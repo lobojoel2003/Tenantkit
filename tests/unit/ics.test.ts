@@ -8,13 +8,22 @@ describe('calendar export', () => {
 
 	it('folds long lines at 75 octets', () => {
 		const folded = foldLine('DESCRIPTION:' + 'é'.repeat(80));
-		for (const line of folded.split('\r\n')) expect(new TextEncoder().encode(line).length).toBeLessThanOrEqual(75);
+		for (const line of folded.split('\r\n'))
+			expect(new TextEncoder().encode(line).length).toBeLessThanOrEqual(75);
 		expect(folded.replace(/\r\n /g, '')).toBe('DESCRIPTION:' + 'é'.repeat(80));
 	});
 
 	it('creates an all-day event with reminders', () => {
 		const ics = createCalendar(
-			[{ uid: 'abc@tenantkit', date: '2026-12-08', title: 'Respond to eviction', description: 'File your answer', remindDaysBefore: [3, 1] }],
+			[
+				{
+					uid: 'abc@tenantkit',
+					date: '2026-12-08',
+					title: 'Respond to eviction',
+					description: 'File your answer',
+					remindDaysBefore: [3, 1]
+				}
+			],
 			new Date('2026-11-04T12:00:00Z')
 		);
 		expect(ics).toContain('BEGIN:VCALENDAR\r\n');

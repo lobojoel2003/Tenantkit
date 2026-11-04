@@ -32,7 +32,8 @@ describe('template language', () => {
 	});
 
 	it('handles if / else / unless', () => {
-		const source = '{{#if urgent}}Urgent.{{else}}Not urgent.{{/if}} {{#unless photos}}No photos.{{/unless}}';
+		const source =
+			'{{#if urgent}}Urgent.{{else}}Not urgent.{{/if}} {{#unless photos}}No photos.{{/unless}}';
 		expect(render(source, { urgent: true })).toBe('Urgent. No photos.');
 		expect(render(source, { urgent: false, photos: true })).toBe('Not urgent.');
 		expect(render(source, { urgent: '' })).toBe('Not urgent. No photos.');
@@ -61,7 +62,9 @@ describe('template language', () => {
 
 	it('treats single line breaks as spaces but keeps paragraphs and value line breaks', () => {
 		const source = 'Line one\ncontinues here.\n\nNew paragraph:\n\n{{list}}\n\nEnd.';
-		expect(render(source, { list: '- one\n- two' })).toBe('Line one continues here.\n\nNew paragraph:\n\n- one\n- two\n\nEnd.');
+		expect(render(source, { list: '- one\n- two' })).toBe(
+			'Line one continues here.\n\nNew paragraph:\n\n- one\n- two\n\nEnd.'
+		);
 	});
 
 	it('ignores comments', () => {
@@ -85,12 +88,20 @@ describe('template language', () => {
 
 	it('lists the names a template uses', () => {
 		const names = templateNames(parseTemplate('{{a}} {{#if b == "x"}}{{c}}{{else}}{{d}}{{/if}}'));
-		expect(names).toEqual([{ name: 'a' }, { name: 'b', compareValue: 'x' }, { name: 'c' }, { name: 'd' }]);
+		expect(names).toEqual([
+			{ name: 'a' },
+			{ name: 'b', compareValue: 'x' },
+			{ name: 'c' },
+			{ name: 'd' }
+		]);
 	});
 
 	it('normalizes whitespace at the edges', () => {
-		expect(normalizeSegments([{ type: 'text', text: '\n\n  Hi  ' }, { type: 'text', text: 'there\n\n\n\n' }])).toEqual([
-			{ type: 'text', text: 'Hi there' }
-		]);
+		expect(
+			normalizeSegments([
+				{ type: 'text', text: '\n\n  Hi  ' },
+				{ type: 'text', text: 'there\n\n\n\n' }
+			])
+		).toEqual([{ type: 'text', text: 'Hi there' }]);
 	});
 });

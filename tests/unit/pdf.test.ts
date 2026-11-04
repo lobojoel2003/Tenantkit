@@ -1,7 +1,12 @@
 import { PDFDocument, StandardFonts } from 'pdf-lib';
 import { describe, expect, it } from 'vitest';
 import type { RenderedLetter } from '../../src/lib/engine/letters.ts';
-import { createLetterPdf, letterBlocks, toPdfSafe, wrapText } from '../../src/lib/pdf/letter-pdf.ts';
+import {
+	createLetterPdf,
+	letterBlocks,
+	toPdfSafe,
+	wrapText
+} from '../../src/lib/pdf/letter-pdf.ts';
 
 const t = (text: string) => [{ type: 'text' as const, text }];
 
@@ -34,7 +39,11 @@ describe('PDF output', () => {
 		for (const line of lines) expect(font.widthOfTextAtSize(line, 11)).toBeLessThanOrEqual(200);
 		expect(lines.at(-2)).toBe('');
 		expect(lines.at(-1)).toBe('next');
-		expect(wrapText('x'.repeat(200), font, 11, 100).every((line) => font.widthOfTextAtSize(line, 11) <= 100)).toBe(true);
+		expect(
+			wrapText('x'.repeat(200), font, 11, 100).every(
+				(line) => font.widthOfTextAtSize(line, 11) <= 100
+			)
+		).toBe(true);
 	});
 
 	it('splits the body into paragraphs', () => {
@@ -45,10 +54,19 @@ describe('PDF output', () => {
 	});
 
 	it('creates a valid multi-page PDF with metadata', async () => {
-		const long = Array.from({ length: 40 }, (_, index) => `Paragraph ${index + 1}. ` + 'Lorem ipsum dolor sit amet. '.repeat(6)).join('\n\n');
+		const long = Array.from(
+			{ length: 40 },
+			(_, index) => `Paragraph ${index + 1}. ` + 'Lorem ipsum dolor sit amet. '.repeat(6)
+		).join('\n\n');
 		const bytes = await createLetterPdf(
 			{ ...letter(''), body: t(long) },
-			{ title: 'Solicitud de reparaciones', author: 'Ana López', language: 'es', pageLabel: (page, pages) => `Página ${page} de ${pages}`, date: new Date('2026-11-04T00:00:00Z') }
+			{
+				title: 'Solicitud de reparaciones',
+				author: 'Ana López',
+				language: 'es',
+				pageLabel: (page, pages) => `Página ${page} de ${pages}`,
+				date: new Date('2026-11-04T00:00:00Z')
+			}
 		);
 		expect(new TextDecoder().decode(bytes.slice(0, 5))).toBe('%PDF-');
 		const loaded = await PDFDocument.load(bytes);

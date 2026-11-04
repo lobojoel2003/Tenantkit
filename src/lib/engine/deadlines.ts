@@ -6,7 +6,7 @@
  */
 import { addDays, addMonths, diffDays, isWeekend, type ISODate } from './civil-date.ts';
 import type { HolidayCalendar, HolidayInstance } from './holidays.ts';
-import type { DeadlineChoiceDef, DeadlineDef, PeriodDef } from './schema.ts';
+import type { PeriodDef } from './schema.ts';
 
 export interface SkippedDay {
 	date: ISODate;
@@ -106,16 +106,28 @@ export function computeDeadline(input: DeadlineInput): DeadlineResult {
 	return result;
 }
 
+/** A deadline rule as the browser sees it (see LocalizedDeadline). */
+export interface RuleLike {
+	period: PeriodDef;
+	extend_if_closed: boolean;
+	options?: { choices: { id: string; addDays: number; period?: PeriodDef }[] };
+}
+
+export type ChoiceLike = NonNullable<RuleLike['options']>['choices'][number];
+
 /** Find the choice for a deadline's optional question (falls back to the first choice). */
-export function findChoice(rule: Pick<DeadlineDef, 'options'>, choiceId?: string): DeadlineChoiceDef | undefined {
+export function findChoice(
+	rule: Pick<RuleLike, 'options'>,
+	choiceId?: string
+): ChoiceLike | undefined {
 	const choices = rule.options?.choices;
 	if (!choices) return undefined;
 	return choices.find((choice) => choice.id === choiceId) ?? choices[0];
 }
 
-/** Compute a deadline rule from content for a trigger date and an optional answer. */
+/** Compute a deadline rule for a trigger date and an optional answer. */
 export function computeRule(
-	rule: Pick<DeadlineDef, 'period' | 'extend_if_closed' | 'options'>,
+	rule: RuleLike,
 	trigger: ISODate,
 	calendar: HolidayCalendar,
 	choiceId?: string
@@ -124,7 +136,7 @@ export function computeRule(
 	return computeDeadline({
 		trigger,
 		period: choice?.period ?? rule.period,
-		addDays: choice?.add_days ?? 0,
+		addDays: choice?.addDays ?? 0,
 		extendIfClosed: rule.extend_if_closed,
 		calendar
 	});

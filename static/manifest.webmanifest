@@ -1,0 +1,10 @@
+{
+	"name": "Tenantkit",
+	"short_name": "Tenantkit",
+	"description": "Tenant letter and deadline helper",
+	"start_url": "./",
+	"display": "standalone",
+	"background_color": "#f6f4ef",
+	"theme_color": "#0e5a5f",
+	"icons": [{ "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

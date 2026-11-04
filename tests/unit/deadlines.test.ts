@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { computeDeadline, computeRule, findChoice, urgency } from '../../src/lib/engine/deadlines.ts';
+import {
+	computeDeadline,
+	computeRule,
+	findChoice,
+	urgency
+} from '../../src/lib/engine/deadlines.ts';
 import { HolidayCalendar } from '../../src/lib/engine/holidays.ts';
 import type { HolidayDef } from '../../src/lib/engine/schema.ts';
 
@@ -7,20 +12,32 @@ const name = { en: 'x' };
 const calendar = new HolidayCalendar([
 	{ id: 'veterans-day', name, date: { month: 11, day: 11, observed: 'nearest_weekday' } },
 	{ id: 'thanksgiving', name, date: { month: 11, weekday: 'thu', nth: 4, offset_days: 0 } },
-	{ id: 'day-after-thanksgiving', name, date: { month: 11, weekday: 'thu', nth: 4, offset_days: 1 } },
+	{
+		id: 'day-after-thanksgiving',
+		name,
+		date: { month: 11, weekday: 'thu', nth: 4, offset_days: 1 }
+	},
 	{ id: 'christmas', name, date: { month: 12, day: 25, observed: 'nearest_weekday' } }
 ] satisfies HolidayDef[]);
 
 describe('computeDeadline', () => {
 	it('counts calendar days without counting the first day', () => {
-		const result = computeDeadline({ trigger: '2026-11-04', period: { amount: 21, unit: 'calendar_days' }, calendar });
+		const result = computeDeadline({
+			trigger: '2026-11-04',
+			period: { amount: 21, unit: 'calendar_days' },
+			calendar
+		});
 		expect(result.due).toBe('2026-11-25');
 		expect(result.skipped).toEqual([]);
 	});
 
 	it('counts court days, skipping weekends and holidays', () => {
 		// Served Friday Nov 20, 2026. Court days: Nov 23, 24, 25, (26-27 holidays), 30, Dec 1, 2, 3, 4, 7, 8.
-		const result = computeDeadline({ trigger: '2026-11-20', period: { amount: 10, unit: 'court_days' }, calendar });
+		const result = computeDeadline({
+			trigger: '2026-11-20',
+			period: { amount: 10, unit: 'court_days' },
+			calendar
+		});
 		expect(result.due).toBe('2026-12-08');
 		expect(result.counted).toEqual([
 			'2026-11-23',
@@ -48,35 +65,65 @@ describe('computeDeadline', () => {
 
 	it('counts 3 court days starting on a weekend', () => {
 		// Notice received Saturday Nov 7 → Mon 9, Tue 10, (Wed 11 Veterans Day), Thu 12.
-		const result = computeDeadline({ trigger: '2026-11-07', period: { amount: 3, unit: 'court_days' }, calendar });
+		const result = computeDeadline({
+			trigger: '2026-11-07',
+			period: { amount: 3, unit: 'court_days' },
+			calendar
+		});
 		expect(result.due).toBe('2026-11-12');
 	});
 
 	it('adds days before counting (e.g. service by mail)', () => {
-		const result = computeDeadline({ trigger: '2026-11-02', addDays: 10, period: { amount: 3, unit: 'court_days' }, calendar });
+		const result = computeDeadline({
+			trigger: '2026-11-02',
+			addDays: 10,
+			period: { amount: 3, unit: 'court_days' },
+			calendar
+		});
 		expect(result.start).toBe('2026-11-12');
 		expect(result.due).toBe('2026-11-17');
 	});
 
 	it('moves a last day that falls on a closed day when asked to', () => {
 		// 14 calendar days from Nov 12 = Thu Nov 26 (Thanksgiving) → Fri is closed too → weekend → Mon Nov 30.
-		const result = computeDeadline({ trigger: '2026-11-12', period: { amount: 14, unit: 'calendar_days' }, extendIfClosed: true, calendar });
+		const result = computeDeadline({
+			trigger: '2026-11-12',
+			period: { amount: 14, unit: 'calendar_days' },
+			extendIfClosed: true,
+			calendar
+		});
 		expect(result.movedFrom).toBe('2026-11-26');
 		expect(result.due).toBe('2026-11-30');
 		expect(result.moved).toHaveLength(4);
-		const unmoved = computeDeadline({ trigger: '2026-11-12', period: { amount: 14, unit: 'calendar_days' }, calendar });
+		const unmoved = computeDeadline({
+			trigger: '2026-11-12',
+			period: { amount: 14, unit: 'calendar_days' },
+			calendar
+		});
 		expect(unmoved.due).toBe('2026-11-26');
 		expect(unmoved.movedFrom).toBeUndefined();
 	});
 
 	it('adds months', () => {
-		expect(computeDeadline({ trigger: '2026-08-31', period: { amount: 6, unit: 'months' }, calendar }).due).toBe('2027-02-28');
+		expect(
+			computeDeadline({ trigger: '2026-08-31', period: { amount: 6, unit: 'months' }, calendar })
+				.due
+		).toBe('2027-02-28');
 	});
 
 	it('rounds hours up to whole days', () => {
-		expect(computeDeadline({ trigger: '2026-11-04', period: { amount: 24, unit: 'hours' }, calendar }).due).toBe('2026-11-05');
-		expect(computeDeadline({ trigger: '2026-11-04', period: { amount: 72, unit: 'hours' }, calendar }).due).toBe('2026-11-07');
-		expect(computeDeadline({ trigger: '2026-11-04', period: { amount: 30, unit: 'hours' }, calendar }).due).toBe('2026-11-06');
+		expect(
+			computeDeadline({ trigger: '2026-11-04', period: { amount: 24, unit: 'hours' }, calendar })
+				.due
+		).toBe('2026-11-05');
+		expect(
+			computeDeadline({ trigger: '2026-11-04', period: { amount: 72, unit: 'hours' }, calendar })
+				.due
+		).toBe('2026-11-07');
+		expect(
+			computeDeadline({ trigger: '2026-11-04', period: { amount: 30, unit: 'hours' }, calendar })
+				.due
+		).toBe('2026-11-06');
 	});
 });
 
@@ -85,12 +132,10 @@ describe('computeRule', () => {
 		period: { amount: 10, unit: 'court_days' as const },
 		extend_if_closed: false,
 		options: {
-			id: 'service',
-			question: name,
 			choices: [
-				{ id: 'personal', label: name, add_days: 0 },
-				{ id: 'mail', label: name, add_days: 10 },
-				{ id: 'hours', label: name, add_days: 0, period: { amount: 24, unit: 'hours' as const } }
+				{ id: 'personal', addDays: 0 },
+				{ id: 'mail', addDays: 10 },
+				{ id: 'hours', addDays: 0, period: { amount: 24, unit: 'hours' as const } }
 			]
 		}
 	};

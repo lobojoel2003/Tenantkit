@@ -13,7 +13,13 @@ import {
 import type { LocalizedLetter } from '../../src/lib/engine/model.ts';
 
 const calendar = new HolidayCalendar([]);
-const context = { locale: 'en', calendar, currency: 'USD', jurisdictionName: 'Testland', today: '2026-11-04' };
+const context = {
+	locale: 'en',
+	calendar,
+	currency: 'USD',
+	jurisdictionName: 'Testland',
+	today: '2026-11-04'
+};
 
 const letter: LocalizedLetter = {
 	id: 'deposit-demand',
@@ -23,11 +29,30 @@ const letter: LocalizedLetter = {
 	fields: [
 		{ id: 'tenant_name', type: 'text', section: 'you', label: 'Your name', required: true },
 		{ id: 'rental_address', type: 'text', section: 'you', label: 'Rental address', required: true },
-		{ id: 'tenant_address', type: 'textarea', section: 'you', label: 'Mailing address', required: false },
+		{
+			id: 'tenant_address',
+			type: 'textarea',
+			section: 'you',
+			label: 'Mailing address',
+			required: false
+		},
 		{ id: 'tenant_email', type: 'email', section: 'you', label: 'Email', required: false },
 		{ id: 'landlord_name', type: 'text', section: 'landlord', label: 'Landlord', required: true },
-		{ id: 'landlord_address', type: 'textarea', section: 'landlord', label: 'Landlord address', required: true },
-		{ id: 'letter_date', type: 'date', section: 'sending', label: 'Date', required: true, default: 'today' },
+		{
+			id: 'landlord_address',
+			type: 'textarea',
+			section: 'landlord',
+			label: 'Landlord address',
+			required: true
+		},
+		{
+			id: 'letter_date',
+			type: 'date',
+			section: 'sending',
+			label: 'Date',
+			required: true,
+			default: 'today'
+		},
 		{
 			id: 'delivery_method',
 			type: 'select',
@@ -40,15 +65,41 @@ const letter: LocalizedLetter = {
 				{ value: 'email', label: 'By email' }
 			]
 		},
-		{ id: 'move_out_date', type: 'date', section: 'details', label: 'Move-out date', required: true },
+		{
+			id: 'move_out_date',
+			type: 'date',
+			section: 'details',
+			label: 'Move-out date',
+			required: true
+		},
 		{ id: 'deposit_amount', type: 'money', section: 'details', label: 'Deposit', required: true },
 		{ id: 'disputed', type: 'checkbox', section: 'details', label: 'Disputed', required: false },
-		{ id: 'disputed_details', type: 'textarea', section: 'details', label: 'Which charges', required: true, showIf: { field: 'disputed', equals: true } }
+		{
+			id: 'disputed_details',
+			type: 'textarea',
+			section: 'details',
+			label: 'Which charges',
+			required: true,
+			showIf: { field: 'disputed', equals: true }
+		}
 	],
-	params: { law: 'The law of {{jurisdiction_name}} says the deadline was {{deadline}}.', empty: '' },
+	params: {
+		law: 'The law of {{jurisdiction_name}} says the deadline was {{deadline}}.',
+		empty: ''
+	},
 	computed: {
-		deadline: { from: 'move_out_date', period: { amount: 21, unit: 'calendar_days' }, addDays: 0, extendIfClosed: false },
-		respond_by: { from: 'letter_date', period: { amount: 14, unit: 'calendar_days' }, addDays: 0, extendIfClosed: false }
+		deadline: {
+			from: 'move_out_date',
+			period: { amount: 21, unit: 'calendar_days' },
+			addDays: 0,
+			extendIfClosed: false
+		},
+		respond_by: {
+			from: 'letter_date',
+			period: { amount: 14, unit: 'calendar_days' },
+			addDays: 0,
+			extendIfClosed: false
+		}
 	},
 	subject: 'Re: Deposit for {{rental_address}}',
 	body: 'I moved out on {{move_out_date}}.\nMy deposit was {{deposit_amount}}.\n\n{{law}}{{empty}}\n\n{{#if disputed}}\nI dispute: {{disputed_details}}\n{{/if}}\nPlease pay by {{respond_by}}.',
@@ -76,7 +127,11 @@ describe('letters', () => {
 	});
 
 	it('validates answers, skipping hidden fields', () => {
-		const values = { ...initialValues(letter, '2026-11-04'), tenant_email: 'not-an-email', deposit_amount: 'lots' };
+		const values = {
+			...initialValues(letter, '2026-11-04'),
+			tenant_email: 'not-an-email',
+			deposit_amount: 'lots'
+		};
 		const problems = validateValues(letter, values);
 		expect(problems).toMatchObject({
 			tenant_name: 'required',
@@ -95,7 +150,9 @@ describe('letters', () => {
 	});
 
 	it('computes dates from answers', () => {
-		expect(computedDate(letter, 'deadline', { move_out_date: '2026-10-01' }, context)).toBe('2026-10-22');
+		expect(computedDate(letter, 'deadline', { move_out_date: '2026-10-01' }, context)).toBe(
+			'2026-10-22'
+		);
 		expect(computedDate(letter, 'deadline', {}, context)).toBeUndefined();
 		expect(computedDate(letter, 'nope', {}, context)).toBeUndefined();
 	});
@@ -152,7 +209,11 @@ describe('letters', () => {
 	});
 
 	it('uses the rental address when there is no separate mailing address, and shows placeholders', () => {
-		const rendered = renderLetter(letter, { rental_address: '1 Elm St', letter_date: '2026-11-04' }, context);
+		const rendered = renderLetter(
+			letter,
+			{ rental_address: '1 Elm St', letter_date: '2026-11-04' },
+			context
+		);
 		const text = letterToText(rendered);
 		expect(text.startsWith('[Your name]\n1 Elm St\n\nNovember 4, 2026')).toBe(true);
 		expect(text).toContain('the deadline was […]');
@@ -160,9 +221,17 @@ describe('letters', () => {
 	});
 
 	it('formats in Spanish', () => {
-		const rendered = renderLetter(letter, { move_out_date: '2026-10-01', deposit_amount: '1500', letter_date: '2026-11-04' }, { ...context, locale: 'es' });
+		const rendered = renderLetter(
+			letter,
+			{ move_out_date: '2026-10-01', deposit_amount: '1500', letter_date: '2026-11-04' },
+			{ ...context, locale: 'es' }
+		);
 		const text = letterToText(rendered);
 		expect(text).toContain('1 de octubre de 2026');
 		expect(text).toMatch(/1500,00\sUS\$|US\$\s?1500,00|1\.500,00\sUS\$/);
+		const us = letterToText(
+			renderLetter(letter, { deposit_amount: '1500' }, { ...context, locale: 'es', region: 'US' })
+		);
+		expect(us).toContain('$1,500.00');
 	});
 });

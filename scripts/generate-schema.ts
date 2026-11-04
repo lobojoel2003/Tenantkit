@@ -8,15 +8,37 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { z } from 'zod';
-import { DeadlinesFile, FieldsetFile, HolidayCalendarFile, JurisdictionFile, LetterFile } from '../src/lib/engine/schema.ts';
+import {
+	DeadlinesFile,
+	FieldsetFile,
+	HolidayCalendarFile,
+	JurisdictionFile,
+	LetterFile
+} from '../src/lib/engine/schema.ts';
 
 const outDir = fileURLToPath(new URL('../schema/', import.meta.url));
 const schemas = {
-	'jurisdiction.schema.json': [JurisdictionFile, 'Tenantkit jurisdiction', 'content/jurisdictions/<id>/jurisdiction.yaml'],
-	'deadlines.schema.json': [DeadlinesFile, 'Tenantkit deadlines', 'content/jurisdictions/<id>/deadlines.yaml'],
-	'letter.schema.json': [LetterFile, 'Tenantkit letter', 'content/letters/*.yaml and content/jurisdictions/<id>/letters/*.yaml'],
+	'jurisdiction.schema.json': [
+		JurisdictionFile,
+		'Tenantkit jurisdiction',
+		'content/jurisdictions/<id>/jurisdiction.yaml'
+	],
+	'deadlines.schema.json': [
+		DeadlinesFile,
+		'Tenantkit deadlines',
+		'content/jurisdictions/<id>/deadlines.yaml'
+	],
+	'letter.schema.json': [
+		LetterFile,
+		'Tenantkit letter',
+		'content/letters/*.yaml and content/jurisdictions/<id>/letters/*.yaml'
+	],
 	'fieldset.schema.json': [FieldsetFile, 'Tenantkit fieldset', 'content/fieldsets/*.yaml'],
-	'holidays.schema.json': [HolidayCalendarFile, 'Tenantkit holiday calendar', 'content/holidays/*.yaml']
+	'holidays.schema.json': [
+		HolidayCalendarFile,
+		'Tenantkit holiday calendar',
+		'content/holidays/*.yaml'
+	]
 } as const;
 
 const check = process.argv.includes('--check');

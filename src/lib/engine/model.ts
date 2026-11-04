@@ -73,15 +73,7 @@ export interface LocalizedDeadline {
 }
 
 export type FieldType =
-	| 'text'
-	| 'textarea'
-	| 'date'
-	| 'money'
-	| 'number'
-	| 'email'
-	| 'tel'
-	| 'select'
-	| 'checkbox';
+	'text' | 'textarea' | 'date' | 'money' | 'number' | 'email' | 'tel' | 'select' | 'checkbox';
 
 export type FieldSection = 'you' | 'landlord' | 'details' | 'sending';
 

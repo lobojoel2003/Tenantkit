@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { execSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import adapter from '@sveltejs/adapter-static';

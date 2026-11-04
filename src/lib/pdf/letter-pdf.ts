@@ -109,7 +109,9 @@ export function letterBlocks(letter: RenderedLetter): Block[] {
 		{ text: lines(letter.sender), after: 1, keep: true },
 		{ text: text(letter.date), after: 1 },
 		{
-			text: [letter.delivery ? text(letter.delivery) : null, lines(letter.recipient)].filter(Boolean).join('\n'),
+			text: [letter.delivery ? text(letter.delivery) : null, lines(letter.recipient)]
+				.filter(Boolean)
+				.join('\n'),
 			after: 1,
 			keep: true
 		},
@@ -121,7 +123,10 @@ export function letterBlocks(letter: RenderedLetter): Block[] {
 	return blocks;
 }
 
-export async function createLetterPdf(letter: RenderedLetter, options: PdfOptions): Promise<Uint8Array> {
+export async function createLetterPdf(
+	letter: RenderedLetter,
+	options: PdfOptions
+): Promise<Uint8Array> {
 	const pdf = await PDFDocument.create();
 	const regular = await pdf.embedFont(StandardFonts.Helvetica);
 	const bold = await pdf.embedFont(StandardFonts.HelveticaBold);
@@ -148,11 +153,13 @@ export async function createLetterPdf(letter: RenderedLetter, options: PdfOption
 		const font = block.bold ? bold : regular;
 		const wrapped = wrapText(toPdfSafe(block.text, font), font, SIZE, width);
 		const height = wrapped.length * LEADING;
-		if (block.keep && y - height < bottom && height < PAGE.height - MARGIN.top - MARGIN.bottom) newPage();
+		if (block.keep && y - height < bottom && height < PAGE.height - MARGIN.top - MARGIN.bottom)
+			newPage();
 		for (const line of wrapped) {
 			if (y - LEADING < bottom) newPage();
 			y -= LEADING;
-			if (line !== '') page.drawText(line, { x: MARGIN.left, y, size: SIZE, font, color: rgb(0.08, 0.08, 0.08) });
+			if (line !== '')
+				page.drawText(line, { x: MARGIN.left, y, size: SIZE, font, color: rgb(0.08, 0.08, 0.08) });
 		}
 		y -= block.after * LEADING;
 	}

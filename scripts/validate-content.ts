@@ -34,7 +34,9 @@ if (!quiet) {
 			`  ${jurisdiction.def.id.padEnd(12)} ${String(jurisdiction.deadlines.length).padStart(2)} deadlines  ${String(jurisdiction.letters.length).padStart(2)} letters  ${jurisdiction.def.status}`
 		);
 	}
-	console.log(`\n${Object.keys(files).length} files checked: ${errors} error(s), ${warnings} warning(s)${strict ? ' (strict)' : ''}`);
+	console.log(
+		`\n${Object.keys(files).length} files checked: ${errors} error(s), ${warnings} warning(s)${strict ? ' (strict)' : ''}`
+	);
 }
 
 if (errors > 0 || (strict && warnings > 0)) process.exit(1);

@@ -6,17 +6,24 @@
  * editors autocompletion and inline errors while volunteers write content.
  */
 import { z } from 'zod';
+import { TOPICS } from './topics.ts';
 
 /** The content format version. Bump only for breaking changes to the format. */
 export const SCHEMA_VERSION = 1;
 
 const id = z
 	.string()
-	.regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Use lowercase letters, numbers and dashes (e.g. "repair-request")');
+	.regex(
+		/^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+		'Use lowercase letters, numbers and dashes (e.g. "repair-request")'
+	);
 
 const fieldId = z
 	.string()
-	.regex(/^[a-z][a-z0-9_]*$/, 'Use lowercase letters, numbers and underscores (e.g. "move_out_date")');
+	.regex(
+		/^[a-z][a-z0-9_]*$/,
+		'Use lowercase letters, numbers and underscores (e.g. "move_out_date")'
+	);
 
 const isoDate = z
 	.string()
@@ -40,7 +47,7 @@ export const Citation = z
 	})
 	.strict();
 
-export const Topic = z.enum(['eviction', 'repairs', 'deposit']);
+export const Topic = z.enum(TOPICS);
 
 export const Period = z
 	.object({
@@ -105,9 +112,15 @@ export const HolidayCalendarFile = z
 
 export const HolidayConfig = z
 	.object({
-		extends: z.array(id).default([]).describe('Holiday calendars to start from, e.g. ["us-federal"]'),
+		extends: z
+			.array(id)
+			.default([])
+			.describe('Holiday calendars to start from, e.g. ["us-federal"]'),
 		add: z.array(Holiday).default([]),
-		remove: z.array(id).default([]).describe('Holiday ids from the extended calendars that courts here do not close for'),
+		remove: z
+			.array(id)
+			.default([])
+			.describe('Holiday ids from the extended calendars that courts here do not close for'),
 		note: Localized.optional(),
 		sources: z.array(Citation).default([])
 	})
@@ -128,12 +141,18 @@ export const JurisdictionFile = z
 		schema_version: z.literal(SCHEMA_VERSION),
 		id: z
 			.string()
-			.regex(/^[a-z]{2}(?:-[a-z0-9]+)*$/, 'Use a country code, then the state or city, e.g. "us-ca"'),
+			.regex(
+				/^[a-z]{2}(?:-[a-z0-9]+)*$/,
+				'Use a country code, then the state or city, e.g. "us-ca"'
+			),
 		name: Localized,
 		short_name: z.string().min(1).max(12),
 		country: z.string().regex(/^[A-Z]{2}$/),
 		kind: z.enum(['general', 'state', 'county', 'city']),
-		currency: z.string().regex(/^[A-Z]{3}$/).default('USD'),
+		currency: z
+			.string()
+			.regex(/^[A-Z]{3}$/)
+			.default('USD'),
 		status: z
 			.enum(['draft', 'reviewed'])
 			.describe('draft: written by volunteers, not yet checked by a lawyer licensed here'),
@@ -141,7 +160,10 @@ export const JurisdictionFile = z
 		reviewed_by: z.array(z.string()).default([]),
 		maintainers: z.array(z.string()).default([]),
 		summary: Localized,
-		letters: z.array(id).default([]).describe('Letter ids offered here (local files override shared ones)'),
+		letters: z
+			.array(id)
+			.default([])
+			.describe('Letter ids offered here (local files override shared ones)'),
 		holidays: HolidayConfig.optional(),
 		help: z.array(HelpResource).default([]),
 		sources: z.array(Citation).default([])
@@ -214,7 +236,17 @@ export const FieldOption = z
 export const Field = z
 	.object({
 		id: fieldId,
-		type: z.enum(['text', 'textarea', 'date', 'money', 'number', 'email', 'tel', 'select', 'checkbox']),
+		type: z.enum([
+			'text',
+			'textarea',
+			'date',
+			'money',
+			'number',
+			'email',
+			'tel',
+			'select',
+			'checkbox'
+		]),
 		section: z.enum(['you', 'landlord', 'details', 'sending']).default('details'),
 		label: Localized,
 		help: Localized.optional(),
@@ -265,7 +297,10 @@ export const LetterFile = z
 		title: Localized.optional(),
 		summary: Localized.optional(),
 		fieldsets: z.array(id).optional(),
-		fields: z.array(Field).optional().describe('Extra fields, added after the fieldsets and any extended letter'),
+		fields: z
+			.array(Field)
+			.optional()
+			.describe('Extra fields, added after the fieldsets and any extended letter'),
 		params: z
 			.record(fieldId, Localized.nullable())
 			.optional()
@@ -298,4 +333,4 @@ export type FieldsetDef = z.infer<typeof FieldsetFile>;
 export type ComputedDef = z.infer<typeof Computed>;
 export type LetterFileDef = z.infer<typeof LetterFile>;
 
-export const TOPICS = Topic.options;
+export { TOPICS };

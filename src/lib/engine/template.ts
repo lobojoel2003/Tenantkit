@@ -21,7 +21,13 @@ export type Condition =
 export type TemplateNode =
 	| { type: 'text'; text: string }
 	| { type: 'var'; name: string }
-	| { type: 'if'; condition: Condition; negate: boolean; then: TemplateNode[]; otherwise: TemplateNode[] };
+	| {
+			type: 'if';
+			condition: Condition;
+			negate: boolean;
+			then: TemplateNode[];
+			otherwise: TemplateNode[];
+	  };
 
 export class TemplateError extends Error {
 	constructor(
@@ -52,7 +58,8 @@ function tokenize(source: string): Token[] {
 	let last = 0;
 	for (const match of source.matchAll(TAG_RE)) {
 		const offset = match.index;
-		if (offset > last) tokens.push({ type: 'text', text: source.slice(last, offset), offset: last });
+		if (offset > last)
+			tokens.push({ type: 'text', text: source.slice(last, offset), offset: last });
 		tokens.push({ type: 'tag', body: match[1] ?? '', offset, standalone: false });
 		last = offset + match[0].length;
 	}
@@ -65,7 +72,8 @@ function tokenize(source: string): Token[] {
 	// is removed, including its line break.
 	const startsLine = new Map<Token, boolean>();
 	for (const token of tokens) {
-		if (token.type === 'text') startsLine.set(token, token.offset === 0 || source[token.offset - 1] === '\n');
+		if (token.type === 'text')
+			startsLine.set(token, token.offset === 0 || source[token.offset - 1] === '\n');
 	}
 	for (let i = 0; i < tokens.length; i++) {
 		const token = tokens[i];
@@ -104,7 +112,12 @@ function tokenize(source: string): Token[] {
 export function parseTemplate(source: string): TemplateNode[] {
 	const tokens = tokenize(source);
 	const root: TemplateNode[] = [];
-	const stack: { node: Extract<TemplateNode, { type: 'if' }>; inElse: boolean; tag: 'if' | 'unless'; offset: number }[] = [];
+	const stack: {
+		node: Extract<TemplateNode, { type: 'if' }>;
+		inElse: boolean;
+		tag: 'if' | 'unless';
+		offset: number;
+	}[] = [];
 	const current = (): TemplateNode[] => {
 		const top = stack.at(-1);
 		if (!top) return root;
@@ -121,9 +134,17 @@ export function parseTemplate(source: string): TemplateNode[] {
 
 		const ifMatch = IF_RE.exec(body);
 		if (ifMatch) {
-			const [, tag, name, op, value] = ifMatch as unknown as [string, 'if' | 'unless', string, '==' | '!=' | undefined, string | undefined];
+			const [, tag, name, op, value] = ifMatch as unknown as [
+				string,
+				'if' | 'unless',
+				string,
+				'==' | '!=' | undefined,
+				string | undefined
+			];
 			const condition: Condition =
-				op !== undefined ? { kind: 'compare', name, op, value: value ?? '' } : { kind: 'truthy', name };
+				op !== undefined
+					? { kind: 'compare', name, op, value: value ?? '' }
+					: { kind: 'truthy', name };
 			const node: Extract<TemplateNode, { type: 'if' }> = {
 				type: 'if',
 				condition,
@@ -164,7 +185,9 @@ export function parseTemplate(source: string): TemplateNode[] {
 }
 
 /** Every name a template refers to, with whether it is used in a comparison. */
-export function templateNames(nodes: readonly TemplateNode[]): { name: string; compareValue?: string }[] {
+export function templateNames(
+	nodes: readonly TemplateNode[]
+): { name: string; compareValue?: string }[] {
 	const names: { name: string; compareValue?: string }[] = [];
 	const walk = (list: readonly TemplateNode[]) => {
 		for (const node of list) {
@@ -186,8 +209,7 @@ export function templateNames(nodes: readonly TemplateNode[]): { name: string; c
 
 /** A piece of rendered output. Values are kept separate so a preview can highlight them. */
 export type Segment =
-	| { type: 'text'; text: string }
-	| { type: 'value'; name: string; text: string; missing: boolean };
+	{ type: 'text'; text: string } | { type: 'value'; name: string; text: string; missing: boolean };
 
 export interface RenderScope {
 	/** Text to insert for a name. Return undefined when the person hasn't filled it in yet. */
@@ -213,7 +235,12 @@ export function renderNodes(nodes: readonly TemplateNode[], scope: RenderScope):
 			const value = scope.text(node.name);
 			if (Array.isArray(value)) out.push(...value);
 			else if (value === undefined || value === '') {
-				out.push({ type: 'value', name: node.name, text: scope.placeholder(node.name), missing: true });
+				out.push({
+					type: 'value',
+					name: node.name,
+					text: scope.placeholder(node.name),
+					missing: true
+				});
 			} else out.push({ type: 'value', name: node.name, text: value, missing: false });
 		} else {
 			const passed = test(node.condition, scope) !== node.negate;

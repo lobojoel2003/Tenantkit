@@ -11,7 +11,14 @@ import type {
 	LocalizedJurisdiction,
 	LocalizedLetter
 } from './model.ts';
-import { TOPICS, type CitationDef, type DeadlineDef, type FieldDef, type LocalizedText, type TopicId } from './schema.ts';
+import {
+	TOPICS,
+	type CitationDef,
+	type DeadlineDef,
+	type FieldDef,
+	type LocalizedText,
+	type TopicId
+} from './schema.ts';
 
 export class Translator {
 	untranslated = false;
@@ -31,7 +38,9 @@ export class Translator {
 
 	citation(citation: CitationDef): LocalizedCitation {
 		const note = this.optional(citation.note);
-		return note === undefined ? { label: citation.label, url: citation.url } : { label: citation.label, url: citation.url, note };
+		return note === undefined
+			? { label: citation.label, url: citation.url }
+			: { label: citation.label, url: citation.url, note };
 	}
 }
 
@@ -48,7 +57,10 @@ export function topicsOf(jurisdiction: ResolvedJurisdiction): TopicId[] {
 	return TOPICS.filter((topic) => used.has(topic));
 }
 
-export function summarizeJurisdiction(jurisdiction: ResolvedJurisdiction, locale: string): JurisdictionSummary {
+export function summarizeJurisdiction(
+	jurisdiction: ResolvedJurisdiction,
+	locale: string
+): JurisdictionSummary {
 	const t = new Translator(locale);
 	const { def } = jurisdiction;
 	return {
@@ -65,7 +77,10 @@ export function summarizeJurisdiction(jurisdiction: ResolvedJurisdiction, locale
 	};
 }
 
-export function localizeJurisdiction(jurisdiction: ResolvedJurisdiction, locale: string): LocalizedJurisdiction {
+export function localizeJurisdiction(
+	jurisdiction: ResolvedJurisdiction,
+	locale: string
+): LocalizedJurisdiction {
 	const t = new Translator(locale);
 	const { def } = jurisdiction;
 	const result: LocalizedJurisdiction = {
@@ -161,7 +176,9 @@ export function localizeLetter(letter: ResolvedLetterDef, locale: string): Local
 		title: t.text(letter.title),
 		summary: t.text(letter.summary),
 		fields: letter.fields.map((field) => localizeField(field, t)),
-		params: Object.fromEntries(Object.entries(letter.params).map(([name, text]) => [name, text === null ? '' : t.text(text)])),
+		params: Object.fromEntries(
+			Object.entries(letter.params).map(([name, text]) => [name, text === null ? '' : t.text(text)])
+		),
 		computed: letter.computed,
 		subject: t.text(letter.subject),
 		body: t.text(letter.body),

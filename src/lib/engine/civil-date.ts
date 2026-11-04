@@ -111,7 +111,11 @@ export function formatDate(value: ISODate, locale: string, style: DateStyle = 'l
 	);
 }
 
-export function formatWeekday(value: ISODate, locale: string, style: 'long' | 'short' = 'short'): string {
+export function formatWeekday(
+	value: ISODate,
+	locale: string,
+	style: 'long' | 'short' = 'short'
+): string {
 	return new Intl.DateTimeFormat(locale, { weekday: style, timeZone: 'UTC' }).format(
 		toUTCDate(value)
 	);

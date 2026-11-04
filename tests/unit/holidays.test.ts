@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { HolidayCalendar, holidaysForYear, mergeHolidayRules, nthWeekday } from '../../src/lib/engine/holidays.ts';
+import {
+	HolidayCalendar,
+	holidaysForYear,
+	mergeHolidayRules,
+	nthWeekday
+} from '../../src/lib/engine/holidays.ts';
 import type { HolidayDef } from '../../src/lib/engine/schema.ts';
 
 const name = { en: 'x' };
@@ -10,7 +15,11 @@ const federal: HolidayDef[] = [
 	{ id: 'juneteenth', name, date: { month: 6, day: 19, observed: 'nearest_weekday' }, since: 2021 },
 	{ id: 'independence-day', name, date: { month: 7, day: 4, observed: 'nearest_weekday' } },
 	{ id: 'thanksgiving', name, date: { month: 11, weekday: 'thu', nth: 4, offset_days: 0 } },
-	{ id: 'day-after-thanksgiving', name, date: { month: 11, weekday: 'thu', nth: 4, offset_days: 1 } },
+	{
+		id: 'day-after-thanksgiving',
+		name,
+		date: { month: 11, weekday: 'thu', nth: 4, offset_days: 1 }
+	},
 	{ id: 'christmas', name, date: { month: 12, day: 25, observed: 'nearest_weekday' } }
 ];
 
@@ -38,12 +47,18 @@ describe('holiday rules', () => {
 	});
 
 	it('respects since/until', () => {
-		expect(holidaysForYear(federal, 2020).some((holiday) => holiday.id === 'juneteenth')).toBe(false);
-		expect(holidaysForYear(federal, 2021).some((holiday) => holiday.id === 'juneteenth')).toBe(true);
+		expect(holidaysForYear(federal, 2020).some((holiday) => holiday.id === 'juneteenth')).toBe(
+			false
+		);
+		expect(holidaysForYear(federal, 2021).some((holiday) => holiday.id === 'juneteenth')).toBe(
+			true
+		);
 	});
 
 	it('keeps the actual date of shifted holidays', () => {
-		const july = holidaysForYear(federal, 2026).find((holiday) => holiday.id === 'independence-day');
+		const july = holidaysForYear(federal, 2026).find(
+			(holiday) => holiday.id === 'independence-day'
+		);
 		expect(july).toMatchObject({ date: '2026-07-03', actual: '2026-07-04' });
 	});
 
@@ -56,7 +71,9 @@ describe('holiday rules', () => {
 		expect(holidaysForYear(rules, 2026).map((holiday) => holiday.date)).toContain('2026-07-04');
 		expect(holidaysForYear(rules, 2027).map((holiday) => holiday.date)).toContain('2027-07-05');
 		// 2028-02-12 is Saturday and is not observed elsewhere.
-		expect(holidaysForYear(rules, 2028).find((holiday) => holiday.id === 'b')?.date).toBe('2028-02-12');
+		expect(holidaysForYear(rules, 2028).find((holiday) => holiday.id === 'b')?.date).toBe(
+			'2028-02-12'
+		);
 	});
 
 	it('answers court-day questions', () => {
@@ -69,10 +86,18 @@ describe('holiday rules', () => {
 	});
 
 	it('merges extended, removed and added holidays', () => {
-		const merged = mergeHolidayRules(federal, ['day-after-thanksgiving'], [
-			{ id: 'christmas', name: { en: 'Christmas (local)' }, date: { month: 12, day: 25, observed: 'none' } },
-			{ id: 'lincoln-day', name, date: { month: 2, day: 12, observed: 'nearest_weekday' } }
-		]);
+		const merged = mergeHolidayRules(
+			federal,
+			['day-after-thanksgiving'],
+			[
+				{
+					id: 'christmas',
+					name: { en: 'Christmas (local)' },
+					date: { month: 12, day: 25, observed: 'none' }
+				},
+				{ id: 'lincoln-day', name, date: { month: 2, day: 12, observed: 'nearest_weekday' } }
+			]
+		);
 		expect(merged.map((holiday) => holiday.id)).toEqual([
 			'new-years-day',
 			'mlk-day',

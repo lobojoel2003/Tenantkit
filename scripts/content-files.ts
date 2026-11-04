@@ -12,7 +12,8 @@ export function readContentFiles(dir: string = CONTENT_DIR): ContentFiles {
 		for (const name of readdirSync(current).sort()) {
 			const path = join(current, name);
 			if (statSync(path).isDirectory()) walk(path);
-			else if (/\.ya?ml$/.test(name)) files[relative(dir, path).split(sep).join('/')] = readFileSync(path, 'utf8');
+			else if (/\.ya?ml$/.test(name))
+				files[relative(dir, path).split(sep).join('/')] = readFileSync(path, 'utf8');
 		}
 	};
 	walk(dir);

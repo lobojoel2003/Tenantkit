@@ -17,7 +17,11 @@ export interface CalendarEvent {
 
 /** Escape text per RFC 5545 §3.3.11. */
 export function escapeText(value: string): string {
-	return value.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n');
+	return value
+		.replace(/\\/g, '\\\\')
+		.replace(/;/g, '\\;')
+		.replace(/,/g, '\\,')
+		.replace(/\r?\n/g, '\\n');
 }
 
 /** Fold lines longer than 75 octets (RFC 5545 §3.1). */
@@ -45,8 +49,17 @@ export function foldLine(line: string): string {
 const compact = (date: ISODate) => date.replace(/-/g, '');
 
 export function createCalendar(events: CalendarEvent[], now: Date = new Date()): string {
-	const stamp = now.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
-	const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Tenantkit//Tenantkit//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH'];
+	const stamp = now
+		.toISOString()
+		.replace(/[-:]/g, '')
+		.replace(/\.\d{3}/, '');
+	const lines = [
+		'BEGIN:VCALENDAR',
+		'VERSION:2.0',
+		'PRODID:-//Tenantkit//Tenantkit//EN',
+		'CALSCALE:GREGORIAN',
+		'METHOD:PUBLISH'
+	];
 	for (const event of events) {
 		lines.push(
 			'BEGIN:VEVENT',
