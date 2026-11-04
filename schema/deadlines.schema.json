@@ -1,0 +1,366 @@
+{
+	"$id": "https://lobojoel2003.github.io/Tenantkit/schema/deadlines.schema.json",
+	"title": "Tenantkit deadlines",
+	"description": "Schema for content/jurisdictions/<id>/deadlines.yaml. Generated from src/lib/engine/schema.ts; do not edit by hand.",
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"type": "object",
+	"properties": {
+		"schema_version": {
+			"type": "number",
+			"const": 1
+		},
+		"deadlines": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+					},
+					"topic": {
+						"type": "string",
+						"enum": [
+							"eviction",
+							"repairs",
+							"deposit"
+						]
+					},
+					"kind": {
+						"type": "string",
+						"enum": [
+							"tenant_deadline",
+							"landlord_deadline",
+							"waiting_period",
+							"protection_period"
+						],
+						"description": "tenant_deadline: you must act by this date. landlord_deadline: your landlord must act. waiting_period: the earliest date something can happen. protection_period: you are protected until this date."
+					},
+					"urgent": {
+						"default": false,
+						"type": "boolean"
+					},
+					"title": {
+						"type": "object",
+						"properties": {
+							"en": {
+								"type": "string",
+								"minLength": 1
+							}
+						},
+						"required": [
+							"en"
+						],
+						"additionalProperties": {
+							"type": "string",
+							"minLength": 1
+						},
+						"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+					},
+					"summary": {
+						"type": "object",
+						"properties": {
+							"en": {
+								"type": "string",
+								"minLength": 1
+							}
+						},
+						"required": [
+							"en"
+						],
+						"additionalProperties": {
+							"type": "string",
+							"minLength": 1
+						},
+						"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+					},
+					"trigger": {
+						"type": "object",
+						"properties": {
+							"en": {
+								"type": "string",
+								"minLength": 1
+							}
+						},
+						"required": [
+							"en"
+						],
+						"additionalProperties": {
+							"type": "string",
+							"minLength": 1
+						},
+						"description": "Label for the starting date, e.g. \"The day you moved out\""
+					},
+					"period": {
+						"type": "object",
+						"properties": {
+							"amount": {
+								"type": "integer",
+								"exclusiveMinimum": 0,
+								"maximum": 9007199254740991
+							},
+							"unit": {
+								"type": "string",
+								"enum": [
+									"calendar_days",
+									"court_days",
+									"months",
+									"hours"
+								],
+								"description": "calendar_days counts every day; court_days skips weekends and the holidays listed for the jurisdiction; months adds calendar months (Jan 31 + 1 month = Feb 28); hours is rounded up to whole days"
+							}
+						},
+						"required": [
+							"amount",
+							"unit"
+						],
+						"additionalProperties": false
+					},
+					"extend_if_closed": {
+						"default": false,
+						"description": "If the last day is a weekend or holiday, move it to the next court day",
+						"type": "boolean"
+					},
+					"options": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"type": "string",
+								"pattern": "^[a-z][a-z0-9_]*$"
+							},
+							"question": {
+								"type": "object",
+								"properties": {
+									"en": {
+										"type": "string",
+										"minLength": 1
+									}
+								},
+								"required": [
+									"en"
+								],
+								"additionalProperties": {
+									"type": "string",
+									"minLength": 1
+								},
+								"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+							},
+							"choices": {
+								"minItems": 2,
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+										},
+										"label": {
+											"type": "object",
+											"properties": {
+												"en": {
+													"type": "string",
+													"minLength": 1
+												}
+											},
+											"required": [
+												"en"
+											],
+											"additionalProperties": {
+												"type": "string",
+												"minLength": 1
+											},
+											"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+										},
+										"add_days": {
+											"default": 0,
+											"description": "Calendar days added to the start date before counting (e.g. service by mail)",
+											"type": "integer",
+											"minimum": 0,
+											"maximum": 9007199254740991
+										},
+										"period": {
+											"description": "Use a different period for this choice",
+											"type": "object",
+											"properties": {
+												"amount": {
+													"type": "integer",
+													"exclusiveMinimum": 0,
+													"maximum": 9007199254740991
+												},
+												"unit": {
+													"type": "string",
+													"enum": [
+														"calendar_days",
+														"court_days",
+														"months",
+														"hours"
+													],
+													"description": "calendar_days counts every day; court_days skips weekends and the holidays listed for the jurisdiction; months adds calendar months (Jan 31 + 1 month = Feb 28); hours is rounded up to whole days"
+												}
+											},
+											"required": [
+												"amount",
+												"unit"
+											],
+											"additionalProperties": false
+										},
+										"note": {
+											"type": "object",
+											"properties": {
+												"en": {
+													"type": "string",
+													"minLength": 1
+												}
+											},
+											"required": [
+												"en"
+											],
+											"additionalProperties": {
+												"type": "string",
+												"minLength": 1
+											},
+											"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+										}
+									},
+									"required": [
+										"id",
+										"label"
+									],
+									"additionalProperties": false
+								}
+							}
+						},
+						"required": [
+							"id",
+							"question",
+							"choices"
+						],
+						"additionalProperties": false
+					},
+					"explanation": {
+						"type": "object",
+						"properties": {
+							"en": {
+								"type": "string",
+								"minLength": 1
+							}
+						},
+						"required": [
+							"en"
+						],
+						"additionalProperties": {
+							"type": "string",
+							"minLength": 1
+						},
+						"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+					},
+					"if_missed": {
+						"type": "object",
+						"properties": {
+							"en": {
+								"type": "string",
+								"minLength": 1
+							}
+						},
+						"required": [
+							"en"
+						],
+						"additionalProperties": {
+							"type": "string",
+							"minLength": 1
+						},
+						"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+					},
+					"steps": {
+						"default": [],
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"en": {
+									"type": "string",
+									"minLength": 1
+								}
+							},
+							"required": [
+								"en"
+							],
+							"additionalProperties": {
+								"type": "string",
+								"minLength": 1
+							},
+							"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+						}
+					},
+					"letters": {
+						"default": [],
+						"type": "array",
+						"items": {
+							"type": "string",
+							"pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+						}
+					},
+					"citations": {
+						"minItems": 1,
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"label": {
+									"type": "string",
+									"minLength": 1,
+									"description": "Short citation, e.g. \"Cal. Civ. Code § 1950.5(g)\""
+								},
+								"url": {
+									"type": "string",
+									"format": "uri",
+									"description": "Link to the official text of the law or rule"
+								},
+								"note": {
+									"type": "object",
+									"properties": {
+										"en": {
+											"type": "string",
+											"minLength": 1
+										}
+									},
+									"required": [
+										"en"
+									],
+									"additionalProperties": {
+										"type": "string",
+										"minLength": 1
+									},
+									"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+								}
+							},
+							"required": [
+								"label",
+								"url"
+							],
+							"additionalProperties": false
+						}
+					}
+				},
+				"required": [
+					"id",
+					"topic",
+					"kind",
+					"title",
+					"summary",
+					"trigger",
+					"period",
+					"explanation",
+					"citations"
+				],
+				"additionalProperties": false
+			}
+		}
+	},
+	"required": [
+		"schema_version",
+		"deadlines"
+	],
+	"additionalProperties": false
+}

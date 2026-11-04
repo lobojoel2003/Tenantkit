@@ -1,0 +1,204 @@
+{
+	"$id": "https://lobojoel2003.github.io/Tenantkit/schema/holidays.schema.json",
+	"title": "Tenantkit holiday calendar",
+	"description": "Schema for content/holidays/*.yaml. Generated from src/lib/engine/schema.ts; do not edit by hand.",
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"type": "object",
+	"properties": {
+		"schema_version": {
+			"type": "number",
+			"const": 1
+		},
+		"id": {
+			"type": "string",
+			"pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+		},
+		"name": {
+			"type": "object",
+			"properties": {
+				"en": {
+					"type": "string",
+					"minLength": 1
+				}
+			},
+			"required": [
+				"en"
+			],
+			"additionalProperties": {
+				"type": "string",
+				"minLength": 1
+			},
+			"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+		},
+		"holidays": {
+			"minItems": 1,
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+					},
+					"name": {
+						"type": "object",
+						"properties": {
+							"en": {
+								"type": "string",
+								"minLength": 1
+							}
+						},
+						"required": [
+							"en"
+						],
+						"additionalProperties": {
+							"type": "string",
+							"minLength": 1
+						},
+						"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+					},
+					"date": {
+						"anyOf": [
+							{
+								"type": "object",
+								"properties": {
+									"month": {
+										"type": "integer",
+										"minimum": 1,
+										"maximum": 12
+									},
+									"day": {
+										"type": "integer",
+										"minimum": 1,
+										"maximum": 31
+									},
+									"observed": {
+										"default": "nearest_weekday",
+										"description": "What happens when the date falls on a weekend. nearest_weekday: Saturday moves to Friday, Sunday to Monday.",
+										"type": "string",
+										"enum": [
+											"none",
+											"nearest_weekday",
+											"sunday_to_monday"
+										]
+									}
+								},
+								"required": [
+									"month",
+									"day"
+								],
+								"additionalProperties": false
+							},
+							{
+								"type": "object",
+								"properties": {
+									"month": {
+										"type": "integer",
+										"minimum": 1,
+										"maximum": 12
+									},
+									"weekday": {
+										"type": "string",
+										"enum": [
+											"sun",
+											"mon",
+											"tue",
+											"wed",
+											"thu",
+											"fri",
+											"sat"
+										]
+									},
+									"nth": {
+										"type": "integer",
+										"minimum": -1,
+										"maximum": 5
+									},
+									"offset_days": {
+										"default": 0,
+										"type": "integer",
+										"minimum": -7,
+										"maximum": 7
+									}
+								},
+								"required": [
+									"month",
+									"weekday",
+									"nth"
+								],
+								"additionalProperties": false
+							}
+						]
+					},
+					"since": {
+						"description": "First year this holiday applies",
+						"type": "integer",
+						"minimum": 1900,
+						"maximum": 9007199254740991
+					},
+					"until": {
+						"description": "Last year this holiday applies",
+						"type": "integer",
+						"minimum": 1900,
+						"maximum": 9007199254740991
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"date"
+				],
+				"additionalProperties": false
+			}
+		},
+		"sources": {
+			"minItems": 1,
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"label": {
+						"type": "string",
+						"minLength": 1,
+						"description": "Short citation, e.g. \"Cal. Civ. Code § 1950.5(g)\""
+					},
+					"url": {
+						"type": "string",
+						"format": "uri",
+						"description": "Link to the official text of the law or rule"
+					},
+					"note": {
+						"type": "object",
+						"properties": {
+							"en": {
+								"type": "string",
+								"minLength": 1
+							}
+						},
+						"required": [
+							"en"
+						],
+						"additionalProperties": {
+							"type": "string",
+							"minLength": 1
+						},
+						"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+					}
+				},
+				"required": [
+					"label",
+					"url"
+				],
+				"additionalProperties": false
+			}
+		}
+	},
+	"required": [
+		"schema_version",
+		"id",
+		"name",
+		"holidays",
+		"sources"
+	],
+	"additionalProperties": false
+}

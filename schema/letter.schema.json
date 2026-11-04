@@ -1,0 +1,480 @@
+{
+	"$id": "https://lobojoel2003.github.io/Tenantkit/schema/letter.schema.json",
+	"title": "Tenantkit letter",
+	"description": "Schema for content/letters/*.yaml and content/jurisdictions/<id>/letters/*.yaml. Generated from src/lib/engine/schema.ts; do not edit by hand.",
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"type": "object",
+	"properties": {
+		"schema_version": {
+			"type": "number",
+			"const": 1
+		},
+		"id": {
+			"type": "string",
+			"pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+		},
+		"extends": {
+			"description": "Start from a shared letter in content/letters/",
+			"type": "string",
+			"pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+		},
+		"topic": {
+			"type": "string",
+			"enum": [
+				"eviction",
+				"repairs",
+				"deposit"
+			]
+		},
+		"title": {
+			"type": "object",
+			"properties": {
+				"en": {
+					"type": "string",
+					"minLength": 1
+				}
+			},
+			"required": [
+				"en"
+			],
+			"additionalProperties": {
+				"type": "string",
+				"minLength": 1
+			},
+			"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+		},
+		"summary": {
+			"type": "object",
+			"properties": {
+				"en": {
+					"type": "string",
+					"minLength": 1
+				}
+			},
+			"required": [
+				"en"
+			],
+			"additionalProperties": {
+				"type": "string",
+				"minLength": 1
+			},
+			"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+		},
+		"fieldsets": {
+			"type": "array",
+			"items": {
+				"type": "string",
+				"pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+			}
+		},
+		"fields": {
+			"description": "Extra fields, added after the fieldsets and any extended letter",
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"pattern": "^[a-z][a-z0-9_]*$"
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"text",
+							"textarea",
+							"date",
+							"money",
+							"number",
+							"email",
+							"tel",
+							"select",
+							"checkbox"
+						]
+					},
+					"section": {
+						"default": "details",
+						"type": "string",
+						"enum": [
+							"you",
+							"landlord",
+							"details",
+							"sending"
+						]
+					},
+					"label": {
+						"type": "object",
+						"properties": {
+							"en": {
+								"type": "string",
+								"minLength": 1
+							}
+						},
+						"required": [
+							"en"
+						],
+						"additionalProperties": {
+							"type": "string",
+							"minLength": 1
+						},
+						"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+					},
+					"help": {
+						"type": "object",
+						"properties": {
+							"en": {
+								"type": "string",
+								"minLength": 1
+							}
+						},
+						"required": [
+							"en"
+						],
+						"additionalProperties": {
+							"type": "string",
+							"minLength": 1
+						},
+						"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+					},
+					"placeholder": {
+						"type": "object",
+						"properties": {
+							"en": {
+								"type": "string",
+								"minLength": 1
+							}
+						},
+						"required": [
+							"en"
+						],
+						"additionalProperties": {
+							"type": "string",
+							"minLength": 1
+						},
+						"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+					},
+					"required": {
+						"default": false,
+						"type": "boolean"
+					},
+					"options": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"value": {
+									"type": "string",
+									"pattern": "^[a-z][a-z0-9_]*$"
+								},
+								"label": {
+									"type": "object",
+									"properties": {
+										"en": {
+											"type": "string",
+											"minLength": 1
+										}
+									},
+									"required": [
+										"en"
+									],
+									"additionalProperties": {
+										"type": "string",
+										"minLength": 1
+									},
+									"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+								}
+							},
+							"required": [
+								"value",
+								"label"
+							],
+							"additionalProperties": false
+						}
+					},
+					"default": {
+						"description": "Use \"today\" for date fields",
+						"type": [
+							"string",
+							"boolean"
+						]
+					},
+					"show_if": {
+						"type": "object",
+						"properties": {
+							"field": {
+								"type": "string",
+								"pattern": "^[a-z][a-z0-9_]*$"
+							},
+							"equals": {
+								"default": true,
+								"type": [
+									"string",
+									"boolean"
+								]
+							}
+						},
+						"required": [
+							"field"
+						],
+						"additionalProperties": false
+					},
+					"max_length": {
+						"type": "integer",
+						"exclusiveMinimum": 0,
+						"maximum": 9007199254740991
+					}
+				},
+				"required": [
+					"id",
+					"type",
+					"label"
+				],
+				"additionalProperties": false
+			}
+		},
+		"params": {
+			"description": "Named text blocks the body can insert with {{name}}. Shared letters can declare a block as null (empty) so each state can fill it in, e.g. with the state law.",
+			"type": "object",
+			"propertyNames": {
+				"type": "string",
+				"pattern": "^[a-z][a-z0-9_]*$"
+			},
+			"additionalProperties": {
+				"anyOf": [
+					{
+						"type": "object",
+						"properties": {
+							"en": {
+								"type": "string",
+								"minLength": 1
+							}
+						},
+						"required": [
+							"en"
+						],
+						"additionalProperties": {
+							"type": "string",
+							"minLength": 1
+						},
+						"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+					},
+					{
+						"type": "null"
+					}
+				]
+			}
+		},
+		"computed": {
+			"type": "object",
+			"propertyNames": {
+				"type": "string",
+				"pattern": "^[a-z][a-z0-9_]*$"
+			},
+			"additionalProperties": {
+				"anyOf": [
+					{
+						"type": "object",
+						"properties": {
+							"from": {
+								"anyOf": [
+									{
+										"type": "string",
+										"pattern": "^[a-z][a-z0-9_]*$"
+									},
+									{
+										"type": "string",
+										"const": "today"
+									}
+								]
+							},
+							"add": {
+								"type": "object",
+								"properties": {
+									"amount": {
+										"type": "integer",
+										"exclusiveMinimum": 0,
+										"maximum": 9007199254740991
+									},
+									"unit": {
+										"type": "string",
+										"enum": [
+											"calendar_days",
+											"court_days",
+											"months",
+											"hours"
+										],
+										"description": "calendar_days counts every day; court_days skips weekends and the holidays listed for the jurisdiction; months adds calendar months (Jan 31 + 1 month = Feb 28); hours is rounded up to whole days"
+									}
+								},
+								"required": [
+									"amount",
+									"unit"
+								],
+								"additionalProperties": false
+							}
+						},
+						"required": [
+							"from",
+							"add"
+						],
+						"additionalProperties": false
+					},
+					{
+						"type": "object",
+						"properties": {
+							"from": {
+								"type": "string",
+								"pattern": "^[a-z][a-z0-9_]*$"
+							},
+							"deadline": {
+								"type": "string",
+								"pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+								"description": "A deadline id from the same jurisdiction"
+							}
+						},
+						"required": [
+							"from",
+							"deadline"
+						],
+						"additionalProperties": false
+					}
+				]
+			}
+		},
+		"subject": {
+			"type": "object",
+			"properties": {
+				"en": {
+					"type": "string",
+					"minLength": 1
+				}
+			},
+			"required": [
+				"en"
+			],
+			"additionalProperties": {
+				"type": "string",
+				"minLength": 1
+			},
+			"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+		},
+		"body": {
+			"type": "object",
+			"properties": {
+				"en": {
+					"type": "string",
+					"minLength": 1
+				}
+			},
+			"required": [
+				"en"
+			],
+			"additionalProperties": {
+				"type": "string",
+				"minLength": 1
+			},
+			"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+		},
+		"closing": {
+			"type": "object",
+			"properties": {
+				"en": {
+					"type": "string",
+					"minLength": 1
+				}
+			},
+			"required": [
+				"en"
+			],
+			"additionalProperties": {
+				"type": "string",
+				"minLength": 1
+			},
+			"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+		},
+		"delivery_tips": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"en": {
+						"type": "string",
+						"minLength": 1
+					}
+				},
+				"required": [
+					"en"
+				],
+				"additionalProperties": {
+					"type": "string",
+					"minLength": 1
+				},
+				"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+			}
+		},
+		"checklist": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"en": {
+						"type": "string",
+						"minLength": 1
+					}
+				},
+				"required": [
+					"en"
+				],
+				"additionalProperties": {
+					"type": "string",
+					"minLength": 1
+				},
+				"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+			}
+		},
+		"citations": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"label": {
+						"type": "string",
+						"minLength": 1,
+						"description": "Short citation, e.g. \"Cal. Civ. Code § 1950.5(g)\""
+					},
+					"url": {
+						"type": "string",
+						"format": "uri",
+						"description": "Link to the official text of the law or rule"
+					},
+					"note": {
+						"type": "object",
+						"properties": {
+							"en": {
+								"type": "string",
+								"minLength": 1
+							}
+						},
+						"required": [
+							"en"
+						],
+						"additionalProperties": {
+							"type": "string",
+							"minLength": 1
+						},
+						"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+					}
+				},
+				"required": [
+					"label",
+					"url"
+				],
+				"additionalProperties": false
+			}
+		}
+	},
+	"required": [
+		"schema_version",
+		"id"
+	],
+	"additionalProperties": false
+}

@@ -1,0 +1,187 @@
+{
+	"$id": "https://lobojoel2003.github.io/Tenantkit/schema/fieldset.schema.json",
+	"title": "Tenantkit fieldset",
+	"description": "Schema for content/fieldsets/*.yaml. Generated from src/lib/engine/schema.ts; do not edit by hand.",
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"type": "object",
+	"properties": {
+		"schema_version": {
+			"type": "number",
+			"const": 1
+		},
+		"id": {
+			"type": "string",
+			"pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+		},
+		"fields": {
+			"minItems": 1,
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"pattern": "^[a-z][a-z0-9_]*$"
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"text",
+							"textarea",
+							"date",
+							"money",
+							"number",
+							"email",
+							"tel",
+							"select",
+							"checkbox"
+						]
+					},
+					"section": {
+						"default": "details",
+						"type": "string",
+						"enum": [
+							"you",
+							"landlord",
+							"details",
+							"sending"
+						]
+					},
+					"label": {
+						"type": "object",
+						"properties": {
+							"en": {
+								"type": "string",
+								"minLength": 1
+							}
+						},
+						"required": [
+							"en"
+						],
+						"additionalProperties": {
+							"type": "string",
+							"minLength": 1
+						},
+						"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+					},
+					"help": {
+						"type": "object",
+						"properties": {
+							"en": {
+								"type": "string",
+								"minLength": 1
+							}
+						},
+						"required": [
+							"en"
+						],
+						"additionalProperties": {
+							"type": "string",
+							"minLength": 1
+						},
+						"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+					},
+					"placeholder": {
+						"type": "object",
+						"properties": {
+							"en": {
+								"type": "string",
+								"minLength": 1
+							}
+						},
+						"required": [
+							"en"
+						],
+						"additionalProperties": {
+							"type": "string",
+							"minLength": 1
+						},
+						"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+					},
+					"required": {
+						"default": false,
+						"type": "boolean"
+					},
+					"options": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"value": {
+									"type": "string",
+									"pattern": "^[a-z][a-z0-9_]*$"
+								},
+								"label": {
+									"type": "object",
+									"properties": {
+										"en": {
+											"type": "string",
+											"minLength": 1
+										}
+									},
+									"required": [
+										"en"
+									],
+									"additionalProperties": {
+										"type": "string",
+										"minLength": 1
+									},
+									"description": "Text keyed by language code. \"en\" is required; add \"es\" and others as translations."
+								}
+							},
+							"required": [
+								"value",
+								"label"
+							],
+							"additionalProperties": false
+						}
+					},
+					"default": {
+						"description": "Use \"today\" for date fields",
+						"type": [
+							"string",
+							"boolean"
+						]
+					},
+					"show_if": {
+						"type": "object",
+						"properties": {
+							"field": {
+								"type": "string",
+								"pattern": "^[a-z][a-z0-9_]*$"
+							},
+							"equals": {
+								"default": true,
+								"type": [
+									"string",
+									"boolean"
+								]
+							}
+						},
+						"required": [
+							"field"
+						],
+						"additionalProperties": false
+					},
+					"max_length": {
+						"type": "integer",
+						"exclusiveMinimum": 0,
+						"maximum": 9007199254740991
+					}
+				},
+				"required": [
+					"id",
+					"type",
+					"label"
+				],
+				"additionalProperties": false
+			}
+		}
+	},
+	"required": [
+		"schema_version",
+		"id",
+		"fields"
+	],
+	"additionalProperties": false
+}
