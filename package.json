@@ -1,0 +1,83 @@
+{
+	"name": "tenantkit",
+	"version": "1.0.0",
+	"private": true,
+	"description": "Tenant letter and deadline helper: a reusable engine where each state's rules and letter templates live as plain YAML data files.",
+	"keywords": [
+		"tenants",
+		"renters",
+		"eviction",
+		"legal-aid",
+		"housing",
+		"security-deposit",
+		"repairs",
+		"deadlines",
+		"letters",
+		"access-to-justice",
+		"sveltekit",
+		"yaml"
+	],
+	"homepage": "https://lobojoel2003.github.io/Tenantkit/",
+	"bugs": {
+		"url": "https://github.com/lobojoel2003/Tenantkit/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/lobojoel2003/Tenantkit.git"
+	},
+	"license": "(AGPL-3.0-only AND CC-BY-4.0)",
+	"author": "lobojoel2003",
+	"type": "module",
+	"engines": {
+		"node": ">=22"
+	},
+	"imports": {
+		"#lib": "./src/lib",
+		"#lib/*": "./src/lib/*"
+	},
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"check": "svelte-check --tsconfig ./tsconfig.json --fail-on-warnings",
+		"lint": "prettier --check . && eslint .",
+		"format": "prettier --write .",
+		"test": "npm run test:unit && npm run test:e2e",
+		"test:unit": "vitest run",
+		"test:coverage": "vitest run --coverage",
+		"test:e2e": "playwright test",
+		"content:validate": "tsx scripts/validate-content.ts --strict",
+		"content:schema": "tsx scripts/generate-schema.ts",
+		"content:package": "tsx scripts/package-content.ts",
+		"release:notes": "tsx scripts/release-notes.ts",
+		"verify": "npm run lint && npm run check && npm run content:validate && npm run test:unit && npm run build"
+	},
+	"dependencies": {
+		"pdf-lib": "^1.17.1"
+	},
+	"devDependencies": {
+		"@axe-core/playwright": "^4.14.0",
+		"@eslint/js": "^10.0.1",
+		"@playwright/test": "^1.63.0",
+		"@sveltejs/adapter-static": "^4.0.1",
+		"@sveltejs/kit": "^3.1.1",
+		"@sveltejs/vite-plugin-svelte": "^7.3.1",
+		"@types/node": "^22.20.5",
+		"@vitest/coverage-v8": "^5.1.0",
+		"eslint": "^10.14.0",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-svelte": "^3.24.0",
+		"globals": "^17.14.0",
+		"prettier": "^3.9.10",
+		"prettier-plugin-svelte": "^4.1.1",
+		"svelte": "^5.57.3",
+		"svelte-check": "^4.7.8",
+		"tsx": "^4.23.15",
+		"typescript": "^6.0.3",
+		"typescript-eslint": "^8.72.1",
+		"vite": "^8.3.5",
+		"vitest": "^5.1.0",
+		"yaml": "^2.9.1",
+		"zod": "^4.6.7"
+	}
+}
