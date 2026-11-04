@@ -5,6 +5,13 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 10
+    ignore:
+      # SvelteKit 3 supports TypeScript 6; move to 7 when SvelteKit does.
+      - dependency-name: typescript
+        update-types: ["version-update:semver-major"]
+      # Types must match the Node.js version in .nvmrc (22).
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
     groups:
       svelte:
         patterns: ["svelte", "svelte-check", "@sveltejs/*", "vite", "vitest", "@vitest/*"]
