@@ -1,0 +1,156 @@
+# yaml-language-server: $schema=../../../schema/jurisdiction.schema.json
+# Texas. Eviction rules follow SB 38 (2025) and the rewritten Texas Rule of Civil Procedure 510,
+# which apply to eviction cases filed on or after January 1, 2026.
+schema_version: 1
+id: us-tx
+name: { en: Texas, es: Texas }
+short_name: TX
+country: US
+kind: state
+status: draft
+last_reviewed: 2026-11-04
+reviewed_by: []
+maintainers: []
+summary:
+  en: >-
+    Deadlines and letters for renters in Texas. Eviction deadlines follow the new rules for cases
+    filed on or after January 1, 2026; cases filed before then follow the old rules.
+  es: >-
+    Plazos y cartas para inquilinos en Texas. Los plazos de desalojo siguen las nuevas reglas para
+    los casos presentados a partir del 1 de enero de 2026; los casos presentados antes siguen las
+    reglas anteriores.
+letters: [repair-request, deposit-demand, payment-plan]
+holidays:
+  # Not extending us-federal: Texas eviction deadlines (Prop. Code § 24.0042) skip "state or federal
+  # holidays", and we count only the actual date of each fixed-date holiday (observed: none).
+  add:
+    # Federal holidays (5 U.S.C. § 6103), most also national holidays in Gov't Code § 662.003(a)
+    - id: new-years-day
+      name: { en: New Year's Day, es: Año Nuevo }
+      date: { month: 1, day: 1, observed: none }
+    - id: mlk-day
+      name: { en: Martin Luther King Jr. Day, es: Día de Martin Luther King Jr. }
+      date: { month: 1, weekday: mon, nth: 3 }
+    - id: presidents-day
+      name: { en: Presidents' Day (Washington's Birthday), es: Día de los Presidentes }
+      date: { month: 2, weekday: mon, nth: 3 }
+    - id: memorial-day
+      name: { en: Memorial Day, es: Día de los Caídos (Memorial Day) }
+      date: { month: 5, weekday: mon, nth: -1 }
+    - id: juneteenth
+      name:
+        {
+          en: Juneteenth (Emancipation Day in Texas),
+          es: Juneteenth (Día de la Emancipación en Texas)
+        }
+      date: { month: 6, day: 19, observed: none }
+    - id: independence-day
+      name: { en: Independence Day, es: Día de la Independencia }
+      date: { month: 7, day: 4, observed: none }
+    - id: labor-day
+      name: { en: Labor Day, es: Día del Trabajo }
+      date: { month: 9, weekday: mon, nth: 1 }
+    - id: columbus-day
+      name:
+        {
+          en: Columbus Day / Indigenous Peoples' Day,
+          es: Día de Colón / Día de los Pueblos Indígenas
+        }
+      date: { month: 10, weekday: mon, nth: 2 }
+    - id: veterans-day
+      name: { en: Veterans Day, es: Día de los Veteranos }
+      date: { month: 11, day: 11, observed: none }
+    - id: thanksgiving
+      name: { en: Thanksgiving Day, es: Día de Acción de Gracias }
+      date: { month: 11, weekday: thu, nth: 4 }
+    - id: christmas
+      name: { en: Christmas Day, es: Navidad }
+      date: { month: 12, day: 25, observed: none }
+    # Texas state holidays, Gov't Code § 662.003(b) (Emancipation Day is listed above with Juneteenth)
+    - id: confederate-heroes-day
+      name: { en: Confederate Heroes Day, es: Día de los Héroes Confederados }
+      date: { month: 1, day: 19, observed: none }
+    - id: texas-independence-day
+      name: { en: Texas Independence Day, es: Día de la Independencia de Texas }
+      date: { month: 3, day: 2, observed: none }
+    - id: san-jacinto-day
+      name: { en: San Jacinto Day, es: Día de San Jacinto }
+      date: { month: 4, day: 21, observed: none }
+    - id: lbj-day
+      name: { en: Lyndon Baines Johnson Day, es: Día de Lyndon Baines Johnson }
+      date: { month: 8, day: 27, observed: none }
+    - id: day-after-thanksgiving
+      name: { en: Day after Thanksgiving, es: Día después de Acción de Gracias }
+      date: { month: 11, weekday: thu, nth: 4, offset_days: 1 }
+    - id: christmas-eve
+      name: { en: Christmas Eve, es: Nochebuena }
+      date: { month: 12, day: 24, observed: none }
+    - id: day-after-christmas
+      name: { en: Day after Christmas, es: Día después de Navidad }
+      date: { month: 12, day: 26, observed: none }
+  note:
+    en: >-
+      This list is used only for Texas eviction deadlines. Under Texas law, weekends and holidays
+      count, but an eviction deadline can't end on a Saturday, Sunday, or state or federal holiday;
+      it moves to the next day that isn't one. The list has the federal holidays and the Texas state
+      holidays in Government Code section 662.003(b). We leave out the optional holidays (Rosh
+      Hashanah, Yom Kippur, Good Friday and César Chávez Day), because it's unclear whether they
+      count, and leaving them out gives the earlier date. For the same reason, when a holiday falls on
+      a weekend we use only the actual date, not a weekday "observed" holiday. Your county's courts
+      may also close on other days, so call the court before you go.
+    es: >-
+      Esta lista se usa solo para los plazos de desalojo en Texas. Según la ley de Texas, los fines de
+      semana y los días feriados cuentan, pero un plazo de desalojo no puede terminar en sábado,
+      domingo ni en un día feriado estatal o federal; pasa al siguiente día que no lo sea. La lista
+      incluye los días feriados federales y los días feriados estatales de Texas de la sección
+      662.003(b) del Código de Gobierno. No incluimos los días feriados opcionales (Rosh Hashaná, Yom
+      Kipur, Viernes Santo y el Día de César Chávez), porque no está claro si cuentan, y al dejarlos
+      fuera se obtiene la fecha más temprana. Por la misma razón, cuando un día feriado cae en fin de
+      semana usamos solo la fecha real, no un día feriado "observado" entre semana. Los tribunales de
+      su condado también pueden cerrar otros días, así que llame al tribunal antes de ir.
+  sources:
+    - label: Tex. Gov't Code § 662.003
+      url: https://statutes.capitol.texas.gov/Docs/GV/htm/GV.662.htm#662.003
+    - label: Tex. Prop. Code § 24.0042
+      url: https://statutes.capitol.texas.gov/Docs/PR/htm/PR.24.htm#24.0042
+    - label: 5 U.S.C. § 6103
+      url: https://www.law.cornell.edu/uscode/text/5/6103
+help:
+  - name: TexasLawHelp.org
+    url: https://texaslawhelp.org/
+    description:
+      en: Free guides and court forms for Texas renters, updated for the 2026 eviction rules, plus a directory of legal aid offices.
+      es: Guías y formularios judiciales gratuitos para inquilinos de Texas, actualizados con las reglas de desalojo de 2026, y un directorio de oficinas de ayuda legal.
+    topics: [eviction, repairs, deposit]
+  - name: Texas RioGrande Legal Aid
+    url: https://www.trla.org/
+    phone: "1-888-988-9996"
+    description:
+      en: Free legal help for people with low incomes in Central, South and West Texas.
+      es: Ayuda legal gratuita para personas de bajos ingresos en el centro, el sur y el oeste de Texas.
+  - name: Lone Star Legal Aid
+    url: https://www.lonestarlegal.org/
+    phone: "1-800-733-8394"
+    description:
+      en: Free legal help for people with low incomes in East and Southeast Texas, including Houston.
+      es: Ayuda legal gratuita para personas de bajos ingresos en el este y el sureste de Texas, incluido Houston.
+  - name: Legal Aid of NorthWest Texas
+    url: https://internet.lanwt.org/
+    phone: "1-888-529-5277"
+    description:
+      en: Free legal help for people with low incomes in North and West Texas, including Dallas and Fort Worth.
+      es: Ayuda legal gratuita para personas de bajos ingresos en el norte y el oeste de Texas, incluidos Dallas y Fort Worth.
+  - name: Texas Tenant Advisor
+    url: https://www.texastenant.org/
+    description:
+      en: Free self-help guides about tenant rights in Texas, such as repairs, deposits and lockouts.
+      es: Guías gratuitas de autoayuda sobre los derechos de los inquilinos en Texas, como reparaciones, depósitos y cambios de cerradura.
+    topics: [repairs, deposit]
+sources:
+  - label: TexasLawHelp.org, Eviction Answer and Defense Guide
+    url: https://texaslawhelp.org/guide/eviction-answer-and-defense-guide
+  - label: Texas Attorney General, Renters' Rights
+    url: https://www.texasattorneygeneral.gov/consumer-protection/home-real-estate-and-travel/renters-rights
+    note:
+      en: May not yet reflect the eviction changes that took effect on January 1, 2026.
+      es: Puede que aún no refleje los cambios en los desalojos que entraron en vigor el 1 de enero de 2026.

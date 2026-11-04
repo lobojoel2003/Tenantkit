@@ -1,0 +1,101 @@
+# yaml-language-server: $schema=../../../../schema/letter.schema.json
+# Texas version of the deposit demand: Prop. Code §§ 92.103, 92.104, 92.107 and 92.109.
+# § 92.107: the landlord doesn't have to refund or itemize until the tenant gives a written forwarding
+# address, so the letter only states a specific deadline date when the address was given by move-out.
+schema_version: 1
+id: deposit-demand
+extends: deposit-demand
+fields:
+  - id: forwarding_address
+    type: select
+    required: true
+    default: this_letter
+    label:
+      en: Did you already give your landlord your forwarding address in writing?
+      es: ¿Ya le dio al arrendador su nueva dirección por escrito?
+    help:
+      en: In Texas, your landlord doesn't have to return your deposit until you give a forwarding address in writing. This letter gives it to them either way.
+      es: En Texas, el arrendador no tiene que devolverle el depósito hasta que usted le dé su nueva dirección por escrito. Esta carta se la da de todas formas.
+    options:
+      - value: this_letter
+        label:
+          en: No, this letter is the first time
+          es: No, esta carta es la primera vez
+      - value: before_move_out
+        label:
+          en: Yes, in writing, before or on the day I moved out
+          es: Sí, por escrito, antes del día en que me mudé o ese mismo día
+      - value: after_move_out
+        label:
+          en: Yes, in writing, after I moved out
+          es: Sí, por escrito, después de mudarme
+  - id: forwarding_address_date
+    type: date
+    required: true
+    show_if: { field: forwarding_address, equals: after_move_out }
+    label:
+      en: When did you give it?
+      es: ¿Cuándo se la dio?
+    help:
+      en: The date you sent or handed it to your landlord.
+      es: La fecha en que se la envió o se la entregó al arrendador.
+params:
+  law:
+    en: |
+      Under Texas Property Code sections 92.103 and 92.104, a landlord must refund a tenant's
+      security deposit on or before the 30th day after the tenant moves out. If you keep any part of
+      it, you must send me the rest with a written, itemized list of all deductions, and you may not
+      deduct for normal wear and tear. Under section 92.107, you do not have to do this until I give you
+      my forwarding address in writing.
+      {{#if forwarding_address == "before_move_out"}}
+      I gave you my forwarding address in writing before I moved out, so your deadline was
+      {{deposit_deadline}}.
+      {{/if}}
+      {{#if forwarding_address == "after_move_out"}}
+      I gave you my forwarding address in writing on {{forwarding_address_date}}, so your 30 days began
+      when you received it.
+      {{/if}}
+      {{#if forwarding_address == "this_letter"}}
+      This letter gives you my forwarding address in writing.
+      {{/if}}
+
+      Under section 92.109, a landlord who does not refund the deposit or provide the itemized list
+      within those 30 days is presumed to have acted in bad faith. A landlord who keeps a deposit in
+      bad faith may be liable for $100, three times the amount wrongfully withheld, and the tenant's
+      reasonable attorney's fees.
+    es: |
+      Según las secciones 92.103 y 92.104 del Código de Propiedad de Texas, el arrendador debe
+      devolver el depósito de garantía del inquilino a más tardar el día 30 después de que el
+      inquilino se muda. Si usted se queda con una parte, debe enviarme el resto con una lista
+      detallada por escrito de todos los descuentos, y no puede descontar por el desgaste normal.
+      Según la sección 92.107, usted no tiene que hacerlo hasta que yo le dé mi nueva dirección por
+      escrito.
+      {{#if forwarding_address == "before_move_out"}}
+      Le di mi nueva dirección por escrito antes de mudarme, así que su plazo venció el
+      {{deposit_deadline}}.
+      {{/if}}
+      {{#if forwarding_address == "after_move_out"}}
+      Le di mi nueva dirección por escrito el {{forwarding_address_date}}, así que sus 30 días
+      empezaron cuando la recibió.
+      {{/if}}
+      {{#if forwarding_address == "this_letter"}}
+      Esta carta le da mi nueva dirección por escrito.
+      {{/if}}
+
+      Según la sección 92.109, se presume que actuó de mala fe el arrendador que no devuelve el
+      depósito ni entrega la lista detallada dentro de esos 30 días. El arrendador que se queda con un
+      depósito de mala fe puede ser responsable de pagar $100, tres veces la cantidad retenida
+      indebidamente y los honorarios razonables del abogado del inquilino.
+computed:
+  deposit_deadline:
+    from: move_out_date
+    deadline: deposit-return
+citations:
+  - label: Tex. Prop. Code § 92.103
+    url: https://statutes.capitol.texas.gov/Docs/PR/htm/PR.92.htm#92.103
+  - label: Tex. Prop. Code § 92.104
+    url: https://statutes.capitol.texas.gov/Docs/PR/htm/PR.92.htm#92.104
+  - label: Tex. Prop. Code § 92.107
+    url: https://statutes.capitol.texas.gov/Docs/PR/htm/PR.92.htm#92.107
+  - label: Tex. Prop. Code § 92.109
+    url: https://statutes.capitol.texas.gov/Docs/PR/htm/PR.92.htm#92.109

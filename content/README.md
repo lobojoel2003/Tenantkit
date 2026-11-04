@@ -80,7 +80,7 @@ second language. Write for them.
 - **Be honest about uncertainty.** If courts disagree, or something depends on
   facts we can't know, say so and point to legal help.
 - **When unsure, pick the safer date for the tenant.** For deadlines the tenant
-  must meet, choose the reading that gives the *earliest* date, and say so in
+  must meet, choose the reading that gives the _earliest_ date, and say so in
   the explanation.
 - **Cite the law.** Every deadline needs at least one `citations` entry that
   links to the official statute or court rule. Prefer the legislature's or
@@ -93,22 +93,22 @@ second language. Write for them.
 ```yaml
 # yaml-language-server: $schema=../../../schema/jurisdiction.schema.json
 schema_version: 1
-id: us-wa                      # country code + state code, lowercase
+id: us-wa # country code + state code, lowercase
 name: { en: Washington, es: Washington }
 short_name: WA
 country: US
-kind: state                    # general | state | county | city
-status: draft                  # draft | reviewed (only a licensed lawyer sets "reviewed")
-last_reviewed: 2026-11-04      # when someone last checked these rules
-reviewed_by: []                # e.g. ["Example Legal Aid Society"]
-maintainers: []                # GitHub usernames who look after this folder
+kind: state # general | state | county | city
+status: draft # draft | reviewed (only a licensed lawyer sets "reviewed")
+last_reviewed: 2026-11-04 # when someone last checked these rules
+reviewed_by: [] # e.g. ["Example Legal Aid Society"]
+maintainers: [] # GitHub usernames who look after this folder
 summary:
   en: One or two sentences about what's covered here.
   es: …
-letters: [repair-request, deposit-demand, payment-plan]   # letters offered here
-holidays:                      # needed if any deadline uses court_days or extend_if_closed
+letters: [repair-request, deposit-demand, payment-plan] # letters offered here
+holidays: # needed if any deadline uses court_days or extend_if_closed
   extends: [us-federal]
-  remove: [columbus-day]       # holidays courts here stay open for
+  remove: [columbus-day] # holidays courts here stay open for
   add:
     - id: native-american-day
       name: { en: Native American Day, es: Día del Indígena Americano }
@@ -117,13 +117,13 @@ holidays:                      # needed if any deadline uses court_days or exten
   sources:
     - label: RCW 1.16.050
       url: https://app.leg.wa.gov/RCW/default.aspx?cite=1.16.050
-help:                          # free legal help, statewide if possible
+help: # free legal help, statewide if possible
   - name: Northwest Justice Project — CLEAR hotline
     url: https://nwjustice.org/get-legal-help
-    phone: "1-888-201-1014"    # quote phone numbers
+    phone: "1-888-201-1014" # quote phone numbers
     description: { en: …, es: … }
-    topics: [eviction]         # optional: eviction | repairs | deposit
-sources: []                    # general guides about tenant law here
+    topics: [eviction] # optional: eviction | repairs | deposit
+sources: [] # general guides about tenant law here
 ```
 
 ## deadlines.yaml
@@ -132,20 +132,20 @@ sources: []                    # general guides about tenant law here
 # yaml-language-server: $schema=../../../schema/deadlines.schema.json
 schema_version: 1
 deadlines:
-  - id: deposit-return                 # unique within the state
-    topic: deposit                     # eviction | repairs | deposit
-    kind: landlord_deadline            # see below
-    urgent: false                      # true shows it first, in red
+  - id: deposit-return # unique within the state
+    topic: deposit # eviction | repairs | deposit
+    kind: landlord_deadline # see below
+    urgent: false # true shows it first, in red
     title: { en: Your landlord must return your deposit, es: … }
     summary: { en: One sentence shown in lists., es: … }
-    trigger: { en: The day you moved out, es: … }   # label for the date the person enters
+    trigger: { en: The day you moved out, es: … } # label for the date the person enters
     period: { amount: 21, unit: calendar_days }
-    extend_if_closed: false            # move a last day that's a weekend/holiday to the next court day
+    extend_if_closed: false # move a last day that's a weekend/holiday to the next court day
     explanation: { en: What the date means, in plain words., es: … }
     if_missed: { en: What happens if the deadline passes., es: … }
-    steps:                             # what to do now, in order
+    steps: # what to do now, in order
       - { en: …, es: … }
-    letters: [deposit-demand]          # letters that help (must be offered in jurisdiction.yaml)
+    letters: [deposit-demand] # letters that help (must be offered in jurisdiction.yaml)
     citations:
       - label: Cal. Civ. Code § 1950.5(g)
         url: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1950.5
@@ -153,21 +153,21 @@ deadlines:
 
 **`kind`** controls how the app words the result:
 
-| kind                | Meaning                                          | Example                      |
-| ------------------- | ------------------------------------------------ | ---------------------------- |
-| `tenant_deadline`   | You must act by this date                        | Respond to an eviction case  |
-| `landlord_deadline` | Your landlord must act by this date              | Return the deposit           |
-| `waiting_period`    | The earliest date something can happen           | Landlord can file in court   |
-| `protection_period` | You are protected until this date                | No retaliation after a complaint |
+| kind                | Meaning                                | Example                          |
+| ------------------- | -------------------------------------- | -------------------------------- |
+| `tenant_deadline`   | You must act by this date              | Respond to an eviction case      |
+| `landlord_deadline` | Your landlord must act by this date    | Return the deposit               |
+| `waiting_period`    | The earliest date something can happen | Landlord can file in court       |
+| `protection_period` | You are protected until this date      | No retaliation after a complaint |
 
 **`period.unit`**:
 
-| unit            | Counts                                                                 |
-| --------------- | ---------------------------------------------------------------------- |
-| `calendar_days` | Every day                                                              |
-| `court_days`    | Only weekdays that aren't holidays in this state's `holidays` list     |
-| `months`        | Calendar months (Jan 31 + 1 month = Feb 28)                            |
-| `hours`         | Rounded up to whole days (24 hours from Monday = Tuesday)              |
+| unit            | Counts                                                             |
+| --------------- | ------------------------------------------------------------------ |
+| `calendar_days` | Every day                                                          |
+| `court_days`    | Only weekdays that aren't holidays in this state's `holidays` list |
+| `months`        | Calendar months (Jan 31 + 1 month = Feb 28)                        |
+| `hours`         | Rounded up to whole days (24 hours from Monday = Tuesday)          |
 
 The day of the event is never counted; the last day is. `extend_if_closed: true`
 moves a last day that falls on a weekend or holiday to the next day that isn't.
@@ -176,19 +176,19 @@ moves a last day that falls on a weekend or holiday to the next day that isn't.
 how court papers were delivered. Add `options`; the first choice is the default:
 
 ```yaml
-    options:
-      id: service
-      question: { en: How did you get the papers?, es: … }
-      choices:
-        - id: personal
-          label: { en: Someone handed them to me, es: … }
-        - id: substituted
-          label: { en: They were left with someone else and mailed, es: … }
-          add_days: 10                 # calendar days added before counting starts
-          note: { en: Why the extra days., es: … }
-        - id: no_heat
-          label: { en: No heat or water, es: … }
-          period: { amount: 24, unit: hours }   # a different period for this choice
+options:
+  id: service
+  question: { en: How did you get the papers?, es: … }
+  choices:
+    - id: personal
+      label: { en: Someone handed them to me, es: … }
+    - id: substituted
+      label: { en: They were left with someone else and mailed, es: … }
+      add_days: 10 # calendar days added before counting starts
+      note: { en: Why the extra days., es: … }
+    - id: no-heat # choice ids use dashes
+      label: { en: No heat or water, es: … }
+      period: { amount: 24, unit: hours } # a different period for this choice
 ```
 
 ## Letters
@@ -212,7 +212,7 @@ params:
 computed:
   deposit_deadline:
     from: move_out_date
-    deadline: deposit-return          # uses the period from deadlines.yaml
+    deadline: deposit-return # uses the period from deadlines.yaml
 citations:
   - label: Cal. Civ. Code § 1950.5
     url: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1950.5
@@ -235,15 +235,15 @@ signature). Field types: `text`, `textarea`, `date`, `money`, `number`, `email`,
 
 ```yaml
 fields:
-  - id: move_out_date          # lowercase_with_underscores
+  - id: move_out_date # lowercase_with_underscores
     type: date
-    section: details           # you | landlord | details | sending (the wizard step)
+    section: details # you | landlord | details | sending (the wizard step)
     required: true
     label: { en: …, es: … }
-    help: { en: …, es: … }     # shown under the question
+    help: { en: …, es: … } # shown under the question
     placeholder: { en: …, es: … }
-    default: today             # dates only; or a select value; or true/false for checkboxes
-    show_if: { field: itemization, equals: disputed }   # only ask when another answer matches
+    default: today # dates only; or a select value; or true/false for checkboxes
+    show_if: { field: itemization, equals: disputed } # only ask when another answer matches
     max_length: 2000
 ```
 
@@ -262,14 +262,14 @@ computed:
 `subject`, `body` and `params` use a small template language. It can only make
 text, never run code.
 
-| Write                                   | Result                                             |
-| --------------------------------------- | -------------------------------------------------- |
+| Write                                   | Result                                                              |
+| --------------------------------------- | ------------------------------------------------------------------- |
 | `{{tenant_name}}`                       | The answer, formatted (dates and money look right in each language) |
-| `{{#if urgent}} … {{/if}}`              | Text shown only when `urgent` is checked or filled in |
-| `{{#if urgent}} … {{else}} … {{/if}}`   | One text or the other                              |
-| `{{#unless has_photos}} … {{/unless}}`  | Shown only when it's *not* checked or filled in    |
-| `{{#if reason == "medical"}} … {{/if}}` | Compare a select answer (also `!=`)                |
-| `{{! note to other volunteers }}`       | A comment, never shown                             |
+| `{{#if urgent}} … {{/if}}`              | Text shown only when `urgent` is checked or filled in               |
+| `{{#if urgent}} … {{else}} … {{/if}}`   | One text or the other                                               |
+| `{{#unless has_photos}} … {{/unless}}`  | Shown only when it's _not_ checked or filled in                     |
+| `{{#if reason == "medical"}} … {{/if}}` | Compare a select answer (also `!=`)                                 |
+| `{{! note to other volunteers }}`       | A comment, never shown                                              |
 
 Names you can use: field ids, `params`, `computed` dates, and `jurisdiction_name`.
 
@@ -291,17 +291,17 @@ Holiday calendars are rules, not lists of dates, so they never go out of date:
 ```yaml
 - id: thanksgiving
   name: { en: Thanksgiving Day, es: Día de Acción de Gracias }
-  date: { month: 11, weekday: thu, nth: 4 }          # nth: 1-5, or -1 for the last
+  date: { month: 11, weekday: thu, nth: 4 } # nth: 1-5, or -1 for the last
 - id: day-after-thanksgiving
   name: { en: Day after Thanksgiving, es: … }
   date: { month: 11, weekday: thu, nth: 4, offset_days: 1 }
 - id: independence-day
   name: { en: Independence Day, es: … }
-  date: { month: 7, day: 4, observed: nearest_weekday }  # Sat→Fri, Sun→Mon (default)
+  date: { month: 7, day: 4, observed: nearest_weekday } # Sat→Fri, Sun→Mon (default)
 - id: juneteenth
   name: { en: Juneteenth, es: … }
   date: { month: 6, day: 19 }
-  since: 2021                                         # first year it applies
+  since: 2021 # first year it applies
 ```
 
 `observed` can be `nearest_weekday` (default), `sunday_to_monday`, or `none`.

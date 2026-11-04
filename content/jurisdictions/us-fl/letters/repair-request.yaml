@@ -1,0 +1,134 @@
+# yaml-language-server: $schema=../../../../schema/letter.schema.json
+# Florida repair request. Fla. Stat. §§ 83.51, 83.60(1)(b), 83.64.
+schema_version: 1
+id: repair-request
+extends: repair-request
+fields:
+  - id: multi_unit
+    type: checkbox
+    section: details
+    label:
+      en: My home is an apartment, condo or other unit, not a single-family house or duplex
+      es: Mi vivienda es un apartamento, condominio u otra unidad, no una casa para una sola familia ni un dúplex
+    help:
+      en: >-
+        For these homes, Florida law also makes your landlord responsible for pest control,
+        locks and keys, garbage removal, and heat, running water and hot water, unless you agreed
+        otherwise in writing.
+      es: >-
+        En estas viviendas, la ley de Florida también hace al arrendador responsable del control
+        de plagas, las cerraduras y llaves, la recolección de basura, y la calefacción, el agua
+        corriente y el agua caliente, a menos que hayan acordado otra cosa por escrito.
+  - id: withhold_notice
+    type: checkbox
+    section: details
+    label:
+      en: Include a 7-day notice that I may withhold rent
+      es: Incluir un aviso de 7 días de que podría retener la renta
+    help:
+      en: >-
+        This is a legal step. Talk to legal aid first. It only applies to problems that break
+        building, housing or health codes, or, where no code applies, problems with the structure
+        or plumbing. If you withhold rent, save every dollar: if your landlord sues, you must
+        deposit it with the court within 5 business days.
+      es: >-
+        Este es un paso legal. Consulte primero con una oficina de ayuda legal. Solo se aplica a
+        problemas que violan los códigos de construcción, vivienda o salud o, donde no haya un
+        código que se aplique, a problemas de la estructura o la plomería. Si retiene la renta,
+        guarde cada dólar: si el arrendador le demanda, debe depositarla en el tribunal dentro de
+        5 días hábiles.
+params:
+  law:
+    en: |
+      Under Florida Statutes section 83.51(1), you must comply with the building, housing and
+      health codes that apply to my home. Where no code applies, you must keep the roof, windows,
+      doors, floors, steps, porches, exterior walls, foundations and other structural parts in good
+      repair, and keep the plumbing in reasonable working order.
+      {{#if multi_unit}}
+      Section 83.51(2) also requires you, unless we agreed otherwise in writing, to provide
+      extermination of rats, mice, roaches, ants, wood-destroying organisms and bedbugs; locks and
+      keys; garbage removal; and working heat in winter, running water and hot water.
+      {{/if}}
+
+      {{#if withhold_notice}}
+      This letter is my written notice under Florida Statutes section 83.60(1)(b). The problems
+      listed above are a material failure to comply with section 83.51(1). If they are not fixed
+      within 7 days after you receive this letter, I intend to withhold rent because of this
+      failure.
+
+      {{/if}}
+      Section 83.64 also says a landlord may not raise the rent, reduce services, or bring or
+      threaten an eviction to retaliate against a tenant who complains in good faith.
+    es: |
+      Según la sección 83.51(1) de los Estatutos de Florida, usted debe cumplir con los códigos de
+      construcción, vivienda y salud que se aplican a mi vivienda. Donde no haya un código que se
+      aplique, debe mantener en buen estado el techo, las ventanas, las puertas, los pisos, las
+      escaleras, los porches, las paredes exteriores, los cimientos y las demás partes de la
+      estructura, y mantener la plomería en condiciones razonables de funcionamiento.
+      {{#if multi_unit}}
+      La sección 83.51(2) también le obliga, a menos que hayamos acordado otra cosa por escrito, a
+      encargarse de exterminar ratas, ratones, cucarachas, hormigas, organismos que destruyen la
+      madera y chinches; a proveer cerraduras y llaves; a recoger la basura; y a mantener en
+      funcionamiento la calefacción en invierno, el agua corriente y el agua caliente.
+      {{/if}}
+
+      {{#if withhold_notice}}
+      Esta carta es mi aviso por escrito según la sección 83.60(1)(b) de los Estatutos de Florida.
+      Los problemas indicados arriba son un incumplimiento importante de la sección 83.51(1). Si no
+      se arreglan dentro de los 7 días después de que usted reciba esta carta, tengo la intención
+      de retener la renta debido a este incumplimiento.
+
+      {{/if}}
+      La sección 83.64 también dice que un arrendador no puede subir la renta, reducir los
+      servicios, ni presentar o amenazar con un desalojo como represalia contra un inquilino que
+      se queja de buena fe.
+computed:
+  # Florida gives landlords 7 days to fix code, structure and plumbing problems after written
+  # notice (§ 83.60(1)(b), § 83.56(1)), so ask for a written answer within 7 days, not 14.
+  respond_by:
+    from: letter_date
+    add: { amount: 7, unit: calendar_days }
+delivery_tips:
+  - en: >-
+      Florida's 7-day clock starts when your landlord receives the letter. Hand-deliver it and ask
+      for a signed, dated copy, or send it by certified mail with a return receipt. Don't rely on a
+      text or email alone.
+    es: >-
+      El plazo de 7 días de Florida empieza cuando el arrendador recibe la carta. Entréguela en
+      mano y pida una copia firmada y con fecha, o envíela por correo certificado con acuse de
+      recibo. No dependa solo de un mensaje de texto o un correo electrónico.
+  - en: >-
+      You can give it to your landlord, the agent named in your lease for notices, the resident
+      manager, or the person you pay rent to.
+    es: >-
+      Puede dársela al arrendador, al agente que su contrato indica para recibir avisos, al
+      administrador que vive en el edificio o a la persona a quien le paga la renta.
+  - en: Keep a copy of the letter and any mailing receipt. Write down the date you sent it.
+    es: Guarde una copia de la carta y cualquier recibo de envío. Anote la fecha en que la envió.
+  - en: Take dated photos or videos of each problem, before and after any repair.
+    es: Tome fotos o videos con fecha de cada problema, antes y después de cualquier reparación.
+  - en: >-
+      Keep paying rent unless legal aid tells you it is safe to withhold. In Florida, withholding
+      is allowed only for code, structure or plumbing problems, only after a written 7-day notice
+      that says you will withhold, and you must save the money: if you are sued, you have only 5
+      business days to deposit it with the court.
+    es: >-
+      Siga pagando la renta, a menos que una oficina de ayuda legal le diga que es seguro
+      retenerla. En Florida, solo se permite retener la renta por problemas de códigos, de la
+      estructura o de la plomería, solo después de un aviso por escrito de 7 días que diga que la
+      retendrá, y debe guardar el dinero: si le demandan, tiene solo 5 días hábiles para
+      depositarlo en el tribunal.
+  - en: >-
+      You can also report code problems to your city or county code enforcement office. Your
+      landlord may not retaliate against you for a good-faith complaint.
+    es: >-
+      También puede reportar problemas de códigos a la oficina de cumplimiento de códigos (code
+      enforcement) de su ciudad o condado. El arrendador no puede tomar represalias contra usted
+      por una queja de buena fe.
+citations:
+  - label: Fla. Stat. § 83.51
+    url: https://www.flsenate.gov/Laws/Statutes/2026/83.51
+  - label: Fla. Stat. § 83.60(1)(b)
+    url: https://www.flsenate.gov/Laws/Statutes/2026/83.60
+  - label: Fla. Stat. § 83.64
+    url: https://www.flsenate.gov/Laws/Statutes/2026/83.64

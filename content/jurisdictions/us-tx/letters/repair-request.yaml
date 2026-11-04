@@ -1,0 +1,75 @@
+# yaml-language-server: $schema=../../../../schema/letter.schema.json
+# Texas version of the repair request: Prop. Code §§ 92.052 and 92.056 (duty to repair, 7 days
+# presumed reasonable) and § 92.331 (retaliation). Never suggest withholding rent: it is not allowed
+# in Texas outside the statute's remedies.
+schema_version: 1
+id: repair-request
+extends: repair-request
+fields:
+  - id: rent_current
+    type: checkbox
+    label:
+      en: I am up to date on my rent
+      es: Estoy al día con mi renta
+    help:
+      en: In Texas, your landlord has to make repairs only if you are not behind on rent when you give notice. If you owe rent, try to pay it before you send this letter.
+      es: En Texas, el arrendador tiene que hacer reparaciones solo si usted no está atrasado con la renta cuando da el aviso. Si debe renta, trate de pagarla antes de enviar esta carta.
+params:
+  law:
+    en: |
+      Under Texas Property Code section 92.052, a landlord must make a diligent effort to repair a
+      condition that materially affects the physical health or safety of an ordinary tenant, once the
+      tenant gives notice to the person or place where rent is normally paid and is not behind on rent.
+      This letter is that notice.
+      {{#if rent_current}}
+      I am up to date on my rent.
+      {{/if}}
+      Under section 92.056, seven days after you receive this notice is presumed to be a reasonable
+      time to make the repairs. Section 92.331 also prohibits a landlord from retaliating against a
+      tenant for six months after a good-faith repair request, for example by filing an eviction case,
+      raising the rent or reducing services.
+    es: |
+      Según la sección 92.052 del Código de Propiedad de Texas, el arrendador debe hacer un esfuerzo
+      diligente para reparar una condición que afecte de manera importante la salud física o la
+      seguridad de un inquilino común, una vez que el inquilino avisa a la persona o al lugar donde
+      normalmente se paga la renta y no está atrasado con la renta. Esta carta es ese aviso.
+      {{#if rent_current}}
+      Estoy al día con mi renta.
+      {{/if}}
+      Según la sección 92.056, se presume que siete días después de que usted reciba este aviso es un
+      plazo razonable para hacer las reparaciones. La sección 92.331 también le prohíbe al arrendador
+      tomar represalias contra un inquilino durante los seis meses siguientes a una solicitud de
+      reparación hecha de buena fe, por ejemplo presentando un caso de desalojo, subiendo la renta o
+      reduciendo los servicios.
+delivery_tips:
+  - en: >-
+      Send this letter by certified mail, return receipt requested, or another mail service with
+      tracking. If you send it any other way, Texas law says you must send a second written notice
+      before your landlord can be held responsible.
+    es: >-
+      Envíe esta carta por correo certificado con acuse de recibo u otro servicio de correo con
+      rastreo. Si la envía de otra forma, la ley de Texas dice que usted debe enviar un segundo aviso
+      por escrito para que el arrendador sea responsable.
+  - en: Send it to the person or place where you normally pay rent, such as the leasing office. If your lease lists a different address for notices, send a copy there too.
+    es: Envíela a la persona o al lugar donde normalmente paga la renta, como la oficina de alquiler. Si su contrato indica otra dirección para avisos, envíe también una copia allí.
+  - en: Stay current on your rent. In Texas, your landlord's duty to repair applies only if you are not behind on rent when you give notice.
+    es: Manténgase al día con la renta. En Texas, la obligación del arrendador de reparar se aplica solo si usted no está atrasado con la renta cuando da el aviso.
+  - en: >-
+      Never withhold rent because of repairs. In Texas, that can lead to an eviction case and cost
+      you your repair rights. Talk to legal aid before you use any other option, such as repair and
+      deduct.
+    es: >-
+      Nunca retenga la renta por las reparaciones. En Texas, eso puede llevar a un caso de desalojo y
+      hacerle perder sus derechos de reparación. Hable con una oficina de ayuda legal antes de usar
+      cualquier otra opción, como hacer la reparación y descontarla de la renta.
+  - en: Keep a copy of the letter and the mailing receipt. Write down the date you sent it, and use the tracking to see the day it arrived.
+    es: Guarde una copia de la carta y el recibo del correo. Anote la fecha en que la envió y use el rastreo para ver el día en que llegó.
+  - en: Take dated photos or videos of each problem, before and after any repair.
+    es: Tome fotos o videos con fecha de cada problema, antes y después de cualquier reparación.
+citations:
+  - label: Tex. Prop. Code § 92.052
+    url: https://statutes.capitol.texas.gov/Docs/PR/htm/PR.92.htm#92.052
+  - label: Tex. Prop. Code § 92.056
+    url: https://statutes.capitol.texas.gov/Docs/PR/htm/PR.92.htm#92.056
+  - label: Tex. Prop. Code § 92.331
+    url: https://statutes.capitol.texas.gov/Docs/PR/htm/PR.92.htm#92.331

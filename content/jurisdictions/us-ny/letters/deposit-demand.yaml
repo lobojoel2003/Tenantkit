@@ -1,0 +1,78 @@
+# yaml-language-server: $schema=../../../../schema/letter.schema.json
+# New York deposit demand. GOL § 7-108(1-a) covers most apartments; rent-stabilized apartments
+# fall under GOL § 7-107, which has no clear 14-day rule, so they get a softer paragraph.
+schema_version: 1
+id: deposit-demand
+extends: deposit-demand
+fields:
+  - id: rent_stabilized
+    type: checkbox
+    section: details
+    label:
+      en: My apartment is rent-stabilized
+      es: Mi apartamento es de renta estabilizada
+    help:
+      en: >-
+        Your lease or renewal lease usually says so. If you're not sure, you can ask the HCR Rent
+        Information Line at (833) 499-0343.
+      es: >-
+        Su contrato o la renovación del contrato normalmente lo dice. Si no está seguro, puede
+        preguntar en la Línea de Información sobre la Renta de HCR al (833) 499-0343.
+params:
+  law:
+    en: |
+      {{#if rent_stabilized}}
+      My apartment is rent-stabilized. Under New York law, including General Obligations Law
+      § 7-107, you must return my security deposit, minus any lawful deductions, within a
+      reasonable time after my tenancy ended.
+      {{else}}
+      Under New York General Obligations Law § 7-108(1-a), you must give me an itemized statement
+      of any part of my deposit you keep, and return the rest, within 14 days after I moved out (by
+      {{deposit_deadline}}). A landlord who does not do both within 14 days loses the right
+      to keep any part of the deposit. A landlord who willfully violates this law may also be liable
+      for punitive damages of up to twice the amount of the deposit.
+      {{/if}}
+    es: |
+      {{#if rent_stabilized}}
+      Mi apartamento es de renta estabilizada. Según la ley de Nueva York, incluido el artículo
+      7-107 de la Ley de Obligaciones Generales (General Obligations Law), usted debe devolverme mi
+      depósito de garantía, menos cualquier descuento permitido por la ley, dentro de un plazo
+      razonable después de que terminó mi contrato.
+      {{else}}
+      Según el artículo 7-108(1-a) de la Ley de Obligaciones Generales (General Obligations Law) de
+      Nueva York, usted debe darme una lista detallada de cualquier parte de mi depósito que se
+      quede, y devolverme el resto, dentro de los 14 días después de que me mudé (a más tardar el
+      {{deposit_deadline}}). Un arrendador que no cumpla con ambas cosas dentro de los
+      14 días pierde el derecho a quedarse con cualquier parte del depósito. Un arrendador que viole
+      esta ley intencionalmente también podría tener que pagar daños punitivos de hasta el doble del
+      depósito.
+      {{/if}}
+computed:
+  deposit_deadline:
+    from: move_out_date
+    deadline: deposit-return
+delivery_tips:
+  - en: Keep a copy of the letter and any mailing receipt. Write down the date you sent it.
+    es: Guarde una copia de la carta y cualquier recibo de envío. Anote la fecha en que la envió.
+  - en: Keep your lease, your move-in and move-out photos, and any list of deductions together. You will need them if you go to small claims court.
+    es: Guarde juntos su contrato, las fotos de cuando se mudó y de cuando se fue, y cualquier lista de descuentos. Los necesitará si va al tribunal de reclamos menores.
+  - en: >-
+      You can also file a free complaint with the New York Attorney General, online or by calling
+      1-800-771-7755.
+    es: >-
+      También puede presentar una queja gratuita ante la Procuraduría General (Attorney General) de
+      Nueva York, por internet o llamando al 1-800-771-7755.
+checklist:
+  - en: Your lease and proof of the deposit you paid (receipt, bank record or lease clause)
+    es: Su contrato y prueba del depósito que pagó (recibo, registro bancario o cláusula del contrato)
+  - en: Photos or video from move-in and move-out
+    es: Fotos o video de cuando se mudó y de cuando se fue
+  - en: Any list of deductions your landlord sent
+    es: Cualquier lista de descuentos que le haya enviado el arrendador
+  - en: Any inspection records, such as the signed move-in condition report or a list from an inspection before you moved out
+    es: Cualquier registro de inspección, como el informe firmado del estado de la vivienda al mudarse o la lista de una inspección antes de irse
+citations:
+  - label: N.Y. Gen. Oblig. Law § 7-108(1-a)
+    url: https://www.nysenate.gov/legislation/laws/GOB/7-108
+  - label: N.Y. Gen. Oblig. Law § 7-107
+    url: https://www.nysenate.gov/legislation/laws/GOB/7-107

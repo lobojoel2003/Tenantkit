@@ -1,0 +1,494 @@
+# yaml-language-server: $schema=../../../schema/deadlines.schema.json
+# Texas deadlines. Eviction rules are for cases filed on or after January 1, 2026 (SB 38, 89th Leg.,
+# and Texas Rule of Civil Procedure 510 as rewritten by Misc. Docket Nos. 25-9096 and 25-9105).
+# Day counting for eviction periods follows Prop. Code § 24.0042: weekends and holidays count, but a
+# period can't end on a Saturday, Sunday, or state or federal holiday (see holidays in jurisdiction.yaml).
+schema_version: 1
+deadlines:
+  - id: notice-to-vacate
+    topic: eviction
+    kind: waiting_period
+    urgent: true
+    title:
+      en: "Notice to vacate: when your landlord can file an eviction case"
+      es: "Aviso para desocupar: cuándo el arrendador puede presentar un caso de desalojo"
+    summary:
+      en: Your landlord can't file an eviction case until your notice period ends, usually 3 days unless your lease says something different.
+      es: El arrendador no puede presentar un caso de desalojo hasta que termine el plazo de su aviso, que suele ser de 3 días, a menos que su contrato diga algo diferente.
+    trigger:
+      en: The day you got the notice, or the day it was mailed if that was earlier
+      es: El día en que recibió el aviso, o el día en que se envió por correo si fue antes
+    period: { amount: 3, unit: calendar_days }
+    extend_if_closed: true
+    options:
+      id: lease_notice_period
+      question:
+        en: How many days does your lease give you after a notice to vacate?
+        es: ¿Cuántos días le da su contrato después de un aviso para desocupar?
+      choices:
+        - id: three-days
+          label:
+            en: My lease doesn't say, or I don't have a written lease (3 days)
+            es: Mi contrato no lo dice, o no tengo contrato por escrito (3 días)
+        - id: one-day
+          label:
+            en: 1 day (24 hours)
+            es: 1 día (24 horas)
+          period: { amount: 1, unit: calendar_days }
+          note:
+            en: Many Texas leases give only 1 day. The period still can't end on a weekend or holiday.
+            es: Muchos contratos en Texas dan solo 1 día. Aun así, el plazo no puede terminar en fin de semana ni en día feriado.
+        - id: two-days
+          label:
+            en: 2 days
+            es: 2 días
+          period: { amount: 2, unit: calendar_days }
+        - id: longer
+          label:
+            en: More than 3 days
+            es: Más de 3 días
+          note:
+            en: Your landlord must wait the number of days in your lease. The app still shows the 3-day date, the earliest one, so count the days in your lease too.
+            es: El arrendador debe esperar los días que dice su contrato. La aplicación sigue mostrando la fecha de 3 días, la más temprana, así que cuente también los días de su contrato.
+    explanation:
+      en: >-
+        Before filing an eviction case, your landlord must give you a written notice to vacate. You get
+        3 days unless your lease sets a shorter or longer period, so check your lease. Weekends and
+        holidays count, but the period can't end on a Saturday, Sunday, or state or federal holiday. If
+        your landlord wants you out only for unpaid rent and you weren't late before the month of the
+        notice, it must be a "notice to pay rent or vacate": you can pay all the rent you owe before
+        the period ends and stay. Courts disagree about what "late before" means (earlier in your lease
+        or only the month before), so if you can pay in full, do it before the period ends. If the
+        notice was mailed, it's unclear whether the time starts when it was mailed or when you got it;
+        the app counts from the date you enter, so enter the earlier date if you're not sure. The date
+        shown is the last day of the notice period; the earliest your landlord can file is the next day.
+      es: >-
+        Antes de presentar un caso de desalojo, el arrendador debe darle un aviso para desocupar por
+        escrito. Usted tiene 3 días, a menos que su contrato fije un plazo más corto o más largo, así
+        que revise su contrato. Los fines de semana y los días feriados cuentan, pero el plazo no puede
+        terminar en sábado, domingo ni en un día feriado estatal o federal. Si el arrendador quiere que
+        se vaya solo por renta sin pagar y usted no se había atrasado antes del mes del aviso, este debe
+        ser un "aviso para pagar la renta o desocupar": usted puede pagar toda la renta que debe antes
+        de que termine el plazo y quedarse. Los tribunales no están de acuerdo sobre qué significa
+        "atrasarse antes" (en cualquier momento de su contrato o solo el mes anterior), así que si puede
+        pagar todo, hágalo antes de que termine el plazo. Si el aviso llegó por correo, no está claro si
+        el plazo empieza cuando se envió o cuando usted lo recibió; la aplicación cuenta desde la fecha
+        que usted escriba, así que escriba la fecha más temprana si no está seguro. La fecha que se
+        muestra es el último día del plazo del aviso; lo más pronto que el arrendador puede presentar
+        el caso es el día siguiente.
+    if_missed:
+      en: >-
+        Once the period ends, your landlord can file an eviction case in justice court. You'll get
+        court papers (a citation) with a trial date, 10 to 21 days after the case is filed. You don't
+        have to file a written answer, but you must go to the trial, or you can lose by default. A
+        notice that was too short or delivered the wrong way, or a plain notice to vacate when you had
+        the right to pay, can be a defense, so tell the judge.
+      es: >-
+        Cuando termina el plazo, el arrendador puede presentar un caso de desalojo en el tribunal del
+        juez de paz (justice court). Usted recibirá documentos del tribunal (un citatorio, o citation)
+        con la fecha del juicio, de 10 a 21 días después de que se presente el caso. No tiene que
+        presentar una respuesta por escrito, pero sí tiene que ir al juicio, o puede perder por no
+        presentarse. Un aviso con un plazo demasiado corto o entregado de forma incorrecta, o un simple
+        aviso para desocupar cuando usted tenía derecho a pagar, puede servirle de defensa, así que
+        dígaselo al juez.
+    steps:
+      - en: >-
+          Read the notice and your lease. Write down the date you got the notice and how it came. The
+          allowed ways are: by mail (including certified mail or a delivery service); left inside your
+          home where you would see it; handed to you or to someone at your home who is 16 or older; or
+          by email or other electronic means, only if you agreed to that in writing. Taping it to the
+          outside of your door no longer counts, unless you actually got it.
+        es: >-
+          Lea el aviso y su contrato. Anote la fecha en que recibió el aviso y cómo le llegó. Las
+          formas permitidas son: por correo (incluido el correo certificado o un servicio de entrega);
+          dejado dentro de su vivienda en un lugar donde usted lo vea; entregado en mano a usted o a
+          alguien de 16 años o más en su vivienda; o por correo electrónico u otro medio electrónico,
+          solo si usted lo aceptó por escrito. Pegarlo por fuera de su puerta ya no cuenta, a menos que
+          usted de verdad lo haya recibido.
+      - en: >-
+          If the notice is only about unpaid rent and you can pay, pay all the rent you owe, plus any
+          reasonable late fees your lease requires, before the period ends. Get a receipt. If your
+          landlord refuses to take it, write down when and how you tried to pay.
+        es: >-
+          Si el aviso es solo por renta sin pagar y usted puede pagar, pague toda la renta que debe,
+          más los cargos razonables por pago atrasado que exija su contrato, antes de que termine el
+          plazo. Pida un recibo. Si el arrendador no acepta el pago, anote cuándo y cómo intentó pagar.
+      - en: >-
+          If you live in public housing, get Section 8 or other federal rent help, or your landlord has
+          a federally backed mortgage, federal law (the CARES Act or HUD rules) may require 30 days'
+          notice. Texas law now says your landlord can file after the Texas notice period but can't have
+          you removed until the 30 days have passed, while TexasLawHelp says the landlord must wait 30
+          days before filing. Whether these federal rules still apply is also disputed, so ask legal aid.
+        es: >-
+          Si vive en vivienda pública, recibe ayuda de la Sección 8 u otra ayuda federal para la renta,
+          o el arrendador tiene una hipoteca respaldada por el gobierno federal, la ley federal (la Ley
+          CARES o las reglas de HUD) podría exigir un aviso de 30 días. La ley de Texas ahora dice que
+          el arrendador puede presentar el caso después del plazo del aviso de Texas, pero no puede
+          hacer que lo saquen hasta que pasen los 30 días, mientras que TexasLawHelp dice que el
+          arrendador debe esperar 30 días antes de presentar el caso. También se discute si estas reglas
+          federales siguen vigentes, así que consulte con una oficina de ayuda legal.
+      - en: Call legal aid right away. A notice is not an eviction. Only a judge can order you to move out.
+        es: Llame enseguida a una oficina de ayuda legal. Un aviso no es un desalojo. Solo un juez puede ordenarle que se mude.
+    letters: [payment-plan]
+    citations:
+      - label: Tex. Prop. Code § 24.005
+        url: https://statutes.capitol.texas.gov/Docs/PR/htm/PR.24.htm#24.005
+      - label: Tex. Prop. Code § 24.0042
+        url: https://statutes.capitol.texas.gov/Docs/PR/htm/PR.24.htm#24.0042
+      - label: SB 38, 89th Leg., R.S. (2025), enrolled text
+        url: https://capitol.texas.gov/tlodocs/89R/billtext/html/SB00038F.htm
+      - label: TexasLawHelp.org, Right to pay late rent
+        url: https://texaslawhelp.org/article/right-to-pay-late-rent
+        note:
+          en: Plain-language guide from Texas legal aid groups.
+          es: Guía en lenguaje sencillo de grupos de ayuda legal de Texas.
+      - label: 15 U.S.C. § 9058(c) (CARES Act 30-day notice)
+        url: https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title15-section9058
+      - label: 24 CFR 966.4 (public housing lease terms)
+        url: https://www.ecfr.gov/current/title-24/subtitle-B/chapter-IX/part-966/subpart-A/section-966.4
+      - label: 24 CFR part 247 (subsidized housing evictions)
+        url: https://www.ecfr.gov/current/title-24/subtitle-B/chapter-II/subchapter-B/part-247
+
+  - id: eviction-appeal
+    topic: eviction
+    kind: tenant_deadline
+    urgent: true
+    title:
+      en: Appeal an eviction judgment
+      es: Apelar un fallo de desalojo
+    summary:
+      en: You have 5 days after the judge signs the judgment to appeal it to county court.
+      es: Tiene 5 días después de que el juez firma el fallo para apelarlo ante el tribunal del condado.
+    trigger:
+      en: The day the judge signed the judgment (if you're not sure, use the trial date)
+      es: El día en que el juez firmó el fallo (si no está seguro, use la fecha del juicio)
+    period: { amount: 5, unit: calendar_days }
+    extend_if_closed: true
+    explanation:
+      en: >-
+        To appeal, you must file at the justice court within 5 days after the judge signs the judgment,
+        even if you find out about it later. Weekends and holidays count, but if day 5 is a Saturday,
+        Sunday, or state or federal holiday, the deadline moves to the next day that isn't. You must
+        file an appeal bond, a cash deposit, or, if you can't pay, a Statement of Inability to Afford
+        Payment of Court Costs, along with a sworn Verified Notice of Eviction Appeal saying you believe
+        you have a real defense and aren't appealing just to delay. Then, within 5 days after you
+        appeal, you must pay one rental period's rent into the court registry, and keep paying every
+        rental period while the appeal goes on. These rules apply to cases filed on or after January 1,
+        2026.
+      es: >-
+        Para apelar, debe presentar la apelación en el tribunal del juez de paz dentro de los 5 días
+        después de que el juez firma el fallo, aunque usted se entere después. Los fines de semana y
+        los días feriados cuentan, pero si el día 5 es sábado, domingo o un día feriado estatal o
+        federal, el plazo pasa al siguiente día que no lo sea. Debe presentar una fianza de apelación,
+        un depósito en efectivo o, si no puede pagar, una Declaración de incapacidad para pagar los
+        costos judiciales (Statement of Inability to Afford Payment of Court Costs), junto con un Aviso
+        verificado de apelación de desalojo (Verified Notice of Eviction Appeal), bajo juramento, en el
+        que dice que cree que tiene una defensa válida y que no apela solo para ganar tiempo. Después,
+        dentro de los 5 días siguientes a su apelación, debe depositar la renta de un período en el
+        registro del tribunal, y seguir pagando cada período de renta mientras dure la apelación. Estas
+        reglas se aplican a los casos presentados a partir del 1 de enero de 2026.
+    if_missed:
+      en: >-
+        If you don't appeal in time, the judgment stands and your landlord can ask for a writ of
+        possession. It can't be issued before the 6th day after the judgment. Once it's served, a
+        constable or sheriff can remove you and your belongings. Contact legal aid right away.
+      es: >-
+        Si no apela a tiempo, el fallo queda firme y el arrendador puede pedir una orden de posesión
+        (writ of possession). No se puede emitir antes del sexto día después del fallo. Una vez
+        entregada, un alguacil (constable) o el sheriff puede sacarlo a usted y sus pertenencias.
+        Comuníquese enseguida con una oficina de ayuda legal.
+    steps:
+      - en: Go to the justice court that decided your case right away and ask for the appeal forms. TexasLawHelp.org also has them. Call legal aid if you can.
+        es: Vaya enseguida al tribunal del juez de paz que decidió su caso y pida los formularios de apelación. TexasLawHelp.org también los tiene. Llame a una oficina de ayuda legal si puede.
+      - en: Within the 5 days, file a bond, a cash deposit, or a Statement of Inability to Afford Payment of Court Costs, plus the Verified Notice of Eviction Appeal. The judgment says the bond amount.
+        es: Dentro de los 5 días, presente una fianza, un depósito en efectivo o una Declaración de incapacidad para pagar los costos judiciales, además del Aviso verificado de apelación de desalojo. El fallo dice el monto de la fianza.
+      - en: >-
+          Within 5 days after you appeal, pay the rent amount stated in the judgment into the court
+          registry, and pay it again every rental period until the appeal ends. If you miss a payment,
+          your landlord can get a writ of possession without a hearing.
+        es: >-
+          Dentro de los 5 días después de apelar, deposite en el registro del tribunal la renta que
+          indica el fallo, y vuelva a pagarla cada período de renta hasta que termine la apelación. Si
+          no hace un pago, el arrendador puede obtener una orden de posesión sin audiencia.
+      - en: >-
+          Case not decided yet? You don't have to file a written answer, but you must go to the trial on
+          the date in your court papers (the citation). Trial is set 10 to 21 days after your landlord
+          files, and at least 4 days after you were served. If you later appeal without having filed a
+          written answer, you may need to file one in county court within 8 days after your case gets
+          there.
+        es: >-
+          ¿Su caso aún no se ha decidido? No tiene que presentar una respuesta por escrito, pero sí
+          tiene que ir al juicio en la fecha que indican los documentos del tribunal (el citatorio). El
+          juicio se fija de 10 a 21 días después de que el arrendador presenta el caso, y al menos 4
+          días después de que a usted le entregaron los documentos. Si después apela sin haber
+          presentado una respuesta por escrito, puede que tenga que presentar una en el tribunal del
+          condado dentro de los 8 días después de que su caso llegue allí.
+    letters: []
+    citations:
+      - label: Tex. Prop. Code § 24.0052
+        url: https://statutes.capitol.texas.gov/Docs/PR/htm/PR.24.htm#24.0052
+      - label: Tex. Prop. Code §§ 24.0053–24.0054
+        url: https://statutes.capitol.texas.gov/Docs/PR/htm/PR.24.htm#24.0053
+      - label: Tex. Prop. Code § 24.0042
+        url: https://statutes.capitol.texas.gov/Docs/PR/htm/PR.24.htm#24.0042
+      - label: Tex. R. Civ. P. 510 (2026), Misc. Docket No. 25-9105
+        url: https://www.txcourts.gov/media/1461822/259105.pdf
+      - label: TexasLawHelp.org, Appealing an eviction
+        url: https://texaslawhelp.org/article/appealing-an-eviction
+        note:
+          en: Plain-language guide with the appeal forms.
+          es: Guía en lenguaje sencillo con los formularios de apelación.
+
+  - id: set-aside-default
+    topic: eviction
+    kind: tenant_deadline
+    urgent: true
+    title:
+      en: Ask the court to set aside a default judgment
+      es: Pedir al tribunal que anule un fallo en rebeldía
+    summary:
+      en: If you missed your eviction trial and lost by default, you can ask the justice court to set the judgment aside within 5 days after the notice of judgment was sent.
+      es: Si no fue a su juicio de desalojo y perdió por no presentarse, puede pedirle al tribunal del juez de paz que anule el fallo dentro de los 5 días después de que se envió el aviso del fallo.
+    trigger:
+      en: The date on the notice of judgment, the day it was sent (if you're not sure, use the date the judgment was signed)
+      es: La fecha del aviso del fallo, el día en que se envió (si no está seguro, use la fecha en que se firmó el fallo)
+    period: { amount: 5, unit: calendar_days }
+    extend_if_closed: true
+    explanation:
+      en: >-
+        If you didn't go to your trial and the judge ruled against you by default, you can file a motion
+        to set aside the default judgment. You must file it within 5 days after the court sent the
+        notice of the judgment, not after you got it, so use the date on the notice. The judge can set
+        the judgment aside for good cause and set a new trial; if the judge hasn't ruled by the 21st
+        day after signing the judgment, the motion is denied automatically. This rule is new in 2026
+        and some details may still be unsettled. Filing it does not give you more time to appeal: the
+        5-day appeal deadline still runs from the day the judge signed the judgment, so appeal too if
+        you can.
+      es: >-
+        Si no fue a su juicio y el juez falló en su contra por no presentarse, puede presentar una
+        moción para anular el fallo en rebeldía. Debe presentarla dentro de los 5 días después de que
+        el tribunal envió el aviso del fallo, no después de que usted lo recibió, así que use la fecha
+        del aviso. El juez puede anular el fallo si hay una buena razón y fijar un nuevo juicio; si el
+        juez no ha decidido para el día 21 después de firmar el fallo, la moción queda negada
+        automáticamente. Esta regla es nueva en 2026 y puede que algunos detalles aún no estén claros.
+        Presentarla no le da más tiempo para apelar: el plazo de 5 días para apelar sigue contando
+        desde el día en que el juez firmó el fallo, así que apele también si puede.
+    if_missed:
+      en: >-
+        You can no longer ask the justice court to set aside the default judgment. You may still be
+        able to appeal if the 5-day appeal deadline hasn't passed, so contact legal aid right away.
+      es: >-
+        Ya no puede pedirle al tribunal del juez de paz que anule el fallo en rebeldía. Es posible que
+        aún pueda apelar si no ha pasado el plazo de 5 días para apelar, así que comuníquese enseguida
+        con una oficina de ayuda legal.
+    steps:
+      - en: Check both deadlines today. The appeal deadline (5 days after the judgment was signed) may come before this one.
+        es: Revise hoy los dos plazos. El plazo para apelar (5 días después de que se firmó el fallo) puede vencer antes que este.
+      - en: >-
+          File a written motion to set aside the default judgment at the justice court. Explain why you
+          missed the trial (for example, you never got the court papers, or you had a medical
+          emergency) and attach any proof.
+        es: >-
+          Presente en el tribunal del juez de paz una moción por escrito para anular el fallo en
+          rebeldía. Explique por qué no fue al juicio (por ejemplo, nunca recibió los documentos del
+          tribunal o tuvo una emergencia médica) y adjunte cualquier prueba.
+      - en: To be safe, also file an appeal within 5 days after the judgment was signed. The motion does not stop the appeal deadline.
+        es: Para estar seguro, presente también una apelación dentro de los 5 días después de que se firmó el fallo. La moción no detiene el plazo para apelar.
+      - en: Get help from legal aid. TexasLawHelp.org explains how to ask to set aside a default judgment.
+        es: Pida ayuda a una oficina de ayuda legal. TexasLawHelp.org explica cómo pedir que se anule un fallo en rebeldía.
+    letters: []
+    citations:
+      - label: Tex. R. Civ. P. 510 (2026), Misc. Docket No. 25-9105
+        url: https://www.txcourts.gov/media/1461822/259105.pdf
+      - label: Tex. Prop. Code § 24.0042
+        url: https://statutes.capitol.texas.gov/Docs/PR/htm/PR.24.htm#24.0042
+      - label: TexasLawHelp.org, Setting aside a default eviction judgment
+        url: https://texaslawhelp.org/article/setting-aside-a-default-eviction-judgment
+        note:
+          en: Plain-language guide from Texas legal aid groups.
+          es: Guía en lenguaje sencillo de grupos de ayuda legal de Texas.
+
+  - id: deposit-return
+    topic: deposit
+    kind: landlord_deadline
+    urgent: false
+    title:
+      en: Your landlord must return your deposit
+      es: El arrendador debe devolverle su depósito
+    summary:
+      en: Your landlord has 30 days after you move out to refund your deposit, with an itemized list of any deductions.
+      es: El arrendador tiene 30 días después de que usted se muda para devolverle el depósito, con una lista detallada de cualquier descuento.
+    trigger:
+      en: The day you moved out, or the day you gave your forwarding address in writing if that was later
+      es: El día en que se mudó, o el día en que dio su nueva dirección por escrito si fue después
+    period: { amount: 30, unit: calendar_days }
+    extend_if_closed: false
+    explanation:
+      en: >-
+        Your landlord must refund your deposit within 30 days after you move out. If they keep any of
+        it, they must send the rest with a written, itemized list of the deductions, and they can't
+        charge for normal wear and tear. Your landlord doesn't have to do this until you give them your
+        forwarding address in writing, so in practice the 30 days start on the later of the day you move out
+        and the day you give your address. If your landlord misses the 30 days, the law presumes they
+        acted in bad faith, and a landlord who keeps a deposit in bad faith may owe you $100, three
+        times the amount wrongfully withheld, and your attorney's fees.
+      es: >-
+        El arrendador debe devolverle el depósito dentro de los 30 días después de que usted se muda.
+        Si se queda con una parte, debe enviarle el resto con una lista detallada por escrito de los
+        descuentos, y no puede cobrarle por el desgaste normal. El arrendador no tiene que hacerlo
+        hasta que usted le dé su nueva dirección por escrito, así que en la práctica los 30 días empiezan
+        en la fecha más tardía entre el día en que se muda y el día en que da su dirección. Si el
+        arrendador no cumple con los 30 días, la ley presume que actuó de mala fe, y un arrendador que
+        se queda con un depósito de mala fe podría tener que pagarle $100, tres veces la cantidad
+        retenida indebidamente y los honorarios de su abogado.
+    if_missed:
+      en: >-
+        Send a demand letter. If that doesn't work, you can file a case in justice court (small claims)
+        for your deposit and the penalties. Your landlord has to prove that keeping the money was
+        reasonable.
+      es: >-
+        Envíe una carta de reclamación. Si eso no funciona, puede presentar un caso en el tribunal del
+        juez de paz (reclamos menores) para pedir su depósito y las multas. El arrendador tiene que
+        probar que quedarse con el dinero fue razonable.
+    steps:
+      - en: Give your landlord your forwarding address in writing. The deposit letter does this. Keep a copy.
+        es: Dele al arrendador su nueva dirección por escrito. La carta sobre el depósito lo hace. Guarde una copia.
+      - en: Take dated photos or video of the home when you move out, and return all the keys.
+        es: Tome fotos o video con fecha de la vivienda cuando se mude, y devuelva todas las llaves.
+      - en: Don't skip your last month's rent to use up the deposit. In Texas, that can make you liable for three times the rent you held back, plus attorney's fees.
+        es: No deje de pagar la renta del último mes para usar el depósito. En Texas, eso puede hacer que usted tenga que pagar tres veces la renta que retuvo, más honorarios de abogado.
+      - en: If 30 days pass with no refund or list, send the deposit letter, then consider filing in justice court.
+        es: Si pasan 30 días sin devolución ni lista, envíe la carta sobre el depósito y después considere presentar un caso en el tribunal del juez de paz.
+    letters: [deposit-demand]
+    citations:
+      - label: Tex. Prop. Code § 92.103
+        url: https://statutes.capitol.texas.gov/Docs/PR/htm/PR.92.htm#92.103
+      - label: Tex. Prop. Code § 92.104
+        url: https://statutes.capitol.texas.gov/Docs/PR/htm/PR.92.htm#92.104
+      - label: Tex. Prop. Code § 92.107
+        url: https://statutes.capitol.texas.gov/Docs/PR/htm/PR.92.htm#92.107
+      - label: Tex. Prop. Code § 92.109
+        url: https://statutes.capitol.texas.gov/Docs/PR/htm/PR.92.htm#92.109
+
+  - id: repair-reasonable-time
+    topic: repairs
+    kind: landlord_deadline
+    urgent: false
+    title:
+      en: Your landlord should make repairs within a reasonable time
+      es: El arrendador debe hacer las reparaciones en un plazo razonable
+    summary:
+      en: For a problem that affects your health or safety, the law presumes 7 days after your landlord gets your notice is a reasonable time to fix it.
+      es: Para un problema que afecta su salud o seguridad, la ley presume que 7 días después de que el arrendador recibe su aviso es un plazo razonable para arreglarlo.
+    trigger:
+      en: The day your landlord got your repair notice
+      es: El día en que el arrendador recibió su aviso de reparación
+    period: { amount: 7, unit: calendar_days }
+    extend_if_closed: false
+    explanation:
+      en: >-
+        Your landlord must make a diligent effort to fix a problem that materially affects the physical
+        health or safety of an ordinary tenant, unless you, your household or a guest caused it. This
+        applies once you give notice to the person or place where you normally pay rent, and only if
+        you are not behind on rent when you give it. The law presumes 7 days after your landlord gets
+        the notice is a reasonable time, but it can be more or less depending on how serious the
+        problem is and whether workers and parts are available. Before your landlord can be held
+        responsible, you must also send a second written notice, unless you sent the first one by
+        certified mail, registered mail, or another mail service with tracking.
+      es: >-
+        El arrendador debe hacer un esfuerzo diligente para arreglar un problema que afecta de manera
+        importante la salud física o la seguridad de un inquilino común, a menos que usted, alguien de
+        su hogar o un invitado lo haya causado. Esto se aplica una vez que usted avisa a la persona o
+        al lugar donde normalmente paga la renta, y solo si no está atrasado con la renta cuando da el
+        aviso. La ley presume que 7 días después de que el arrendador recibe el aviso es un plazo
+        razonable, pero puede ser más o menos según lo grave que sea el problema y si hay trabajadores
+        y materiales disponibles. Para que el arrendador sea responsable, usted también debe enviar un
+        segundo aviso por escrito, a menos que haya enviado el primero por correo certificado, correo
+        registrado u otro servicio de correo con rastreo.
+    if_missed:
+      en: >-
+        If your landlord hasn't made a diligent effort after a reasonable time, you may be able to end
+        your lease, make the repair and deduct the cost from your rent (only in some situations), or
+        ask a justice court to order the repair, lower your rent and award damages. These options have
+        strict rules, so talk to legal aid before you use one.
+      es: >-
+        Si el arrendador no ha hecho un esfuerzo diligente después de un plazo razonable, es posible
+        que usted pueda terminar su contrato, hacer la reparación y descontar el costo de la renta
+        (solo en algunos casos), o pedirle a un tribunal del juez de paz que ordene la reparación, baje
+        su renta y le pague daños. Estas opciones tienen reglas estrictas, así que hable con una
+        oficina de ayuda legal antes de usar una.
+    steps:
+      - en: Send your repair request in writing to the place where you pay rent, by certified mail with a return receipt or another mail service with tracking. Keep the receipt.
+        es: Envíe su solicitud de reparación por escrito al lugar donde paga la renta, por correo certificado con acuse de recibo u otro servicio de correo con rastreo. Guarde el recibo.
+      - en: Keep paying your rent on time. Never withhold rent because of repairs. In Texas, that can lead to an eviction and cost you your repair rights.
+        es: Siga pagando la renta a tiempo. Nunca retenga la renta por las reparaciones. En Texas, eso puede llevar a un desalojo y hacerle perder sus derechos de reparación.
+      - en: If you didn't use certified or tracked mail, send a second written notice after a reasonable time.
+        es: Si no usó correo certificado o con rastreo, envíe un segundo aviso por escrito después de un plazo razonable.
+      - en: Take dated photos, keep copies of everything, and call legal aid if the problem isn't fixed.
+        es: Tome fotos con fecha, guarde copias de todo y llame a una oficina de ayuda legal si no arreglan el problema.
+    letters: [repair-request]
+    citations:
+      - label: Tex. Prop. Code § 92.052
+        url: https://statutes.capitol.texas.gov/Docs/PR/htm/PR.92.htm#92.052
+      - label: Tex. Prop. Code § 92.056
+        url: https://statutes.capitol.texas.gov/Docs/PR/htm/PR.92.htm#92.056
+
+  - id: retaliation-protection
+    topic: repairs
+    kind: protection_period
+    urgent: false
+    title:
+      en: Protection from retaliation after a repair request or complaint
+      es: Protección contra represalias después de pedir reparaciones o quejarse
+    summary:
+      en: For 6 months after you ask for repairs or make a complaint in good faith, your landlord generally can't retaliate against you.
+      es: Durante 6 meses después de que usted pide reparaciones o presenta una queja de buena fe, por lo general el arrendador no puede tomar represalias contra usted.
+    trigger:
+      en: The day you asked for repairs or made the complaint
+      es: El día en que pidió las reparaciones o presentó la queja
+    period: { amount: 6, unit: months }
+    extend_if_closed: false
+    explanation:
+      en: >-
+        For 6 months after you, in good faith, ask for repairs, complain to a government office about
+        building or health code problems, use a right under your lease or the law, or join a tenant
+        group, your landlord can't retaliate. Retaliation includes filing an eviction, raising your
+        rent, cutting services, ending your lease, or taking away your use of the home. There are
+        exceptions: your landlord can still act if, for example, you're behind on rent, you damaged the
+        property on purpose, you threatened someone, or you seriously broke the lease. We couldn't
+        recheck every detail of this law for 2026, so confirm it with legal aid.
+      es: >-
+        Durante 6 meses después de que usted, de buena fe, pide reparaciones, se queja ante una oficina
+        del gobierno por problemas de construcción o de salud, usa un derecho de su contrato o de la
+        ley, o se une a un grupo de inquilinos, el arrendador no puede tomar represalias. Las
+        represalias incluyen presentar un desalojo, subirle la renta, cortarle servicios, terminar su
+        contrato o quitarle el uso de la vivienda. Hay excepciones: el arrendador todavía puede actuar
+        si, por ejemplo, usted está atrasado con la renta, dañó la propiedad a propósito, amenazó a
+        alguien o violó gravemente el contrato. No pudimos volver a revisar todos los detalles de esta
+        ley para 2026, así que confírmelos con una oficina de ayuda legal.
+    if_missed:
+      en: >-
+        After 6 months this protection ends, but your landlord still needs a court order to evict you.
+        If your landlord retaliates within the 6 months, you can raise it as a defense in an eviction
+        case, and a court may award you one month's rent plus $500, your actual damages, court costs
+        and attorney's fees.
+      es: >-
+        Después de 6 meses esta protección termina, pero el arrendador todavía necesita una orden del
+        tribunal para desalojarlo. Si el arrendador toma represalias dentro de los 6 meses, usted puede
+        usarlo como defensa en un caso de desalojo, y un tribunal podría otorgarle una renta mensual
+        más $500, sus daños reales, los costos judiciales y los honorarios de abogado.
+    steps:
+      - en: Keep proof of the date you asked for repairs or complained, such as a copy of the letter, the mail receipt, an email or a complaint number.
+        es: Guarde una prueba de la fecha en que pidió reparaciones o se quejó, como una copia de la carta, el recibo del correo, un correo electrónico o un número de queja.
+      - en: Keep paying rent on time and follow your lease, so the exceptions don't apply.
+        es: Siga pagando la renta a tiempo y cumpla su contrato, para que no se apliquen las excepciones.
+      - en: If your landlord files an eviction, raises the rent or cuts services within 6 months, write down what happened and contact legal aid. Tell the judge in any eviction case.
+        es: Si el arrendador presenta un desalojo, sube la renta o corta servicios dentro de los 6 meses, anote lo que pasó y comuníquese con una oficina de ayuda legal. Dígaselo al juez en cualquier caso de desalojo.
+    letters: [repair-request]
+    citations:
+      - label: Tex. Prop. Code § 92.331
+        url: https://statutes.capitol.texas.gov/Docs/PR/htm/PR.92.htm#92.331
+      - label: Tex. Prop. Code § 92.332
+        url: https://statutes.capitol.texas.gov/Docs/PR/htm/PR.92.htm#92.332
+      - label: Tex. Prop. Code § 92.333
+        url: https://statutes.capitol.texas.gov/Docs/PR/htm/PR.92.htm#92.333

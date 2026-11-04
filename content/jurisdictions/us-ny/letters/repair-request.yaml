@@ -1,0 +1,43 @@
+# yaml-language-server: $schema=../../../../schema/letter.schema.json
+# New York repair request. RPL § 235-b sets no statewide repair deadline, so the letter asks for
+# repairs within a reasonable time (the shared wording) and doesn't compute a legal deadline.
+schema_version: 1
+id: repair-request
+extends: repair-request
+params:
+  law:
+    en: >-
+      Under New York Real Property Law § 235-b, every residential lease includes a warranty of
+      habitability. You must keep my home and the building's common areas fit to live in and free of
+      conditions that are dangerous to life, health or safety, and this right cannot be waived. When
+      a landlord does not meet this duty, a court can reduce the rent. Real Property Law § 223-b also
+      protects tenants from retaliation for making good-faith complaints like this one.
+    es: >-
+      Según el artículo 235-b de la Ley de Bienes Raíces (Real Property Law) de Nueva York, todo
+      contrato de alquiler de vivienda incluye una garantía de habitabilidad. Usted debe mantener mi
+      vivienda y las áreas comunes del edificio en condiciones aptas para vivir y libres de
+      condiciones peligrosas para la vida, la salud o la seguridad, y no se puede renunciar a este
+      derecho. Cuando un arrendador no cumple con este deber, un tribunal puede reducir la renta. El
+      artículo 223-b de la misma ley también protege a los inquilinos contra represalias por
+      presentar quejas de buena fe como esta.
+delivery_tips:
+  - en: Keep a copy of the letter and any mailing receipt. Write down the date you sent it.
+    es: Guarde una copia de la carta y cualquier recibo de envío. Anote la fecha en que la envió.
+  - en: Take dated photos or videos of each problem, before and after any repair.
+    es: Tome fotos o videos con fecha de cada problema, antes y después de cualquier reparación.
+  - en: >-
+      In New York City, you can also report the problems to HPD by calling 311. Elsewhere in the
+      state, contact your city or town's code enforcement or building department. An inspector can
+      issue violations that give your landlord a deadline to make repairs.
+    es: >-
+      En la Ciudad de Nueva York, también puede reportar los problemas a HPD llamando al 311. En el
+      resto del estado, comuníquese con la oficina de cumplimiento de códigos o el departamento de
+      edificios de su ciudad o pueblo. Un inspector puede emitir infracciones que le dan al
+      arrendador un plazo para hacer las reparaciones.
+  - en: Keep paying rent unless a lawyer or legal aid office tells you it is safe to do something else. Withholding rent without following New York's rules can lead to an eviction case.
+    es: Siga pagando la renta, a menos que un abogado o una oficina de ayuda legal le diga que es seguro hacer otra cosa. Retener la renta sin seguir las reglas de Nueva York puede llevar a un caso de desalojo.
+citations:
+  - label: N.Y. Real Prop. Law § 235-b (warranty of habitability)
+    url: https://www.nysenate.gov/legislation/laws/RPP/235-B
+  - label: N.Y. Real Prop. Law § 223-b (retaliation)
+    url: https://www.nysenate.gov/legislation/laws/RPP/223-B

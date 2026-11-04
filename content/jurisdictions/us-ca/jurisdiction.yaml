@@ -1,0 +1,111 @@
+# yaml-language-server: $schema=../../../schema/jurisdiction.schema.json
+# California: statewide rules only. Many cities and counties (for example Los Angeles,
+# San Francisco and Oakland) add their own protections, which are not covered here.
+schema_version: 1
+id: us-ca
+name:
+  en: California
+  es: California
+short_name: CA
+country: US
+kind: state
+status: draft
+last_reviewed: 2026-11-04
+reviewed_by: []
+maintainers: []
+summary:
+  en: >-
+    Deadlines and letters for renters under California state law. Your city or county may give
+    you more protection, so check with local legal aid too.
+  es: >-
+    Plazos y cartas para inquilinos según las leyes del estado de California. Su ciudad o condado
+    puede darle más protección, así que consulte también con una oficina local de ayuda legal.
+letters: [repair-request, deposit-demand, payment-plan]
+holidays:
+  extends: [us-federal]
+  remove: [columbus-day] # CCP § 135 excludes the 2nd Monday in October
+  add:
+    - id: lincoln-day
+      name: { en: Lincoln Day, es: Día de Lincoln }
+      date: { month: 2, day: 12, observed: nearest_weekday }
+    - id: farmworkers-day
+      name:
+        en: Farmworkers Day (formerly César Chávez Day)
+        es: Día de los Trabajadores Agrícolas (antes Día de César Chávez)
+      date: { month: 3, day: 31, observed: nearest_weekday }
+    - id: native-american-day
+      name: { en: Native American Day, es: Día del Indígena Americano }
+      date: { month: 9, weekday: fri, nth: 4 }
+    - id: day-after-thanksgiving
+      name: { en: Day after Thanksgiving, es: Día después de Acción de Gracias }
+      date: { month: 11, weekday: thu, nth: 4, offset_days: 1 }
+  note:
+    en: >-
+      California courts close on the federal holidays except Columbus Day (Indigenous Peoples'
+      Day). They also close on Lincoln Day (February 12), Farmworkers Day (March 31, formerly
+      César Chávez Day), Native American Day (the fourth Friday in September) and the day after
+      Thanksgiving. A holiday that falls on a Saturday is observed on the Friday before, and one
+      that falls on a Sunday on the Monday after. A local court can also close on other days, and
+      those days don't count either (CCP § 12b). The app doesn't know about local closures, so
+      your real deadline could be later than it shows. Check with your court clerk.
+    es: >-
+      Los tribunales de California cierran en los días feriados federales, excepto el Día de Colón
+      (Día de los Pueblos Indígenas). También cierran el Día de Lincoln (12 de febrero), el Día de
+      los Trabajadores Agrícolas (31 de marzo, antes Día de César Chávez), el Día del Indígena
+      Americano (el cuarto viernes de septiembre) y el día después de Acción de Gracias. Si un
+      feriado cae en sábado, se observa el viernes anterior; si cae en domingo, el lunes siguiente.
+      Un tribunal local también puede cerrar otros días, y esos días tampoco cuentan (CCP § 12b).
+      La aplicación no sabe de esos cierres locales, así que su plazo real podría ser más tarde de
+      lo que muestra. Consulte con la secretaría del tribunal.
+  sources:
+    - label: Cal. Code Civ. Proc. § 135 (judicial holidays)
+      url: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CCP&sectionNum=135
+    - label: Cal. Gov. Code § 6700 (state holidays)
+      url: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=GOV&sectionNum=6700
+    - label: Cal. Rules of Court, rule 1.11 (holidays on a weekend)
+      url: https://courts.ca.gov/cms/rules/index/one/rule1_11
+    - label: Cal. Code Civ. Proc. § 12b (days a court is closed)
+      url: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CCP&sectionNum=12b
+    - label: California Courts, Court holidays
+      url: https://courts.ca.gov/about/court-holidays
+help:
+  - name: California Courts Self-Help Guide — Eviction
+    url: https://selfhelp.courts.ca.gov/eviction-tenant
+    description:
+      en: >-
+        The courts' official guide for tenants, with the forms and steps to respond to an eviction
+        case. Every county court also has a free self-help center that can help you fill out forms.
+      es: >-
+        La guía oficial de los tribunales para inquilinos, con los formularios y los pasos para
+        responder a una demanda de desalojo. El tribunal de cada condado también tiene un centro de
+        ayuda gratuito que puede ayudarle a llenar los formularios.
+    topics: [eviction]
+  - name: LawHelpCA
+    url: https://www.lawhelpca.org/
+    description:
+      en: Find free legal aid offices near you, by county, and read guides about tenant rights.
+      es: Encuentre oficinas gratuitas de ayuda legal cerca de usted, por condado, y lea guías sobre los derechos de los inquilinos.
+    topics: [eviction, repairs, deposit]
+  - name: Tenant Power Toolkit
+    url: https://tenantpowertoolkit.org/
+    description:
+      en: >-
+        A free online tool, in English and Spanish, that helps you fill out your Answer to an
+        eviction case and file it on time.
+      es: >-
+        Una herramienta gratuita en línea, en inglés y español, que le ayuda a llenar su
+        Contestación a una demanda de desalojo y a presentarla a tiempo.
+    topics: [eviction]
+  - name: Housing Is Key — Tenant resources (State of California)
+    url: https://housing.ca.gov/resources/tenant
+    description:
+      en: The state's page with links to rental assistance and local tenant help.
+      es: La página del estado con enlaces a ayuda para pagar la renta y a servicios locales para inquilinos.
+    topics: [eviction, repairs, deposit]
+sources:
+  - label: California Courts Self-Help Guide, Security deposits
+    url: https://selfhelp.courts.ca.gov/guide-security-deposits-california
+  - label: California Attorney General, Know Your Rights — Security Deposits
+    url: https://oag.ca.gov/system/files/media/Know-Your-Rights-Security-Deposits-English.pdf
+  - label: California Department of Real Estate, Landlord-Tenant Guide (2026)
+    url: https://www.dre.ca.gov/publications/ResourceGuidebook/2026_Landlord_Tenant_Guide.pdf

@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=../../../../schema/letter.schema.json
+# Florida payment plan. Same letter as the shared one, with Florida tips: a payment plan doesn't
+# stop a 3-day notice or the 5-day court registry deadline (Fla. Stat. §§ 83.56, 83.60(2)).
+schema_version: 1
+id: payment-plan
+extends: payment-plan
+delivery_tips:
+  - en: >-
+      This letter does not stop a 3-day notice or an eviction case. If you were served with court
+      papers, you still have only 5 business days to file an answer AND deposit the rent the
+      complaint says you owe into the court registry.
+    es: >-
+      Esta carta no detiene un aviso de 3 días ni un caso de desalojo. Si le entregaron documentos
+      del tribunal, igual tiene solo 5 días hábiles para presentar una contestación Y depositar en
+      el registro del tribunal la renta que la demanda dice que usted debe.
+  - en: >-
+      If your landlord agrees, get the plan in writing and signed. Keep receipts for every payment.
+      If your landlord accepts part of the rent after a 3-day notice, ask for a written receipt.
+    es: >-
+      Si el arrendador está de acuerdo, pida el plan por escrito y firmado. Guarde los recibos de
+      cada pago. Si el arrendador acepta parte de la renta después de un aviso de 3 días, pida un
+      recibo por escrito.
+  - en: Contact legal aid or a local tenant group before you sign any agreement to move out.
+    es: Comuníquese con una oficina de ayuda legal o un grupo de inquilinos antes de firmar cualquier acuerdo para mudarse.
+citations:
+  - label: Fla. Stat. § 83.56(3), (5)
+    url: https://www.flsenate.gov/Laws/Statutes/2026/83.56
+  - label: Fla. Stat. § 83.60(2)
+    url: https://www.flsenate.gov/Laws/Statutes/2026/83.60

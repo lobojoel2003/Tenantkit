@@ -1,0 +1,141 @@
+# yaml-language-server: $schema=../../../schema/jurisdiction.schema.json
+# New York State. Some rules (the 10-day answer at the clerk, HPD, Right to Counsel) apply only in
+# New York City; the deadline texts say so. Research notes: statutes as amended by the Housing
+# Stability and Tenant Protection Act of 2019 (HSTPA) and the Good Cause Eviction Law (2024).
+schema_version: 1
+id: us-ny
+name:
+  en: New York
+  es: Nueva York
+short_name: NY
+country: US
+kind: state
+status: draft
+last_reviewed: 2026-11-04
+reviewed_by: []
+maintainers: []
+summary:
+  en: >-
+    Covers New York's 14-day rent demand, the 10-day deadline to answer a nonpayment case in New
+    York City Housing Court, the 14-day deposit return rule, and one year of protection from
+    retaliation. Some rules are different inside and outside New York City, so check which one
+    applies to you.
+  es: >-
+    Incluye el aviso de cobro de renta de 14 días de Nueva York, el plazo de 10 días para responder
+    a un caso por falta de pago en el Tribunal de Vivienda de la Ciudad de Nueva York, la regla de
+    14 días para devolver el depósito y un año de protección contra represalias. Algunas reglas son
+    diferentes dentro y fuera de la Ciudad de Nueva York, así que revise cuál le corresponde.
+letters: [repair-request, deposit-demand, payment-plan]
+holidays:
+  extends: [us-federal]
+  add:
+    # GCL § 24 moves a holiday that falls on a Sunday to Monday, and has no Saturday rule, so the
+    # fixed-date federal holidays are replaced with sunday_to_monday versions.
+    - id: new-years-day
+      name: { en: New Year's Day, es: Año Nuevo }
+      date: { month: 1, day: 1, observed: sunday_to_monday }
+    - id: lincoln-birthday
+      name: { en: Lincoln's Birthday, es: Natalicio de Lincoln }
+      date: { month: 2, day: 12, observed: sunday_to_monday }
+    - id: juneteenth
+      name: { en: Juneteenth, es: Juneteenth (Día de la Emancipación) }
+      date: { month: 6, day: 19, observed: sunday_to_monday }
+      since: 2021
+    - id: independence-day
+      name: { en: Independence Day, es: Día de la Independencia }
+      date: { month: 7, day: 4, observed: sunday_to_monday }
+    - id: election-day
+      name: { en: Election Day, es: Día de las Elecciones }
+      # The Tuesday after the first Monday in November (general election day, every year).
+      date: { month: 11, weekday: mon, nth: 1, offset_days: 1 }
+    - id: veterans-day
+      name: { en: Veterans Day, es: Día de los Veteranos }
+      date: { month: 11, day: 11, observed: sunday_to_monday }
+    - id: christmas
+      name: { en: Christmas Day, es: Navidad }
+      date: { month: 12, day: 25, observed: sunday_to_monday }
+  note:
+    en: >-
+      We use New York's public holidays from General Construction Law § 24. When one falls on a
+      Sunday, the Monday after is also a holiday. The law has no rule for holidays that fall on a
+      Saturday, so we don't treat the Friday before as a holiday, even though the state courts close
+      that day (for example, Friday, July 3, 2026). This can only make a date we show earlier, never
+      later. If the court is closed on your last day, act by the business day before. Flag Day is
+      left out because it is always on a Sunday.
+    es: >-
+      Usamos los días feriados oficiales de Nueva York de la Ley de Construcción General (General
+      Construction Law), artículo 24. Cuando uno cae en domingo, el lunes siguiente también es
+      feriado. La ley no tiene una regla para los feriados que caen en sábado, así que no contamos
+      el viernes anterior como feriado, aunque los tribunales del estado cierran ese día (por
+      ejemplo, el viernes 3 de julio de 2026). Esto solo puede hacer que una fecha que mostramos sea
+      más temprana, nunca más tarde. Si el tribunal está cerrado su último día, actúe a más tardar
+      el día hábil anterior. No incluimos el Día de la Bandera porque siempre cae en domingo.
+  sources:
+    - label: N.Y. Gen. Constr. Law § 24 (public holidays)
+      url: https://www.nysenate.gov/legislation/laws/GCN/24
+    - label: N.Y. Gen. Constr. Law § 25-a (last day on a weekend or holiday)
+      url: https://www.nysenate.gov/legislation/laws/GCN/25-A
+    - label: N.Y. State Unified Court System, court holidays
+      url: https://www.nycourts.gov/about-us/terms-court-calendar-holidays
+help:
+  - name: New York Courts — CourtHelp and Court Help Centers
+    url: https://www.nycourts.gov/courthelp/
+    description:
+      en: >-
+        Free court information, forms and do-it-yourself programs, including how to answer an
+        eviction case. Court Help Centers in many courthouses can explain the process, but they
+        can't give legal advice.
+      es: >-
+        Información gratuita del tribunal, formularios y programas para hacerlo usted mismo, incluso
+        cómo responder a un caso de desalojo. Los Centros de Ayuda de muchos tribunales pueden
+        explicarle el proceso, pero no pueden darle asesoría legal.
+    topics: [eviction, repairs, deposit]
+  - name: LawHelpNY
+    url: https://www.lawhelpny.org/
+    description:
+      en: Find free legal aid programs anywhere in New York State, by county and by problem.
+      es: Encuentre programas gratuitos de ayuda legal en todo el estado de Nueva York, por condado y por tipo de problema.
+    topics: [eviction, repairs, deposit]
+  - name: NYC Tenant Helpline and Right to Counsel (New York City only)
+    url: https://www.nyc.gov/site/hra/help/legal-services-for-tenants.page
+    phone: "311"
+    description:
+      en: >-
+        New York City only. Call 311 and ask for the Tenant Helpline or Right to Counsel. Free legal
+        advice for tenants in every ZIP code, whatever your immigration status, and a free lawyer in
+        Housing Court for many tenants, depending on income.
+      es: >-
+        Solo en la Ciudad de Nueva York. Llame al 311 y pida la Línea de Ayuda para Inquilinos
+        (Tenant Helpline) o el Derecho a Representación Legal (Right to Counsel). Asesoría legal
+        gratuita para inquilinos en todos los códigos postales, sin importar su estatus migratorio, y
+        un abogado gratuito en el Tribunal de Vivienda para muchos inquilinos, según sus ingresos.
+    topics: [eviction, repairs]
+  - name: New York Attorney General — Help Line
+    url: https://ag.ny.gov/file-complaint/housing-real-estate/rental-issues
+    phone: "1-800-771-7755"
+    description:
+      en: >-
+        File a free complaint about a security deposit, repairs or harassment by your landlord,
+        online or by phone. TDD: 1-800-788-9898.
+      es: >-
+        Presente una queja gratuita sobre el depósito de garantía, las reparaciones o el acoso del
+        arrendador, por internet o por teléfono. TDD: 1-800-788-9898.
+    topics: [deposit, repairs]
+  - name: NYS Homes and Community Renewal (HCR) — Rent Information Line
+    url: https://hcr.ny.gov/tenant-resources
+    phone: "(833) 499-0343"
+    description:
+      en: >-
+        For rent-stabilized and rent-controlled tenants: questions about your rent, services,
+        repairs and lease renewals, and how to file a complaint with HCR.
+      es: >-
+        Para inquilinos con renta estabilizada o renta controlada: preguntas sobre su renta, los
+        servicios, las reparaciones y la renovación del contrato, y cómo presentar una queja ante HCR.
+    topics: [repairs, deposit, eviction]
+sources:
+  - label: New York Attorney General, Residential Tenants' Rights Guide
+    url: https://ag.ny.gov/publications/residential-tenants-rights-guide
+  - label: NY Courts CourtHelp, Answering an eviction case
+    url: https://www.nycourts.gov/courthelp/homes/LTanswering.shtml
+  - label: NYC Housing Court, Answering a case
+    url: https://www.nycourts.gov/new-york-city-housing-court/answering-case-nyc-housing-court

@@ -1,0 +1,336 @@
+# yaml-language-server: $schema=../../../schema/deadlines.schema.json
+# California deadlines. Court-day counting uses the holidays in jurisdiction.yaml.
+# Research notes and open questions for reviewers are summarized in each explanation.
+schema_version: 1
+deadlines:
+  - id: pay-or-quit
+    topic: eviction
+    kind: tenant_deadline
+    urgent: true
+    title:
+      en: Pay the rent or move out (3-day notice)
+      es: Pagar la renta o desocupar (aviso de 3 días)
+    summary:
+      en: After you get a 3-day notice to pay rent or quit, you have 3 court days to pay the full amount it asks for.
+      es: Después de recibir un aviso de 3 días para pagar la renta o desocupar, tiene 3 días hábiles del tribunal para pagar la cantidad completa que le piden.
+    trigger:
+      en: The day you got the notice
+      es: El día en que recibió el aviso
+    period: { amount: 3, unit: court_days }
+    explanation:
+      en: >-
+        Pay the full amount on the notice within 3 court days. Weekends, court holidays and the
+        day you got the notice don't count. If you pay it all in time, your landlord can't use this
+        notice to evict you. Mailing doesn't add extra days, so if the notice was posted on your door
+        or left with someone and also mailed, enter the earliest date to be safe. If you live in
+        public housing, have Section 8, or your building has federal funding or a federally backed
+        mortgage, your landlord may have had to give you 30 days instead (federal CARES Act and HUD
+        rules), so ask legal aid.
+      es: >-
+        Pague la cantidad completa del aviso dentro de 3 días hábiles del tribunal. Los fines de
+        semana, los feriados del tribunal y el día en que recibió el aviso no cuentan. Si paga todo a
+        tiempo, el arrendador no puede usar este aviso para desalojarle. Que el aviso se haya enviado
+        por correo no le da días extra, así que si lo pegaron en su puerta o lo dejaron con otra
+        persona y además se lo enviaron por correo, escriba la fecha más temprana para estar seguro.
+        Si vive en vivienda pública, tiene Sección 8, o su edificio recibe fondos federales o tiene
+        una hipoteca respaldada por el gobierno federal, es posible que el arrendador tuviera que darle
+        30 días (ley federal CARES y reglas de HUD), así que consulte con una oficina de ayuda legal.
+    if_missed:
+      en: >-
+        Your landlord can file an eviction case (unlawful detainer) and can refuse rent you offer
+        late. You may still have defenses, for example if the notice asks for late fees or more than
+        the rent you owe, or if you fell behind because your Social Security benefits were delayed or
+        stopped (a newer law, AB 246, may help). Get legal help right away. If you get court papers,
+        you will have 10 court days to respond.
+      es: >-
+        El arrendador puede presentar una demanda de desalojo (unlawful detainer) y puede rechazar la
+        renta que usted ofrezca tarde. Es posible que todavía tenga defensas, por ejemplo si el aviso
+        cobra recargos por atraso o más de la renta que debe, o si se atrasó porque sus beneficios del
+        Seguro Social se retrasaron o se suspendieron (una ley reciente, AB 246, podría ayudarle).
+        Busque ayuda legal de inmediato. Si recibe documentos del tribunal, tendrá 10 días hábiles del
+        tribunal para responder.
+    steps:
+      - en: Pay the full amount on the notice by the deadline, to the person and in the way the notice lists. Keep a receipt or other proof of payment.
+        es: Pague la cantidad completa del aviso antes del plazo, a la persona y de la forma que indica el aviso. Guarde un recibo u otra prueba del pago.
+      - en: If your landlord won't take your payment, write down when and how you tried to pay, and keep the money ready.
+        es: Si el arrendador no acepta su pago, anote cuándo y cómo intentó pagar, y tenga el dinero listo.
+      - en: If you can't pay it all, contact legal aid or your court's self-help center now. Ask about rental assistance, and whether the notice is correct.
+        es: Si no puede pagar todo, comuníquese ahora con una oficina de ayuda legal o con el centro de ayuda de su tribunal. Pregunte por ayuda para pagar la renta y si el aviso es correcto.
+    letters: [payment-plan]
+    citations:
+      - label: Cal. Code Civ. Proc. § 1161(2)
+        url: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CCP&sectionNum=1161
+      - label: Cal. Code Civ. Proc. § 1162 (how the notice is served)
+        url: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CCP&sectionNum=1162
+      - label: California Courts Self-Help, Types of eviction notices
+        url: https://selfhelp.courts.ca.gov/eviction-tenant/notice-types
+      - label: 15 U.S.C. § 9058(c) (CARES Act 30-day notice)
+        url: https://www.law.cornell.edu/uscode/text/15/9058
+
+  - id: eviction-response
+    topic: eviction
+    kind: tenant_deadline
+    urgent: true
+    title:
+      en: Respond to an eviction case (unlawful detainer)
+      es: Responder a una demanda de desalojo (unlawful detainer)
+    summary:
+      en: After you're served with eviction court papers, you have 10 court days to file a written response with the court.
+      es: Después de recibir los documentos judiciales de desalojo, tiene 10 días hábiles del tribunal para presentar una respuesta por escrito ante el tribunal.
+    trigger:
+      en: The day you got the court papers
+      es: El día en que recibió los documentos del tribunal
+    period: { amount: 10, unit: court_days }
+    options:
+      id: service
+      question:
+        en: How did you get the court papers?
+        es: ¿Cómo recibió los documentos del tribunal?
+      choices:
+        - id: personal
+          label:
+            en: Someone handed them to me
+            es: Alguien me los entregó en mano
+        - id: substituted
+          label:
+            en: They were left with someone else at my home or work, and a copy was mailed to me
+            es: Los dejaron con otra persona en mi casa o trabajo, y me enviaron una copia por correo
+          add_days: 10
+          note:
+            en: >-
+              Enter the date the papers were mailed (it's on the proof of service, or check the
+              postmark). Service is complete 10 days after mailing, and your 10 court days start
+              after that. If you don't know the mailing date, enter the day the papers were left,
+              to be safe.
+            es: >-
+              Escriba la fecha en que le enviaron los documentos por correo (aparece en el comprobante
+              de entrega, o revise el matasellos). La entrega se completa 10 días después del envío, y
+              sus 10 días hábiles del tribunal empiezan después. Si no sabe la fecha del envío, escriba
+              el día en que dejaron los documentos, para estar seguro.
+        - id: posted-and-mailed
+          label:
+            en: They were posted on my door and mailed to me (a judge allowed this)
+            es: Los pegaron en mi puerta y me los enviaron por correo (un juez lo permitió)
+          add_days: 10
+          note:
+            en: >-
+              Enter the date the papers were posted and mailed. If those were different days, enter
+              the earlier one, to be safe. Service is complete 10 days after posting and mailing, and
+              your 10 court days start after that.
+            es: >-
+              Escriba la fecha en que pegaron los documentos y se los enviaron por correo. Si fueron
+              días distintos, escriba el más temprano, para estar seguro. La entrega se completa 10
+              días después de pegarlos y enviarlos, y sus 10 días hábiles del tribunal empiezan después.
+    explanation:
+      en: >-
+        File a written response, usually an Answer (form UD-105), with the court within 10 court
+        days. Weekends, court holidays and the day you were served don't count. If the papers were
+        left with someone else or posted, service is complete on the 10th day after they were mailed,
+        and your 10 court days start after that. If that 10th day is a weekend or holiday, the law
+        is unclear about whether it moves, so the app uses the earlier date. If you were served
+        through the Safe at Home address confidentiality program, you get 5 more court days, but the
+        app doesn't add them.
+      es: >-
+        Presente una respuesta por escrito, normalmente una Contestación (formulario UD-105), ante el
+        tribunal dentro de 10 días hábiles del tribunal. Los fines de semana, los feriados del
+        tribunal y el día en que le entregaron los documentos no cuentan. Si dejaron los documentos
+        con otra persona o los pegaron en su puerta, la entrega se completa el décimo día después de
+        que se enviaron por correo, y sus 10 días hábiles del tribunal empiezan después. Si ese décimo
+        día cae en fin de semana o feriado, la ley no deja claro si se mueve, así que la aplicación usa
+        la fecha más temprana. Si le entregaron los documentos a través del programa de
+        confidencialidad de domicilio Safe at Home, tiene 5 días hábiles del tribunal más, pero la
+        aplicación no los suma.
+    if_missed:
+      en: >-
+        Your landlord can ask the court for a default judgment, and you could lose the case without
+        a hearing and be locked out. If the deadline has passed, try to file your response right away
+        anyway, because the court may still accept it if no default has been entered. Get legal help
+        about asking the court to cancel (set aside) a default.
+      es: >-
+        El arrendador puede pedirle al tribunal un fallo por incumplimiento (default), y usted podría
+        perder el caso sin una audiencia y ser desalojado. Si el plazo ya pasó, intente presentar su
+        respuesta de inmediato de todos modos, porque el tribunal todavía podría aceptarla si no se ha
+        registrado el incumplimiento. Busque ayuda legal para pedirle al tribunal que anule ese fallo.
+    steps:
+      - en: File your Answer (form UD-105) with the court clerk before the deadline. Don't wait for the last day.
+        es: Presente su Contestación (formulario UD-105) en la secretaría del tribunal antes del plazo. No espere hasta el último día.
+      - en: Get free help now from your court's self-help center, legal aid, or the Tenant Power Toolkit.
+        es: Busque ayuda gratuita ahora en el centro de ayuda de su tribunal, en una oficina de ayuda legal o en el Tenant Power Toolkit.
+      - en: If you can't afford the filing fee, ask for a fee waiver (form FW-001) when you file.
+        es: Si no puede pagar la cuota de presentación, pida una exención de cuotas (formulario FW-001) cuando presente su respuesta.
+      - en: Have someone 18 or older, not you, mail a copy of your Answer to your landlord or their lawyer, and file proof that it was mailed.
+        es: Pídale a una persona mayor de 18 años, que no sea usted, que envíe por correo una copia de su Contestación al arrendador o a su abogado, y presente el comprobante del envío.
+    letters: []
+    citations:
+      - label: Cal. Code Civ. Proc. § 1167 (10 court days, since Jan. 1, 2025)
+        url: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CCP&sectionNum=1167
+      - label: Cal. Code Civ. Proc. § 415.20 (papers left with someone and mailed)
+        url: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CCP&sectionNum=415.20
+      - label: Cal. Code Civ. Proc. § 415.45 (posting and mailing)
+        url: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CCP&sectionNum=415.45
+      - label: California Courts Self-Help, Respond to an eviction
+        url: https://selfhelp.courts.ca.gov/eviction-tenant/respond
+
+  - id: deposit-return
+    topic: deposit
+    kind: landlord_deadline
+    urgent: false
+    title:
+      en: Your landlord must return your deposit
+      es: El arrendador debe devolverle el depósito
+    summary:
+      en: Your landlord has 21 days after you move out to return your deposit or send you a list of deductions with the rest.
+      es: El arrendador tiene 21 días después de que usted se muda para devolverle el depósito o enviarle una lista de descuentos con el resto.
+    trigger:
+      en: The day you moved out and returned the keys
+      es: El día en que se mudó y devolvió las llaves
+    period: { amount: 21, unit: calendar_days }
+    extend_if_closed: true
+    explanation:
+      en: >-
+        Within 21 days after you move out, your landlord must return your whole deposit, or send you
+        an itemized list of deductions along with the rest of the money. Receipts must come with the
+        list if repair and cleaning charges are over $125, and for move-outs since April 1, 2025, so
+        must photos of the home taken after you left and after any repairs. Your landlord can't charge
+        you for normal wear and tear. If day 21 is a weekend or court holiday, the deadline moves to
+        the next court day (CCP § 12a), and a refund sent by mail may arrive a few days later. Since
+        2026, if you paid rent or the deposit electronically, your landlord generally must return it
+        electronically to an account you name in writing.
+      es: >-
+        Dentro de los 21 días después de que usted se muda, el arrendador debe devolverle todo el
+        depósito, o enviarle una lista detallada de descuentos junto con el resto del dinero. La lista
+        debe venir con recibos si los cargos de reparación y limpieza pasan de $125 y, si se mudó
+        después del 1 de abril de 2025, también con fotos de la vivienda tomadas después de que se fue
+        y después de cualquier reparación. El arrendador no puede cobrarle por el desgaste normal. Si el
+        día 21 cae en fin de semana o feriado del tribunal, el plazo pasa al siguiente día hábil del
+        tribunal (CCP § 12a), y un reembolso enviado por correo puede llegar unos días después. Desde
+        2026, si pagó la renta o el depósito de forma electrónica, por lo general el arrendador debe
+        devolvérselo de forma electrónica a una cuenta que usted indique por escrito.
+    if_missed:
+      en: >-
+        Send your landlord a demand letter. If that doesn't work, you can sue in small claims court.
+        If a court finds that your landlord kept the deposit in bad faith, it can order your landlord
+        to pay up to twice the amount of the deposit as a penalty, on top of the money owed.
+      es: >-
+        Envíele al arrendador una carta de reclamación. Si eso no funciona, puede demandarlo en el
+        tribunal de reclamos menores. Si un tribunal decide que el arrendador se quedó con el depósito
+        de mala fe, puede ordenarle pagar hasta el doble del depósito como multa, además del dinero que
+        le debe.
+    steps:
+      - en: Give your landlord your new address in writing, so they know where to send your deposit and the list.
+        es: Dele al arrendador su nueva dirección por escrito, para que sepa adónde enviarle el depósito y la lista.
+      - en: If the deadline passes, or you disagree with the charges, send a demand letter and keep a copy.
+        es: Si pasa el plazo, o no está de acuerdo con los cargos, envíe una carta de reclamación y guarde una copia.
+      - en: If your landlord still doesn't pay, you can file a claim in small claims court. You don't need a lawyer.
+        es: Si el arrendador aun así no le paga, puede presentar un reclamo en el tribunal de reclamos menores. No necesita un abogado.
+    letters: [deposit-demand]
+    citations:
+      - label: Cal. Civ. Code § 1950.5
+        url: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1950.5
+      - label: Cal. Code Civ. Proc. § 12a (last day on a holiday)
+        url: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CCP&sectionNum=12a
+      - label: California Courts Self-Help Guide, Security deposits
+        url: https://selfhelp.courts.ca.gov/guide-security-deposits-california
+
+  - id: repair-reasonable-time
+    topic: repairs
+    kind: waiting_period
+    urgent: false
+    title:
+      en: When you can repair and deduct
+      es: Cuándo puede reparar y descontar de la renta
+    summary:
+      en: If you wait more than 30 days after giving notice, the law presumes you waited long enough before fixing a serious problem yourself and taking the cost off your rent.
+      es: Si espera más de 30 días después de avisar, la ley supone que esperó lo suficiente antes de arreglar usted mismo un problema grave y descontar el costo de la renta.
+    trigger:
+      en: The day your landlord got your repair request
+      es: El día en que el arrendador recibió su solicitud de reparación
+    period: { amount: 31, unit: calendar_days }
+    explanation:
+      en: >-
+        If your landlord doesn't fix a problem that makes your home unfit to live in within a
+        reasonable time after your notice, the law lets you fix it yourself and take the cost off
+        your rent. If you act after the 30th day following your notice, the law presumes you waited
+        long enough, so the app shows day 31. A shorter wait can be reasonable for urgent problems,
+        but your landlord can argue it wasn't, so that's riskier. The repair can't cost more than one
+        month's rent, you can do this only twice in 12 months, and not for damage you caused. Talk to
+        legal aid before you take anything off your rent, because a mistake can lead to an eviction case.
+      es: >-
+        Si el arrendador no arregla en un plazo razonable, después de su aviso, un problema que hace
+        que su vivienda no sea habitable, la ley le permite arreglarlo usted mismo y descontar el costo
+        de la renta. Si actúa después del día 30 desde su aviso, la ley supone que esperó lo suficiente,
+        así que la aplicación muestra el día 31. Para problemas urgentes, una espera más corta puede ser
+        razonable, pero el arrendador puede alegar que no lo fue, así que es más riesgoso. La reparación
+        no puede costar más de un mes de renta, solo puede hacerlo dos veces en 12 meses, y no por daños
+        que usted causó. Hable con una oficina de ayuda legal antes de descontar algo de la renta,
+        porque un error puede llevar a un caso de desalojo.
+    if_missed:
+      en: >-
+        If the repair still isn't done after this date, talk to legal aid about repair and deduct or
+        other options. You can also ask your city or county code enforcement office to inspect.
+      es: >-
+        Si la reparación todavía no se ha hecho después de esta fecha, hable con una oficina de ayuda
+        legal sobre reparar y descontar u otras opciones. También puede pedirle a la oficina de
+        inspección de vivienda (code enforcement) de su ciudad o condado que haga una inspección.
+    steps:
+      - en: Send your landlord a written repair request and keep a copy. Write down the day they got it.
+        es: Envíele al arrendador una solicitud de reparación por escrito y guarde una copia. Anote el día en que la recibió.
+      - en: Take dated photos of the problem, and keep any estimates and receipts for the repair.
+        es: Tome fotos con fecha del problema y guarde los presupuestos y recibos de la reparación.
+      - en: Talk to legal aid before you take anything off your rent.
+        es: Hable con una oficina de ayuda legal antes de descontar algo de la renta.
+    letters: [repair-request]
+    citations:
+      - label: Cal. Civ. Code § 1942 (repair and deduct)
+        url: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1942
+      - label: Cal. Civ. Code § 1941.1 (what makes a home fit to live in)
+        url: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1941.1
+
+  - id: retaliation-protection
+    topic: repairs
+    kind: protection_period
+    urgent: false
+    title:
+      en: Protection from retaliation after a repair request
+      es: Protección contra represalias después de pedir reparaciones
+    summary:
+      en: For 180 days after you ask for repairs or complain about your home's condition, the law protects you if your landlord tries to evict you, raise your rent or cut services to get back at you.
+      es: Durante 180 días después de pedir reparaciones o quejarse del estado de su vivienda, la ley le protege si el arrendador intenta desalojarle, subirle la renta o reducir servicios como represalia.
+    trigger:
+      en: The day you asked for repairs or made a complaint
+      es: El día en que pidió reparaciones o presentó una queja
+    period: { amount: 180, unit: calendar_days }
+    explanation:
+      en: >-
+        For 180 days after you ask your landlord for repairs in good faith, complain to a government
+        agency such as code enforcement, or have an inspection or citation, your landlord can't evict
+        you, raise your rent or cut services to get back at you. If more than one of these happened,
+        the 180 days run from the latest one. This protection applies only if you are not behind on
+        rent, and you can use it only once in any 12-month period. Your landlord can still act for a
+        real reason stated in good faith, and retaliation can be illegal even after 180 days.
+      es: >-
+        Durante 180 días después de que usted pida reparaciones al arrendador de buena fe, se queje
+        ante una agencia del gobierno como la oficina de inspección de vivienda, o haya una inspección o
+        una citación, el arrendador no puede desalojarle, subirle la renta ni reducir servicios como
+        represalia. Si pasó más de una de estas cosas, los 180 días cuentan desde la más reciente. Esta
+        protección solo aplica si no está atrasado con la renta, y solo puede usarla una vez en cualquier
+        período de 12 meses. El arrendador todavía puede actuar por una razón real expresada de buena fe,
+        y las represalias pueden ser ilegales aun después de los 180 días.
+    if_missed:
+      en: >-
+        After this date, this extra protection ends. Retaliation is still against the law, but it
+        may be harder to prove.
+      es: >-
+        Después de esta fecha, esta protección adicional termina. Las represalias siguen siendo
+        ilegales, pero puede ser más difícil probarlas.
+    steps:
+      - en: Keep copies of every repair request and complaint, with the dates.
+        es: Guarde copias de cada solicitud de reparación y de cada queja, con las fechas.
+      - en: Keep paying your rent on time, so you stay protected.
+        es: Siga pagando la renta a tiempo, para seguir protegido.
+      - en: If your landlord gives you a notice, raises your rent or cuts services soon after you complained, contact legal aid right away.
+        es: Si el arrendador le da un aviso, le sube la renta o reduce servicios poco después de su queja, comuníquese de inmediato con una oficina de ayuda legal.
+    letters: [repair-request]
+    citations:
+      - label: Cal. Civ. Code § 1942.5
+        url: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1942.5

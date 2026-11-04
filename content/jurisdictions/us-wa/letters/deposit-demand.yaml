@@ -1,0 +1,80 @@
+# yaml-language-server: $schema=../../../../schema/letter.schema.json
+# Washington deposit demand (RCW 59.18.280). The landlord's 30 days start from the LATER of
+# the end of the rental agreement and move-out, so there is an optional field for a rental
+# agreement that ended after the tenant moved out.
+schema_version: 1
+id: deposit-demand
+extends: deposit-demand
+fields:
+  - id: tenancy_end_date
+    type: date
+    label:
+      en: The day your rental agreement ended, if it was after you moved out (optional)
+      es: El día en que terminó su contrato, si fue después de que se mudó (opcional)
+    help:
+      en: >-
+        Your landlord's 30 days start from the later of the day your rental agreement ended and
+        the day you moved out. Leave this empty if your rental agreement ended on or before the
+        day you moved out.
+      es: >-
+        Los 30 días que tiene el arrendador empiezan a contar desde la fecha más tardía: el día
+        en que terminó su contrato o el día en que se mudó. Déjelo en blanco si su contrato
+        terminó el mismo día en que se mudó o antes.
+params:
+  law:
+    en: >-
+      Washington law (RCW 59.18.280) requires you to return my deposit, or give me a full and
+      specific written statement of the basis for keeping any part of it together with any
+      refund due, within 30 days after my rental agreement ended{{#if tenancy_end_date}} on
+      {{tenancy_end_date}}{{/if}} and I moved out, that is, by {{#if tenancy_end_date}}{{deposit_deadline_lease_end}}{{else}}{{deposit_deadline}}{{/if}}.
+      For any damage charges, the statement must include copies of the estimates received or
+      invoices paid, or, for work you did yourself, the time spent and the hourly rate. A
+      landlord who misses this deadline may be liable for the full deposit, and a court may award
+      up to twice the deposit if a landlord intentionally refuses to provide the statement,
+      documentation or refund.
+    es: >-
+      La ley de Washington (RCW 59.18.280) le exige devolverme el depósito, o darme una
+      explicación por escrito, completa y específica, de las razones para quedarse con cualquier
+      parte de él, junto con el reembolso que me corresponda, dentro de los 30 días después de que
+      terminó mi contrato{{#if tenancy_end_date}} el {{tenancy_end_date}}{{/if}} y me mudé, es
+      decir, a más tardar el {{#if tenancy_end_date}}{{deposit_deadline_lease_end}}{{else}}{{deposit_deadline}}{{/if}}.
+      Para cualquier cargo por daños, la explicación debe incluir copias de los presupuestos
+      recibidos o de las facturas pagadas o, si usted mismo hizo el trabajo, las horas dedicadas
+      y la tarifa por hora. Un arrendador que no cumple este plazo podría tener que devolver todo
+      el depósito, y un tribunal puede otorgar hasta el doble del depósito si un arrendador se
+      niega a propósito a entregar la explicación, los documentos o el reembolso.
+computed:
+  deposit_deadline:
+    from: move_out_date
+    deadline: deposit-return
+  deposit_deadline_lease_end:
+    from: tenancy_end_date
+    deadline: deposit-return
+delivery_tips:
+  - en: Keep a copy of the letter and any mailing receipt. Write down the date you sent it.
+    es: Guarde una copia de la carta y cualquier recibo de envío. Anote la fecha en que la envió.
+  - en: >-
+      Washington landlords must send the deposit statement to your last known address, so make
+      sure your landlord has your new address in writing. This letter gives it to them.
+    es: >-
+      En Washington, el arrendador debe enviar la explicación sobre el depósito a su última
+      dirección conocida, así que asegúrese de que tenga su nueva dirección por escrito. Esta
+      carta se la da.
+  - en: >-
+      Keep your lease, your move-in and move-out photos, and any list of deductions together. You
+      will need them if you go to small claims court.
+    es: >-
+      Guarde juntos su contrato, las fotos de cuando se mudó y de cuando se fue, y cualquier lista
+      de descuentos. Los necesitará si va al tribunal de reclamos menores.
+checklist:
+  - en: Your lease and proof of the deposit you paid (receipt, bank record or lease clause)
+    es: Su contrato y prueba del depósito que pagó (recibo, registro bancario o cláusula del contrato)
+  - en: The move-in condition checklist your landlord gave you, if you got one
+    es: La lista de revisión del estado de la vivienda que le dio el arrendador al mudarse, si la recibió
+  - en: Photos or video from move-in and move-out
+    es: Fotos o video de cuando se mudó y de cuando se fue
+  - en: Any statement or list of deductions your landlord sent, with any estimates or invoices
+    es: Cualquier explicación o lista de descuentos que le haya enviado el arrendador, con los presupuestos o facturas
+citations:
+  - label: RCW 59.18.280
+    url: https://app.leg.wa.gov/RCW/default.aspx?cite=59.18.280

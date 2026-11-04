@@ -1,0 +1,533 @@
+# yaml-language-server: $schema=../../../schema/deadlines.schema.json
+# Florida deadlines. Researched 2026-11-04; see the research notes in the pull request.
+# Court days skip weekends and the § 110.117 holidays listed in jurisdiction.yaml.
+schema_version: 1
+deadlines:
+  # ---------------------------------------------------------------- eviction
+  - id: three-day-notice
+    topic: eviction
+    kind: tenant_deadline
+    urgent: true
+    title:
+      en: Pay the rent after a 3-day notice
+      es: Pagar la renta después de un aviso de 3 días
+    summary:
+      en: >-
+        If your landlord gave you a written notice to pay rent or move out, you have 3 business
+        days to pay, not counting weekends or court holidays.
+      es: >-
+        Si el arrendador le dio un aviso por escrito para pagar la renta o mudarse, tiene 3 días
+        hábiles para pagar, sin contar los fines de semana ni los días feriados del tribunal.
+    trigger:
+      en: The day you got the notice (handed to you, posted on your door, or emailed). If it was mailed, the postmark date.
+      es: El día en que recibió el aviso (en mano, pegado en su puerta o por correo electrónico). Si llegó por correo, la fecha del matasellos.
+    period: { amount: 3, unit: court_days }
+    extend_if_closed: false
+    options:
+      id: delivery
+      question:
+        en: How did you get the notice?
+        es: ¿Cómo recibió el aviso?
+      choices:
+        - id: hand-or-posted
+          label:
+            en: It was handed to me, or posted at my home
+            es: Me lo entregaron en mano, o lo dejaron pegado en mi vivienda
+        - id: mailed
+          label:
+            en: It came by mail
+            es: Llegó por correo
+          add_days: 5
+          note:
+            en: >-
+              We add 5 days to the postmark date. Older Florida appeals court decisions add 5 days
+              when a 3-day notice is mailed, but the statute itself doesn't say so, so this is less
+              certain. Pay by the earlier date if you can, and check with legal aid.
+            es: >-
+              Sumamos 5 días a la fecha del matasellos. Algunas decisiones antiguas de los
+              tribunales de apelaciones de Florida suman 5 días cuando el aviso de 3 días llega por
+              correo, pero la ley no lo dice, así que esto es menos seguro. Si puede, pague antes de
+              la fecha más temprana y consulte con una oficina de ayuda legal.
+        - id: email
+          label:
+            en: It came by email
+            es: Llegó por correo electrónico
+          note:
+            en: >-
+              An emailed notice counts only if you and your landlord both signed a lease addendum
+              agreeing to get notices by email (Fla. Stat. § 83.505). We count from the day it was
+              sent. If you never signed one, ask legal aid whether the notice is valid, but don't
+              ignore it.
+            es: >-
+              Un aviso por correo electrónico solo es válido si usted y el arrendador firmaron un
+              anexo del contrato para recibir avisos por correo electrónico (sección 83.505 de los
+              Estatutos de Florida). Contamos desde el día en que se envió. Si nunca firmó uno,
+              pregunte en una oficina de ayuda legal si el aviso es válido, pero no lo ignore.
+    explanation:
+      en: >-
+        Count 3 business days after the day you got the notice: Saturdays, Sundays and court
+        holidays don't count. To keep your home, pay the full rent the notice asks for by the end
+        of the last day. We skip only the holidays that all Florida courts close for. Your county
+        court may close on other days too, which could give you more time, but we show the
+        earliest date to be safe.
+      es: >-
+        Cuente 3 días hábiles después del día en que recibió el aviso: los sábados, domingos y
+        días feriados del tribunal no cuentan. Para conservar su vivienda, pague toda la renta que
+        pide el aviso antes de que termine el último día. Solo saltamos los feriados en que cierran
+        todos los tribunales de Florida. El tribunal de su condado puede cerrar otros días, lo que
+        podría darle más tiempo, pero mostramos la fecha más temprana para mayor seguridad.
+    if_missed:
+      en: >-
+        Your landlord can end your lease and file an eviction case in county court. Your landlord
+        can't lock you out, shut off your utilities or remove your things to make you leave. Only
+        the sheriff can remove you, and only after the court rules. Watch for court papers: once
+        you are served, you have only 5 business days to respond.
+      es: >-
+        El arrendador puede terminar su contrato y presentar una demanda de desalojo en el
+        tribunal del condado. El arrendador no puede cambiarle las cerraduras, cortarle los
+        servicios ni sacar sus cosas para obligarle a irse. Solo el alguacil (sheriff) puede
+        sacarle, y solo después de que el tribunal decida. Esté atento a los documentos del
+        tribunal: una vez que se los entreguen, tiene solo 5 días hábiles para responder.
+    steps:
+      - en: >-
+          Check the notice. It should give you at least 3 business days and list only the rent you
+          owe. If the dates or the amount look wrong, call legal aid, but keep working to pay.
+        es: >-
+          Revise el aviso. Debe darle por lo menos 3 días hábiles e indicar solo la renta que debe.
+          Si las fechas o la cantidad parecen incorrectas, llame a una oficina de ayuda legal, pero
+          siga tratando de pagar.
+      - en: >-
+          If you can, pay the full amount by the last day in a way that leaves proof, such as a
+          money order or cashier's check, and get a written receipt.
+        es: >-
+          Si puede, pague la cantidad completa a más tardar el último día de una forma que deje
+          constancia, como un giro postal (money order) o un cheque de caja, y pida un recibo por
+          escrito.
+      - en: >-
+          If you can't pay it all, call 211 for rental assistance and call legal aid right away.
+          You can offer a payment plan in writing, but it doesn't stop the deadline.
+        es: >-
+          Si no puede pagarlo todo, llame al 211 para buscar ayuda con la renta y llame de
+          inmediato a una oficina de ayuda legal. Puede ofrecer un plan de pagos por escrito, pero
+          eso no detiene el plazo.
+      - en: >-
+          Don't ignore court papers. If you are served with an eviction complaint, you have only
+          5 business days to file an answer and deposit the rent with the court.
+        es: >-
+          No ignore los documentos del tribunal. Si le entregan una demanda de desalojo, tiene
+          solo 5 días hábiles para presentar una contestación y depositar la renta en el tribunal.
+    letters: [payment-plan]
+    citations:
+      - label: Fla. Stat. § 83.56(3)–(5)
+        url: https://www.flsenate.gov/Laws/Statutes/2026/83.56
+      - label: Fla. Stat. § 83.505
+        url: https://www.flsenate.gov/Laws/Statutes/2025/83.505
+      - label: Fla. Stat. § 83.67
+        url: https://www.flsenate.gov/Laws/Statutes/2026/83.67
+
+  - id: eviction-answer
+    topic: eviction
+    kind: tenant_deadline
+    urgent: true
+    title:
+      en: Answer the eviction case and pay the rent into the court registry
+      es: Contestar la demanda de desalojo y depositar la renta en el registro del tribunal
+    summary:
+      en: >-
+        You have 5 business days after you are served to file a written answer AND pay the rent
+        the complaint says you owe into the court registry, or you can lose your case without a
+        hearing.
+      es: >-
+        Tiene 5 días hábiles después de que le entreguen los documentos para presentar una
+        contestación por escrito Y depositar en el registro del tribunal la renta que la demanda
+        dice que usted debe, o puede perder el caso sin una audiencia.
+    trigger:
+      en: The day the court papers were handed to you or posted on your door, whichever came first. If you aren't sure, use the earliest possible day.
+      es: El día en que le entregaron los documentos del tribunal o los pegaron en su puerta, lo que haya pasado primero. Si no está seguro, use el día más temprano posible.
+    period: { amount: 5, unit: court_days }
+    extend_if_closed: false
+    explanation:
+      en: >-
+        Within 5 business days you must do two things at the county court clerk's office: file a
+        written answer, and pay into the court registry the rent the complaint says you owe. If
+        you think that amount is wrong, file a motion to determine rent instead, with proof such
+        as receipts. If you don't deposit the rent or file that motion in time, you lose every
+        defense except "I already paid," even a defense about repairs, a bad notice or
+        retaliation. We count from the day the papers were handed to you or posted, skipping only
+        weekends and statewide court holidays, so this is the earliest likely date: your court
+        may allow a little more time, but don't wait.
+      es: >-
+        En un plazo de 5 días hábiles debe hacer dos cosas en la secretaría del tribunal del
+        condado: presentar una contestación por escrito y depositar en el registro del tribunal
+        la renta que la demanda dice que usted debe. Si cree que esa cantidad está mal, presente
+        en su lugar una moción para determinar la renta (motion to determine rent), con pruebas
+        como recibos. Si no deposita la renta ni presenta esa moción a tiempo, pierde todas sus
+        defensas excepto "ya pagué", incluso las defensas sobre reparaciones, un aviso
+        incorrecto o represalias. Contamos desde el día en que le entregaron los documentos o los
+        pegaron en su puerta, y solo saltamos los fines de semana y los feriados de todos los
+        tribunales del estado, así que esta es la fecha más temprana probable: su tribunal podría
+        darle un poco más de tiempo, pero no espere.
+    if_missed:
+      en: >-
+        If you don't file an answer, your landlord can get a default judgment. If you don't
+        deposit the rent or file a motion to determine rent, you give up all defenses except
+        proof that you paid, and the judge can order your eviction right away, without a hearing.
+        After that, the sheriff posts a 24-hour notice on your door and can then remove you.
+      es: >-
+        Si no presenta una contestación, el arrendador puede obtener una sentencia en rebeldía.
+        Si no deposita la renta ni presenta una moción para determinar la renta, pierde todas sus
+        defensas excepto la prueba de que pagó, y el juez puede ordenar su desalojo de inmediato,
+        sin una audiencia. Después, el alguacil (sheriff) pega un aviso de 24 horas en su puerta
+        y luego puede sacarle de la vivienda.
+    steps:
+      - en: >-
+          Today: read the summons and the complaint. Write down the case number and the amount of
+          rent the complaint says you owe.
+        es: >-
+          Hoy: lea la citación y la demanda. Anote el número de caso y la cantidad de renta que la
+          demanda dice que usted debe.
+      - en: >-
+          Call legal aid right away: FloridaLawHelp.org or the eviction helpline at
+          1-888-780-0443. Don't let the deadline pass while you wait to hear back.
+        es: >-
+          Llame de inmediato a una oficina de ayuda legal: FloridaLawHelp.org o la línea de ayuda
+          para desalojos, 1-888-780-0443. No deje pasar el plazo mientras espera una respuesta.
+      - en: >-
+          By the deadline, file a written answer with the clerk and give or mail a copy to your
+          landlord or their lawyer. Keep a copy stamped by the clerk.
+        es: >-
+          Antes de que venza el plazo, presente una contestación por escrito en la secretaría del
+          tribunal y entregue o envíe por correo una copia al arrendador o a su abogado. Guarde
+          una copia sellada por la secretaría.
+      - en: >-
+          In the same 5 days, pay the rent the complaint says you owe into the court registry at
+          the clerk's office, or file a motion to determine rent with your proof. In public or
+          subsidized housing, pay only your share. Then pay each new month's rent into the
+          registry when it is due until the case ends.
+        es: >-
+          En los mismos 5 días, deposite en el registro del tribunal, en la secretaría, la renta
+          que la demanda dice que usted debe, o presente una moción para determinar la renta con
+          sus pruebas. Si vive en vivienda pública o subsidiada, deposite solo la parte que le
+          toca. Después, deposite la renta de cada mes en el registro cuando venza, hasta que
+          termine el caso.
+    citations:
+      - label: Fla. Stat. § 83.60(2)
+        url: https://www.flsenate.gov/Laws/Statutes/2026/83.60
+      - label: Fla. Stat. § 51.011(1)
+        url: https://www.flsenate.gov/Laws/Statutes/2025/51.011
+
+  # ----------------------------------------------------------------- deposit
+  - id: deposit-no-claim
+    topic: deposit
+    kind: landlord_deadline
+    urgent: false
+    title:
+      en: Your landlord must return your deposit if they make no claim
+      es: El arrendador debe devolverle el depósito si no hace ningún reclamo
+    summary:
+      en: If your landlord isn't keeping any of your deposit, they must return it within 15 days after you move out.
+      es: Si el arrendador no se va a quedar con nada de su depósito, debe devolvérselo dentro de los 15 días después de que usted se mude.
+    trigger:
+      en: The day you moved out
+      es: El día en que se mudó
+    period: { amount: 15, unit: calendar_days }
+    extend_if_closed: false
+    explanation:
+      en: >-
+        If your landlord doesn't plan to take anything out of your security deposit, Florida law
+        gives them 15 days after you move out to return it, plus any interest owed. If they want to
+        keep some of it, they have 30 days instead to send you a written notice of their claim. The
+        law starts the clock when you move out at the end of your lease. Some guides say it starts
+        when the lease ends, so if you moved out before your lease ended, ask legal aid how to
+        count.
+      es: >-
+        Si el arrendador no piensa descontar nada de su depósito de garantía, la ley de Florida le
+        da 15 días después de que usted se mude para devolvérselo, más los intereses que se deban.
+        Si quiere quedarse con una parte, tiene 30 días para enviarle un aviso por escrito de su
+        reclamo. La ley empieza a contar cuando usted se muda al terminar el contrato. Algunas
+        guías dicen que empieza cuando termina el contrato, así que si se mudó antes de que
+        terminara su contrato, pregunte en una oficina de ayuda legal cómo contar.
+    if_missed:
+      en: >-
+        If 15 days pass with no refund, your landlord can still send a notice of claim until the
+        30-day deadline. If neither a refund nor a notice arrives within 30 days, your landlord
+        loses the right to keep any of your deposit.
+      es: >-
+        Si pasan 15 días sin que le devuelvan el depósito, el arrendador todavía puede enviar un
+        aviso de reclamo hasta que venza el plazo de 30 días. Si en 30 días no llega ni el
+        depósito ni un aviso, el arrendador pierde el derecho a quedarse con cualquier parte de su
+        depósito.
+    steps:
+      - en: >-
+          At least 7 days before you move out, give your landlord your new mailing address in
+          writing, by certified mail or hand delivery. Keep a copy.
+        es: >-
+          Por lo menos 7 días antes de mudarse, dele al arrendador su nueva dirección postal por
+          escrito, por correo certificado o en mano. Guarde una copia.
+      - en: On move-out day, take dated photos or video of every room, and return the keys.
+        es: El día en que se mude, tome fotos o video con fecha de cada cuarto y devuelva las llaves.
+      - en: If you get neither your deposit nor a notice of claim within 30 days, send a demand letter for the full deposit.
+        es: Si en 30 días no recibe ni su depósito ni un aviso de reclamo, envíe una carta para exigir el depósito completo.
+    letters: [deposit-demand]
+    citations:
+      - label: Fla. Stat. § 83.49(3)(a)
+        url: https://www.flsenate.gov/Laws/Statutes/2025/83.49
+
+  - id: deposit-claim-notice
+    topic: deposit
+    kind: landlord_deadline
+    urgent: false
+    title:
+      en: Your landlord must send a notice to keep any of your deposit
+      es: El arrendador debe enviarle un aviso para quedarse con parte de su depósito
+    summary:
+      en: >-
+        To keep any part of your deposit, your landlord must send you a written notice of the
+        claim by certified mail within 30 days after you move out.
+      es: >-
+        Para quedarse con cualquier parte de su depósito, el arrendador debe enviarle por correo
+        certificado un aviso por escrito del reclamo dentro de los 30 días después de que usted
+        se mude.
+    trigger:
+      en: The day you moved out
+      es: El día en que se mudó
+    period: { amount: 30, unit: calendar_days }
+    extend_if_closed: false
+    explanation:
+      en: >-
+        If your landlord wants to keep any of your deposit, they must send you a written notice
+        within 30 days after you move out, saying how much and why. It must go by certified mail to
+        your last known mailing address, or by email only if you both signed a lease addendum
+        agreeing to notices by email. If you moved out without giving your landlord at least 7
+        days' written notice with your new address, by certified mail or hand delivery, your
+        landlord doesn't have to send this notice, but you still keep your right to the deposit.
+        That 7-day rule mainly applies if you leave before your lease ends or rent month to month,
+        but it's safest to give the notice either way.
+      es: >-
+        Si el arrendador quiere quedarse con parte de su depósito, debe enviarle un aviso por
+        escrito dentro de los 30 días después de que usted se mude, que diga cuánto y por qué.
+        Debe enviarlo por correo certificado a su última dirección postal conocida, o por correo
+        electrónico solo si ambos firmaron un anexo del contrato para recibir avisos por correo
+        electrónico. Si usted se mudó sin darle al arrendador un aviso por escrito con su nueva
+        dirección por lo menos 7 días antes, por correo certificado o en mano, el arrendador no
+        tiene que enviarle este aviso, pero usted conserva su derecho al depósito. Esa regla de 7
+        días se aplica sobre todo si se va antes de que termine el contrato o si alquila mes a
+        mes, pero lo más seguro es dar el aviso en todo caso.
+    if_missed:
+      en: >-
+        If your landlord doesn't send the notice within 30 days, they lose the right to take
+        anything out of your deposit and must return all of it. They can still sue you separately
+        for damage to the home, but only after they return the deposit.
+      es: >-
+        Si el arrendador no envía el aviso dentro de los 30 días, pierde el derecho a descontar
+        cualquier cosa de su depósito y debe devolvérselo completo. Todavía puede demandarle por
+        separado por daños a la vivienda, pero solo después de devolverle el depósito.
+    steps:
+      - en: >-
+          At least 7 days before you move out, give your landlord written notice with your new
+          mailing address, by certified mail or hand delivery. Keep a copy.
+        es: >-
+          Por lo menos 7 días antes de mudarse, dele al arrendador un aviso por escrito con su
+          nueva dirección postal, por correo certificado o en mano. Guarde una copia.
+      - en: >-
+          Watch your mail. If the post office leaves a slip for certified mail, pick it up right
+          away: you have only 15 days to object after you receive the notice.
+        es: >-
+          Revise su correo. Si el correo le deja un aviso de carta certificada, recójala de
+          inmediato: tiene solo 15 días para objetar después de recibir el aviso.
+      - en: If you get a notice of claim and disagree with it, object in writing within 15 days.
+        es: Si recibe un aviso de reclamo y no está de acuerdo, objételo por escrito dentro de los 15 días.
+      - en: If no notice arrives within 30 days, send a demand letter for your full deposit.
+        es: Si no llega ningún aviso en 30 días, envíe una carta para exigir su depósito completo.
+    letters: [deposit-demand]
+    citations:
+      - label: Fla. Stat. § 83.49(3)(a), (5)
+        url: https://www.flsenate.gov/Laws/Statutes/2025/83.49
+      - label: Fla. Stat. § 83.505
+        url: https://www.flsenate.gov/Laws/Statutes/2025/83.505
+
+  - id: deposit-objection
+    topic: deposit
+    kind: tenant_deadline
+    urgent: true
+    title:
+      en: Object in writing to your landlord's deposit claim
+      es: Objetar por escrito el reclamo del arrendador sobre su depósito
+    summary:
+      en: If you disagree with your landlord's notice of claim on your deposit, you must object in writing within 15 days after you receive it.
+      es: Si no está de acuerdo con el aviso de reclamo del arrendador sobre su depósito, debe objetarlo por escrito dentro de los 15 días después de recibirlo.
+    trigger:
+      en: The day you received your landlord's notice of claim
+      es: El día en que recibió el aviso de reclamo del arrendador
+    period: { amount: 15, unit: calendar_days }
+    extend_if_closed: false
+    explanation:
+      en: >-
+        Your landlord's notice should say how much they want to keep, why, and where to send an
+        objection. If you disagree, you must object in writing within 15 days after you receive
+        it. The law doesn't say whether your objection must arrive or only be sent by then, and we
+        don't move the date if it falls on a weekend, so send it as early as you can and keep
+        proof of when you sent it. If you aren't sure when you received the notice, use the
+        earliest date it could have reached you, such as the date on a certified-mail slip.
+      es: >-
+        El aviso del arrendador debe decir cuánto quiere descontar, por qué y adónde enviar una
+        objeción. Si no está de acuerdo, debe objetarlo por escrito dentro de los 15 días después
+        de recibirlo. La ley no dice si su objeción tiene que llegar o solo enviarse en ese plazo,
+        y no movemos la fecha si cae en fin de semana, así que envíela lo antes posible y guarde
+        prueba de cuándo la envió. Si no está seguro de cuándo recibió el aviso, use la fecha más
+        temprana en que pudo haberle llegado, como la fecha del aviso de carta certificada.
+    if_missed:
+      en: >-
+        If you don't object in time, your landlord may take the amount claimed out of your
+        deposit, and must send you the rest within 30 days after the date of the notice. You may
+        still be able to sue for the money later, but it is harder, so talk to legal aid.
+      es: >-
+        Si no objeta a tiempo, el arrendador puede descontar de su depósito la cantidad que
+        reclama, y debe enviarle el resto dentro de los 30 días después de la fecha del aviso.
+        Es posible que todavía pueda demandar para recuperar el dinero, pero es más difícil, así
+        que consulte con una oficina de ayuda legal.
+    steps:
+      - en: Read the notice. Write down the amount, the reasons and the address for objections.
+        es: Lea el aviso. Anote la cantidad, los motivos y la dirección para enviar objeciones.
+      - en: >-
+          Write your objection: list each charge you disagree with and why. You can use the deposit
+          letter here and choose that you disagree with some charges.
+        es: >-
+          Escriba su objeción: indique cada cargo con el que no está de acuerdo y por qué. Puede
+          usar la carta del depósito de esta página y elegir que no está de acuerdo con algunos
+          cargos.
+      - en: >-
+          Send it to the address in the notice by certified mail with a return receipt, or
+          hand-deliver it and get a signed, dated copy. Keep copies, photos and receipts.
+        es: >-
+          Envíela a la dirección que aparece en el aviso por correo certificado con acuse de
+          recibo, o entréguela en mano y pida una copia firmada y con fecha. Guarde copias, fotos y
+          recibos.
+      - en: >-
+          If your landlord still keeps the money, you can sue in small claims court. The winner can
+          recover court costs and attorney's fees, so talk to legal aid first.
+        es: >-
+          Si el arrendador de todos modos se queda con el dinero, puede demandarle en el tribunal
+          de reclamos menores. Quien gane puede recuperar los gastos del tribunal y los honorarios
+          de abogado, así que consulte primero con una oficina de ayuda legal.
+    letters: [deposit-demand]
+    citations:
+      - label: Fla. Stat. § 83.49(3)(a)–(c)
+        url: https://www.flsenate.gov/Laws/Statutes/2025/83.49
+
+  # ----------------------------------------------------------------- repairs
+  - id: repair-notice
+    topic: repairs
+    kind: landlord_deadline
+    urgent: false
+    title:
+      en: Your landlord has 7 days to fix serious problems after your written notice
+      es: El arrendador tiene 7 días para arreglar problemas graves después de su aviso por escrito
+    summary:
+      en: >-
+        After your landlord gets your written notice about code, structure or plumbing problems,
+        they have 7 days to fix them before you can withhold rent or end your lease.
+      es: >-
+        Después de que el arrendador reciba su aviso por escrito sobre problemas de códigos, de la
+        estructura o de la plomería, tiene 7 días para arreglarlos antes de que usted pueda
+        retener la renta o terminar su contrato.
+    trigger:
+      en: The day you hand-delivered or mailed your written notice
+      es: El día en que entregó en mano o envió por correo su aviso por escrito
+    period: { amount: 7, unit: calendar_days }
+    extend_if_closed: false
+    options:
+      id: delivery
+      question:
+        en: How did you deliver the notice?
+        es: ¿Cómo entregó el aviso?
+      choices:
+        - id: hand-delivered
+          label:
+            en: I handed it to my landlord, their agent, the manager or the person I pay rent to
+            es: Se lo entregué en mano al arrendador, a su agente, al administrador o a la persona a quien le pago la renta
+        - id: mailed
+          label:
+            en: I mailed it
+            es: Lo envié por correo
+          add_days: 5
+          note:
+            en: >-
+              We add 5 days for mailing, which is how Florida courts often treat mailed notices,
+              but this is less certain for this notice. If your certified-mail receipt shows a
+              later delivery date, count 7 days from that date instead. Waiting longer is the
+              safer choice before you withhold rent.
+            es: >-
+              Sumamos 5 días por el envío por correo, que es como los tribunales de Florida suelen
+              tratar los avisos enviados por correo, pero esto es menos seguro para este aviso. Si
+              su recibo de correo certificado muestra una fecha de entrega posterior, cuente 7 días
+              desde esa fecha. Esperar más es lo más seguro antes de retener la renta.
+    explanation:
+      en: >-
+        This deadline matters if you plan to withhold rent. Florida lets you use your landlord's
+        failure to fix problems as a defense to an eviction for unpaid rent only if your written
+        notice listed the problems and said you intend to withhold rent, and 7 days have passed
+        since your landlord got it. This covers only problems under § 83.51(1): breaking building,
+        housing or health codes, or, where no code applies, problems with the roof, windows,
+        doors, floors, steps, porches, outside walls, foundation or plumbing. If you withhold, you
+        MUST save every dollar: if your landlord sues, you have to deposit that rent into the court
+        registry within 5 business days or you lose the defense. Talk to legal aid before you
+        withhold any rent.
+      es: >-
+        Este plazo importa si piensa retener la renta. En Florida, usted puede usar como defensa
+        en un desalojo por falta de pago el hecho de que el arrendador no arregló los problemas,
+        pero solo si su aviso por escrito indicaba los problemas y decía que usted piensa retener
+        la renta, y si pasaron 7 días desde que el arrendador lo recibió. Esto solo cubre los
+        problemas de la sección 83.51(1): violaciones de los códigos de construcción, vivienda o
+        salud o, donde no haya un código que se aplique, problemas con el techo, las ventanas, las
+        puertas, los pisos, las escaleras, los porches, las paredes exteriores, los cimientos o la
+        plomería. Si retiene la renta, DEBE guardar cada dólar: si el arrendador le demanda, tiene
+        que depositar esa renta en el registro del tribunal dentro de 5 días hábiles o pierde la
+        defensa. Consulte con una oficina de ayuda legal antes de retener cualquier renta.
+    if_missed:
+      en: >-
+        If the problems aren't fixed within 7 days, you may be able to withhold rent if your
+        notice said you would, and a judge decides how much rent, if any, you owe. If your notice
+        said you would end the lease, you may be able to do that instead. Withholding without the
+        right notice, or for the wrong kind of problem, can lead to eviction and to paying your
+        landlord's attorney's fees.
+      es: >-
+        Si los problemas no se arreglan en 7 días, es posible que pueda retener la renta si su
+        aviso decía que lo haría, y un juez decide cuánta renta debe, si debe alguna. Si su aviso
+        decía que terminaría el contrato, es posible que pueda hacerlo. Retener la renta sin el
+        aviso correcto, o por un problema que no está cubierto, puede llevar a un desalojo y a que
+        tenga que pagar los honorarios del abogado del arrendador.
+    steps:
+      - en: >-
+          Write a notice that lists each problem. If you might withhold rent, the notice must say
+          so. The repair letter here can add that language for you.
+        es: >-
+          Escriba un aviso que indique cada problema. Si es posible que retenga la renta, el aviso
+          debe decirlo. La carta de reparaciones de esta página puede agregar ese texto.
+      - en: >-
+          Hand-deliver it and get a signed, dated copy, or send it by certified mail with a return
+          receipt. Keep copies and photos.
+        es: >-
+          Entréguelo en mano y pida una copia firmada y con fecha, o envíelo por correo certificado
+          con acuse de recibo. Guarde copias y fotos.
+      - en: Talk to legal aid before you withhold any rent.
+        es: Consulte con una oficina de ayuda legal antes de retener cualquier renta.
+      - en: >-
+          If you withhold, set every dollar aside. If you are sued, you will have only 5 business
+          days to deposit it into the court registry.
+        es: >-
+          Si retiene la renta, guarde cada dólar aparte. Si le demandan, tendrá solo 5 días
+          hábiles para depositarlo en el registro del tribunal.
+    letters: [repair-request]
+    citations:
+      - label: Fla. Stat. § 83.51(1)
+        url: https://www.flsenate.gov/Laws/Statutes/2026/83.51
+      - label: Fla. Stat. § 83.60(1)(b), (2)
+        url: https://www.flsenate.gov/Laws/Statutes/2026/83.60
+      - label: Fla. Stat. § 83.56(1)
+        url: https://www.flsenate.gov/Laws/Statutes/2026/83.56
+      - label: Fla. Stat. § 83.64
+        url: https://www.flsenate.gov/Laws/Statutes/2026/83.64
+        note:
+          en: Your landlord may not retaliate against you for a good-faith complaint, for example by raising the rent, cutting services or threatening eviction.
+          es: El arrendador no puede tomar represalias contra usted por una queja de buena fe, por ejemplo subiéndole la renta, quitándole servicios o amenazándole con un desalojo.

@@ -31,7 +31,11 @@ holidays:
     name: { en: Labor Day, es: Día del Trabajo }
     date: { month: 9, weekday: mon, nth: 1 }
   - id: columbus-day
-    name: { en: Columbus Day / Indigenous Peoples' Day, es: Día de Colón / Día de los Pueblos Indígenas }
+    name:
+      {
+        en: Columbus Day / Indigenous Peoples' Day,
+        es: Día de Colón / Día de los Pueblos Indígenas
+      }
     date: { month: 10, weekday: mon, nth: 2 }
   - id: veterans-day
     name: { en: Veterans Day, es: Día de los Veteranos }

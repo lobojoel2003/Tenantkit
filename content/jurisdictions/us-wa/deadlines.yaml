@@ -1,0 +1,475 @@
+# yaml-language-server: $schema=../../../schema/deadlines.schema.json
+# Washington deadlines. Every rule cites the RCW on app.leg.wa.gov.
+#
+# Not modeled as a deadline on purpose: the answer to an eviction summons. Its date is
+# printed on the summons and can be anywhere from 7 to 30 days after service
+# (RCW 59.12.070), so it can't be calculated. The pay-or-vacate entry tells people to
+# use the date on the summons, mail early, and call the screening line.
+schema_version: 1
+deadlines:
+  - id: pay-or-vacate
+    topic: eviction
+    kind: tenant_deadline
+    urgent: true
+    title:
+      en: Pay the rent or move out (14-day notice)
+      es: Pagar la renta o desocupar (aviso de 14 días)
+    summary:
+      en: >-
+        After you get a 14-day notice to pay or vacate, you have 14 days to pay the full amount
+        it demands.
+      es: >-
+        Después de recibir un aviso de 14 días para pagar o desocupar (14-day notice to pay or
+        vacate), tiene 14 días para pagar todo lo que le cobra.
+    trigger:
+      en: The day the notice was served (handed to you, posted or mailed)
+      es: El día en que le entregaron el aviso (en persona, pegado en la puerta o por correo)
+    period: { amount: 14, unit: calendar_days }
+    # RCW 1.12.040 may move a last day that falls on a weekend or legal holiday to the next
+    # business day. We don't count that extra time for the tenant's pay-by date (safer).
+    extend_if_closed: false
+    options:
+      id: delivery
+      question:
+        en: How did you get the notice?
+        es: ¿Cómo recibió el aviso?
+      choices:
+        - id: in-person
+          label:
+            en: It was handed to me personally
+            es: Me lo entregaron a mí en persona
+          note:
+            en: Day 1 is the day after the notice was handed to you.
+            es: El día 1 es el día siguiente a la entrega del aviso.
+        - id: mailed
+          label:
+            en: A copy was mailed to me (it may also have been posted on my door or left with someone)
+            es: Me enviaron una copia por correo (quizás también la pegaron en la puerta o se la dejaron a otra persona)
+          # Deliberately 0, not 5. RCW 59.12.040 (as amended by HB 2664, 2026) says that when
+          # the notice is served by mail, 5 more days must pass before the landlord can FILE.
+          # It doesn't clearly give the tenant 5 more days to pay, so we keep the earlier date.
+          add_days: 0
+          note:
+            en: >-
+              When the notice is mailed, your landlord must wait 5 more days before filing an
+              eviction case (RCW 59.12.040). It's not clear that this gives you more time to pay,
+              so Tenantkit doesn't add those days. Count from the earliest date: the day the
+              notice was posted, left with someone, or mailed.
+            es: >-
+              Cuando el aviso se envía por correo, el arrendador debe esperar 5 días más antes de
+              presentar un caso de desalojo (RCW 59.12.040). No está claro que eso le dé a usted
+              más tiempo para pagar, así que Tenantkit no suma esos días. Cuente desde la fecha
+              más temprana: el día en que pegaron el aviso, se lo dejaron a otra persona o lo
+              enviaron por correo.
+    explanation:
+      en: >-
+        Pay everything the notice demands within 14 days, or move out. Day 1 is the day after
+        the notice was served. The notice can only demand rent, utilities and other recurring
+        charges listed in your rental agreement, not late fees or lawyer's fees, and if you pay
+        the full amount in time, your landlord can't use this notice to evict you. If day 14
+        falls on a weekend or legal holiday, state law (RCW 1.12.040) may give you until the
+        next business day, but Tenantkit doesn't count that extra time, to be safe. If your
+        home has a federally backed mortgage or is in a federal housing program (like Section
+        8, public housing or tax-credit housing), the Washington Supreme Court has held that
+        your landlord must give you a 30-day notice instead (Knight, 2025), so ask legal aid,
+        and still pay by the date shown if you can.
+      es: >-
+        Pague todo lo que le cobra el aviso dentro de 14 días, o desocupe la vivienda. El día 1
+        es el día siguiente a la entrega del aviso. El aviso solo puede cobrar la renta, los
+        servicios públicos y otros cargos periódicos que aparecen en su contrato, no cargos por
+        atraso ni honorarios de abogados, y si paga todo a tiempo, el arrendador no puede usar
+        este aviso para desalojarle. Si el día 14 cae en fin de semana o en un feriado oficial,
+        la ley estatal (RCW 1.12.040) podría darle hasta el siguiente día hábil, pero Tenantkit
+        no cuenta ese tiempo extra, para mayor seguridad. Si su vivienda tiene una hipoteca
+        respaldada por el gobierno federal o forma parte de un programa federal de vivienda
+        (como la Sección 8, la vivienda pública o la vivienda con créditos fiscales), la Corte
+        Suprema de Washington decidió que el arrendador debe darle un aviso de 30 días (caso
+        Knight, 2025); consulte con una oficina de ayuda legal y, si puede, pague de todos
+        modos antes de la fecha indicada.
+    if_missed:
+      en: >-
+        If you don't pay in full by then, your landlord can file an eviction case (5 days later
+        if the notice was mailed). You may still be able to keep your home by paying the rent,
+        court costs and some fees before the judgment, or within 5 court days after it (RCW
+        59.18.410). If you get a summons, you must respond by the date printed on it, which can
+        be as soon as 7 days after it was served on you (RCW 59.12.070). Tenantkit can't
+        calculate that date for you, so read the summons as soon as you get it.
+      es: >-
+        Si no paga todo para esa fecha, el arrendador puede presentar un caso de desalojo (5
+        días después si el aviso se envió por correo). Aún podría quedarse en su vivienda si
+        paga la renta, los costos judiciales y algunos cargos antes de la sentencia, o dentro de
+        los 5 días hábiles del tribunal después de ella (RCW 59.18.410). Si recibe una citación
+        (summons), debe responder antes de la fecha impresa en ella, que puede ser apenas 7 días
+        después de que se la entregaron (RCW 59.12.070). Tenantkit no puede calcular esa fecha,
+        así que lea la citación en cuanto la reciba.
+    steps:
+      - en: >-
+          Pay the full amount the notice demands by the date shown, in a way you can prove
+          (check, money order or online payment), and keep the receipt.
+        es: >-
+          Pague todo lo que le cobra el aviso antes de la fecha indicada, de una forma que pueda
+          comprobar (cheque, giro postal o pago en línea), y guarde el recibo.
+      - en: If you can't pay it all, call 2-1-1 to ask about rental assistance, and call legal aid right away.
+        es: >-
+          Si no puede pagarlo todo, llame al 2-1-1 para preguntar por ayuda para pagar la renta y
+          comuníquese de inmediato con una oficina de ayuda legal.
+      - en: >-
+          If you get court papers (a summons), respond by 5:00 p.m. on the date printed on the
+          summons: give your landlord or their lawyer a Notice of Appearance or an Answer, and
+          file it with the court. If you mail it, mail it more than 3 days before that date.
+        es: >-
+          Si recibe documentos del tribunal (una citación o summons), responda antes de las 5:00
+          p. m. de la fecha impresa en la citación: entréguele al arrendador o a su abogado un
+          Aviso de Comparecencia (Notice of Appearance) o una Respuesta (Answer), y preséntelo en
+          el tribunal. Si lo envía por correo, envíelo más de 3 días antes de esa fecha.
+      - en: >-
+          Call the Eviction Defense Screening Line at 1-855-657-8387 as soon as you get court
+          papers. If your income is low, the court may appoint a free lawyer for you (RCW
+          59.18.640).
+        es: >-
+          Llame a la Línea de Evaluación para la Defensa contra Desalojos (Eviction Defense
+          Screening Line) al 1-855-657-8387 en cuanto reciba documentos del tribunal. Si tiene
+          bajos ingresos, el tribunal podría asignarle un abogado gratis (RCW 59.18.640).
+    letters: [payment-plan]
+    citations:
+      - label: RCW 59.12.030(3)
+        url: https://app.leg.wa.gov/RCW/default.aspx?cite=59.12.030
+        note:
+          en: 14 days to pay the rent or move out.
+          es: 14 días para pagar la renta o desocupar.
+      - label: RCW 59.18.057
+        url: https://app.leg.wa.gov/RCW/default.aspx?cite=59.18.057
+        note:
+          en: The notice form, and what the notice may demand.
+          es: El formulario del aviso y lo que puede cobrar.
+      - label: RCW 59.12.040
+        url: https://app.leg.wa.gov/RCW/default.aspx?cite=59.12.040
+        note:
+          en: How the notice must be served, and the 5 extra days before filing when it is mailed.
+          es: Cómo se debe entregar el aviso y los 5 días extra antes de presentar el caso si se envía por correo.
+      - label: HB 2664 (2026), final bill report
+        url: https://lawfilesext.leg.wa.gov/biennium/2025-26/Pdf/Bill%20Reports/House/2664%20HBR%20FBR%2026.pdf
+        note:
+          en: Since June 11, 2026, a mailed notice no longer has to go by certified mail.
+          es: Desde el 11 de junio de 2026, el aviso enviado por correo ya no tiene que ir por correo certificado.
+      - label: RCW 1.12.040
+        url: https://app.leg.wa.gov/RCW/default.aspx?cite=1.12.040
+        note:
+          en: How days are counted, including weekends and holidays.
+          es: Cómo se cuentan los días, incluidos los fines de semana y los feriados.
+      - label: RCW 59.18.410
+        url: https://app.leg.wa.gov/RCW/default.aspx?cite=59.18.410
+        note:
+          en: Paying to keep your home after an eviction case is filed (reinstatement).
+          es: Pagar para quedarse en la vivienda después de que se presenta un caso de desalojo (restablecimiento).
+      - label: RCW 59.12.070
+        url: https://app.leg.wa.gov/RCW/default.aspx?cite=59.12.070
+        note:
+          en: The summons must give you 7 to 30 days to respond.
+          es: La citación debe darle de 7 a 30 días para responder.
+      - label: RCW 59.18.640
+        url: https://app.leg.wa.gov/RCW/default.aspx?cite=59.18.640
+        note:
+          en: Right to a court-appointed lawyer for tenants with low incomes.
+          es: Derecho a un abogado asignado por el tribunal para inquilinos de bajos ingresos.
+      - label: Housing Authority of King County v. Knight (Wash. 2025)
+        url: https://www.courts.wa.gov/opinions/pdf/1029055.pdf
+        note:
+          en: The federal CARES Act 30-day notice applies to nonpayment evictions in covered housing.
+          es: El aviso federal de 30 días de la ley CARES se aplica a desalojos por falta de pago en viviendas cubiertas.
+
+  - id: repair-start
+    topic: repairs
+    kind: landlord_deadline
+    urgent: false
+    title:
+      en: Your landlord must start repairs
+      es: El arrendador debe empezar las reparaciones
+    summary:
+      en: >-
+        After your landlord gets your written notice, they must start repairs within 24 hours,
+        72 hours or 10 days, depending on the problem.
+      es: >-
+        Después de recibir su aviso por escrito, el arrendador debe empezar las reparaciones en
+        un plazo de 24 horas, 72 horas o 10 días, según el problema.
+    trigger:
+      en: The day your landlord got your written notice
+      es: El día en que el arrendador recibió su aviso por escrito
+    # Must match the first choice: letters that use this deadline get the first choice's period.
+    period: { amount: 24, unit: hours }
+    # Not extended: the 24- and 72-hour limits run in hours, and moving them past a weekend
+    # would tell people their landlord has more time than it does.
+    extend_if_closed: false
+    options:
+      id: problem
+      question:
+        en: What is the problem?
+        es: ¿Cuál es el problema?
+      choices:
+        - id: no-heat-water-power-or-hazard
+          label:
+            en: No heat, no hot or cold water, no electricity, or something that puts lives in danger
+            es: No hay calefacción, agua caliente o fría, ni electricidad, o hay algo que pone vidas en peligro
+          period: { amount: 24, unit: hours }
+          note:
+            en: >-
+              The 24 hours start when your landlord gets your notice, so the time of day matters.
+              The date shown is the day the 24 hours run out.
+            es: >-
+              Las 24 horas empiezan cuando el arrendador recibe su aviso, así que la hora del día
+              importa. La fecha indicada es el día en que se cumplen las 24 horas.
+        - id: appliance-or-plumbing
+          label:
+            en: >-
+              The refrigerator, stove and oven, or a major plumbing fixture (like a toilet, sink or
+              tub) that your landlord provided doesn't work
+            es: >-
+              No funciona el refrigerador, la estufa con horno o un accesorio de plomería importante
+              (como el inodoro, el lavabo o la tina) que le dio el arrendador
+          period: { amount: 72, unit: hours }
+          note:
+            en: >-
+              The 72 hours start when your landlord gets your notice. The date shown is the day the
+              72 hours run out.
+            es: >-
+              Las 72 horas empiezan cuando el arrendador recibe su aviso. La fecha indicada es el
+              día en que se cumplen las 72 horas.
+        - id: other
+          label:
+            en: Any other repair
+            es: Cualquier otra reparación
+          period: { amount: 10, unit: calendar_days }
+          note:
+            en: >-
+              If day 10 falls on a weekend or legal holiday, your landlord may have until the next
+              business day (RCW 1.12.040).
+            es: >-
+              Si el día 10 cae en fin de semana o en un feriado oficial, el arrendador podría tener
+              hasta el siguiente día hábil (RCW 1.12.040).
+    explanation:
+      en: >-
+        This is when your landlord must start repairs, not finish them. The clock starts when
+        your landlord, or the person named for notices, gets your written notice, so keep proof
+        of the date, and of the time for the 24- and 72-hour limits. Your landlord may get more
+        time if the delay is truly beyond their control, but must still make the repair as soon
+        as possible. To use your repair rights under this law, you must be up to date on rent
+        and utilities.
+      es: >-
+        Este es el plazo para que el arrendador empiece las reparaciones, no para que las
+        termine. El plazo empieza cuando el arrendador, o la persona designada para recibir
+        avisos, recibe su aviso por escrito, así que guarde una prueba de la fecha, y también de
+        la hora para los plazos de 24 y 72 horas. El arrendador podría tener más tiempo si el
+        retraso de verdad no depende de él, pero aun así debe hacer la reparación lo antes
+        posible. Para usar sus derechos de reparación según esta ley, debe estar al día con la
+        renta y los servicios públicos.
+    if_missed:
+      en: >-
+        If your landlord doesn't start in time and you are up to date on rent and utilities,
+        you may be able to end your rental agreement with written notice (RCW 59.18.090), hire
+        someone to make the repair and take the cost out of your rent, up to set limits (RCW
+        59.18.100), or ask a court to lower your rent or, in some cases, let you pay rent into
+        an escrow account (RCW 59.18.110 and 59.18.115). Each option has strict steps, so talk
+        to legal aid before you hold back or deduct any rent.
+      es: >-
+        Si el arrendador no empieza a tiempo y usted está al día con la renta y los servicios
+        públicos, podría terminar su contrato con un aviso por escrito (RCW 59.18.090), contratar
+        a alguien para hacer la reparación y descontar el costo de la renta, hasta ciertos
+        límites (RCW 59.18.100), o pedirle a un tribunal que baje la renta o, en algunos casos,
+        que le permita depositar la renta en una cuenta de garantía (escrow) (RCW 59.18.110 y
+        59.18.115). Cada opción tiene pasos estrictos, así que hable con una oficina de ayuda
+        legal antes de retener o descontar renta.
+    steps:
+      - en: >-
+          Write to your landlord, or the person your rental agreement names for notices, and
+          describe each problem. The repair letter can help.
+        es: >-
+          Escríbale al arrendador, o a la persona que su contrato designa para recibir avisos, y
+          describa cada problema. La carta de reparaciones le puede ayudar.
+      - en: >-
+          Deliver it in a way that proves when they got it: hand it over and ask for a signed,
+          dated copy, or use certified mail with a return receipt.
+        es: >-
+          Entréguela de una forma que compruebe cuándo la recibieron: entréguela en mano y pida
+          una copia firmada y con fecha, o envíela por correo certificado con acuse de recibo.
+      - en: Keep paying rent and utilities on time, and take dated photos of each problem.
+        es: Siga pagando la renta y los servicios públicos a tiempo, y tome fotos con fecha de cada problema.
+      - en: If repairs don't start in time, talk to legal aid before you deduct or hold back rent.
+        es: Si las reparaciones no empiezan a tiempo, hable con una oficina de ayuda legal antes de descontar o retener renta.
+    letters: [repair-request]
+    citations:
+      - label: RCW 59.18.070
+        url: https://app.leg.wa.gov/RCW/default.aspx?cite=59.18.070
+        note:
+          en: The 24-hour, 72-hour and 10-day deadlines to start repairs.
+          es: Los plazos de 24 horas, 72 horas y 10 días para empezar las reparaciones.
+      - label: RCW 59.18.060
+        url: https://app.leg.wa.gov/RCW/default.aspx?cite=59.18.060
+        note:
+          en: What your landlord must keep in good repair.
+          es: Lo que el arrendador debe mantener en buen estado.
+      - label: RCW 59.18.080
+        url: https://app.leg.wa.gov/RCW/default.aspx?cite=59.18.080
+        note:
+          en: You must be current on rent and utilities to use these remedies.
+          es: Debe estar al día con la renta y los servicios públicos para usar estos recursos.
+      - label: RCW 59.18.090
+        url: https://app.leg.wa.gov/RCW/default.aspx?cite=59.18.090
+      - label: RCW 59.18.100
+        url: https://app.leg.wa.gov/RCW/default.aspx?cite=59.18.100
+        note:
+          en: Repair and deduct, and its limits.
+          es: Reparar y descontar de la renta, y sus límites.
+      - label: RCW 59.18.110
+        url: https://app.leg.wa.gov/RCW/default.aspx?cite=59.18.110
+      - label: RCW 59.18.115
+        url: https://app.leg.wa.gov/RCW/default.aspx?cite=59.18.115
+
+  - id: deposit-return
+    topic: deposit
+    kind: landlord_deadline
+    urgent: false
+    title:
+      en: Your landlord must return your deposit
+      es: El arrendador debe devolverle el depósito
+    summary:
+      en: >-
+        Your landlord has 30 days after your rental agreement ends and you move out to return
+        your deposit or explain in writing why they kept any of it.
+      es: >-
+        El arrendador tiene 30 días después de que termina su contrato y usted se muda para
+        devolverle el depósito o explicarle por escrito por qué se quedó con una parte.
+    trigger:
+      en: The day your rental agreement ended or you moved out, whichever was later
+      es: El día en que terminó su contrato o el día en que se mudó, el que haya sido más tarde
+    period: { amount: 30, unit: calendar_days }
+    extend_if_closed: false
+    explanation:
+      en: >-
+        Within 30 days, your landlord must return your deposit, or give you a full and specific
+        written statement of why they are keeping any of it along with any refund, in person or
+        by first-class mail to your last known address. For damage charges, the statement must
+        include copies of estimates or invoices, or the time spent and hourly rate if the
+        landlord did the work. Your landlord can't keep any of the deposit for normal wear from
+        ordinary use. If day 30 falls on a weekend or legal holiday, your landlord may have
+        until the next business day, so wait until then before you go to court.
+      es: >-
+        Dentro de 30 días, el arrendador debe devolverle el depósito, o darle una explicación
+        por escrito, completa y específica, de por qué se queda con una parte, junto con lo que
+        le corresponda devolver, en persona o por correo regular a su última dirección conocida.
+        Para cobrar daños, la explicación debe incluir copias de presupuestos o facturas, o las
+        horas de trabajo y la tarifa por hora si el arrendador hizo el trabajo. El arrendador no
+        puede quedarse con nada del depósito por el desgaste normal del uso ordinario. Si el día
+        30 cae en fin de semana o en un feriado oficial, el arrendador podría tener hasta el
+        siguiente día hábil, así que espere hasta entonces antes de ir al tribunal.
+    if_missed:
+      en: >-
+        If your landlord misses the deadline, they may be liable for your full deposit and
+        usually can't argue for keeping any of it, unless something beyond their control caused
+        the delay or you abandoned the home. A court may award up to twice the deposit if your
+        landlord intentionally refused to give you the statement, documents or refund. The side
+        that wins can also be awarded court costs and lawyer's fees.
+      es: >-
+        Si el arrendador no cumple el plazo, podría tener que devolverle todo el depósito y, por
+        lo general, no puede alegar razones para quedarse con una parte, salvo que algo fuera de
+        su control causara el retraso o que usted haya abandonado la vivienda. Un tribunal puede
+        otorgarle hasta el doble del depósito si el arrendador se negó a propósito a darle la
+        explicación, los documentos o el reembolso. La parte que gane también puede recibir los
+        costos judiciales y los honorarios de abogados.
+    steps:
+      - en: Give your landlord your new mailing address in writing.
+        es: Dele al arrendador su nueva dirección postal por escrito.
+      - en: >-
+          If the deadline passes without your deposit or a full statement, send a demand letter.
+        es: >-
+          Si pasa el plazo y no recibe su depósito ni una explicación completa, envíe una carta
+          de reclamación.
+      - en: Keep your rental agreement, move-in checklist, photos and anything your landlord sends you.
+        es: Guarde su contrato, la lista de revisión de la mudanza, las fotos y todo lo que le envíe el arrendador.
+      - en: >-
+          If you still don't get it back, you can file in small claims court. Legal aid can help
+          you decide.
+        es: >-
+          Si aun así no se lo devuelven, puede presentar un reclamo en el tribunal de reclamos
+          menores. Una oficina de ayuda legal le puede ayudar a decidir.
+    letters: [deposit-demand]
+    citations:
+      - label: RCW 59.18.280
+        url: https://app.leg.wa.gov/RCW/default.aspx?cite=59.18.280
+      - label: SHB 1074 (2023), final bill report
+        url: https://lawfilesext.leg.wa.gov/Biennium/2023-24/Htm/Bill%20Reports/House/1074-S%20HBR%20FBR%2023.htm
+        note:
+          en: Changed the deadline from 21 to 30 days and added the documentation rules, starting July 23, 2023.
+          es: Cambió el plazo de 21 a 30 días y agregó las reglas sobre documentos, a partir del 23 de julio de 2023.
+
+  - id: retaliation-protection
+    topic: repairs
+    kind: protection_period
+    urgent: false
+    title:
+      en: Protection from retaliation
+      es: Protección contra represalias
+    summary:
+      en: >-
+        For 90 days after you complain or use your rights, an eviction or rent increase is
+        presumed to be retaliation.
+      es: >-
+        Durante 90 días después de que usted presenta una queja o hace valer sus derechos, se
+        presume que un desalojo o un aumento de renta es una represalia.
+    trigger:
+      en: The day you complained or used your rights (for example, sent a written repair request)
+      es: El día en que presentó una queja o hizo valer sus derechos (por ejemplo, envió una solicitud de reparación por escrito)
+    period: { amount: 90, unit: calendar_days }
+    extend_if_closed: false
+    explanation:
+      en: >-
+        If your landlord tries to evict you, raises your rent, cuts services or adds new duties
+        within 90 days after you made a good-faith complaint to a government agency (like a
+        code inspector) or used your rights under Washington's landlord-tenant law, the law
+        presumes it is retaliation, and your landlord has to show otherwise. If a government
+        inspection or action came after your complaint, the 90 days can also run from that later
+        date, so you can enter it instead. The presumption works against you if you were behind
+        on rent when your landlord gave you a notice ending your tenancy, or if you complained
+        within 90 days after your landlord proposed a rent increase. It also doesn't cover a
+        rent increase whose notice gives reasonable grounds for it.
+      es: >-
+        Si el arrendador trata de desalojarle, le sube la renta, le quita servicios o le impone
+        nuevas obligaciones dentro de los 90 días después de que usted presentó de buena fe una
+        queja ante una agencia del gobierno (como un inspector de códigos de vivienda) o hizo
+        valer sus derechos según la ley de arrendamiento de Washington, la ley presume que es
+        una represalia, y el arrendador tiene que demostrar lo contrario. Si después de su queja
+        hubo una inspección o una acción del gobierno, los 90 días también pueden contar desde
+        esa fecha posterior, así que puede usar esa fecha. La presunción va en su contra si usted
+        estaba atrasado con la renta cuando el arrendador le dio un aviso para terminar el
+        arrendamiento, o si presentó la queja dentro de los 90 días después de que el
+        arrendador propuso un aumento de renta. Tampoco cubre un aumento de renta cuyo aviso da
+        razones justificadas.
+    if_missed:
+      en: >-
+        After 90 days, retaliation is still against the law, but there is no presumption: you
+        would need to show that your landlord acted because of your complaint.
+      es: >-
+        Después de 90 días, las represalias siguen siendo ilegales, pero ya no hay presunción:
+        usted tendría que demostrar que el arrendador actuó por su queja.
+    steps:
+      - en: Keep copies of your complaint or repair request, and proof of the date.
+        es: Guarde copias de su queja o de su solicitud de reparación, y una prueba de la fecha.
+      - en: Keep paying rent on time, so the presumption stays on your side.
+        es: Siga pagando la renta a tiempo, para que la presunción siga a su favor.
+      - en: >-
+          If your landlord gives you a notice to move, raises the rent or cuts services, write
+          down the date and call legal aid right away.
+        es: >-
+          Si el arrendador le da un aviso para mudarse, le sube la renta o le quita servicios,
+          anote la fecha y llame de inmediato a una oficina de ayuda legal.
+    letters: [repair-request]
+    citations:
+      - label: RCW 59.18.240
+        url: https://app.leg.wa.gov/RCW/default.aspx?cite=59.18.240
+        note:
+          en: Retaliation is not allowed.
+          es: Las represalias no están permitidas.
+      - label: RCW 59.18.250
+        url: https://app.leg.wa.gov/RCW/default.aspx?cite=59.18.250
+        note:
+          en: The 90-day presumption and its exceptions.
+          es: La presunción de 90 días y sus excepciones.

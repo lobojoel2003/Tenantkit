@@ -1,0 +1,85 @@
+# yaml-language-server: $schema=../../../../schema/letter.schema.json
+# California version of the shared deposit demand letter: adds the Civil Code § 1950.5 rules
+# and the electronic-return rule (AB 414, from January 1, 2026).
+schema_version: 1
+id: deposit-demand
+extends: deposit-demand
+fields:
+  - id: paid_electronically
+    type: checkbox
+    label:
+      en: I paid rent or my deposit electronically (online, by app or by bank transfer)
+      es: Pagué la renta o el depósito de forma electrónica (en línea, con una aplicación o por transferencia bancaria)
+    help:
+      en: >-
+        Since 2026, California law says your landlord must then return your deposit electronically,
+        to an account you name in writing, unless you both agree in writing to another way.
+      es: >-
+        Desde 2026, la ley de California dice que entonces el arrendador debe devolverle el depósito
+        de forma electrónica, a una cuenta que usted indique por escrito, a menos que los dos acuerden
+        otra forma por escrito.
+  - id: electronic_account
+    type: text
+    required: true
+    max_length: 200
+    show_if: { field: paid_electronically }
+    label:
+      en: Which account or payment app should your landlord send the money to?
+      es: ¿A qué cuenta o aplicación de pagos debe enviarle el dinero el arrendador?
+    help:
+      en: >-
+        For example, the same account you paid rent from, or the email or phone number for your
+        payment app. You don't have to write your full bank account number in the letter.
+      es: >-
+        Por ejemplo, la misma cuenta desde la que pagaba la renta, o el correo electrónico o número de
+        teléfono de su aplicación de pagos. No tiene que escribir su número de cuenta bancaria completo
+        en la carta.
+    placeholder:
+      en: My Zelle account (ana.lopez@example.com)
+      es: Mi cuenta de Zelle (ana.lopez@example.com)
+params:
+  law:
+    en: |
+      California Civil Code section 1950.5 requires you to return my full deposit, or send me an
+      itemized statement of deductions with the rest of my deposit, within 21 days after I moved out:
+      by {{deposit_deadline}}. The statement must include copies of receipts or invoices for repair
+      and cleaning charges over $125. Since April 1, 2025, it must also include photos of the home
+      taken after I moved out, before and after any repairs or cleaning. You may not deduct for
+      ordinary wear and tear.
+
+      {{#if paid_electronically}}
+      Because I paid electronically, the law also requires you to return my deposit electronically,
+      unless we both agree in writing to another method. Please send the money to this account:
+      {{electronic_account}}. You can mail the itemized statement and photos to my address below.
+
+      {{/if}}
+      If a court finds that you kept my deposit in bad faith, you may be liable for up to twice the
+      amount of the deposit in damages, in addition to the amount owed.
+    es: |
+      El Código Civil de California, sección 1950.5, le exige devolverme todo el depósito, o
+      enviarme una lista detallada de descuentos junto con el resto de mi depósito, dentro de los 21
+      días después de que me mudé: a más tardar el {{deposit_deadline}}. La lista debe incluir copias
+      de los recibos o facturas de los cargos de reparación y limpieza que pasen de $125. Desde el 1 de
+      abril de 2025, también debe incluir fotos de la vivienda tomadas después de que me mudé, antes y
+      después de cualquier reparación o limpieza. No puede descontar por el desgaste normal.
+
+      {{#if paid_electronically}}
+      Como pagué de forma electrónica, la ley también le exige devolverme el depósito de forma
+      electrónica, a menos que los dos acordemos otra forma por escrito. Por favor, envíe el dinero a
+      esta cuenta: {{electronic_account}}. Puede enviarme por correo la lista detallada y las fotos a
+      mi dirección que aparece más abajo.
+
+      {{/if}}
+      Si un tribunal decide que usted se quedó con mi depósito de mala fe, podría tener que pagar hasta
+      el doble del depósito por daños, además de la cantidad que me debe.
+computed:
+  deposit_deadline:
+    from: move_out_date
+    deadline: deposit-return
+citations:
+  - label: Cal. Civ. Code § 1950.5
+    url: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1950.5
+  - label: AB 2801 (2024), move-out photos
+    url: https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202320240AB2801
+  - label: AB 414 (2025), electronic return of deposits
+    url: https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202520260AB414

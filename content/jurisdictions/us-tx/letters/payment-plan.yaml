@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../../../schema/letter.schema.json
+# Texas version of the payment plan letter. Only the tips change: since 2026, a tenant who gets a
+# "notice to pay rent or vacate" can stay by paying the rent owed in full within the notice period
+# (Prop. Code § 24.005), and a payment plan offer doesn't pause that period.
+schema_version: 1
+id: payment-plan
+extends: payment-plan
+delivery_tips:
+  - en: >-
+      If you got a notice to pay rent or vacate, paying all the rent you owe before the notice period
+      ends should let you stay. This offer does not pause that period, so pay in full if you can, and get a
+      receipt.
+    es: >-
+      Si recibió un aviso para pagar la renta o desocupar, pagar toda la renta que debe antes de que
+      termine el plazo del aviso debería permitirle quedarse. Esta oferta no detiene ese plazo, así que pague
+      todo si puede y pida un recibo.
+  - en: This letter does not stop an eviction case. If you got court papers (a citation), you must still go to the trial on the date they show.
+    es: Esta carta no detiene un caso de desalojo. Si recibió documentos del tribunal (un citatorio), igual tiene que ir al juicio en la fecha que indican.
+  - en: If your landlord agrees, get the plan in writing and signed. Keep receipts for every payment.
+    es: Si el arrendador está de acuerdo, pida el plan por escrito y firmado. Guarde los recibos de cada pago.
+  - en: Contact legal aid or a local tenant group before you sign any agreement to move out.
+    es: Comuníquese con una oficina de ayuda legal o un grupo de inquilinos antes de firmar cualquier acuerdo para mudarse.
+citations:
+  - label: Tex. Prop. Code § 24.005
+    url: https://statutes.capitol.texas.gov/Docs/PR/htm/PR.24.htm#24.005

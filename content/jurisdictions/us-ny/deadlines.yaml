@@ -1,0 +1,331 @@
+# yaml-language-server: $schema=../../../schema/deadlines.schema.json
+# New York deadlines. Counting follows General Construction Law § 20 (the day of the event is not
+# counted). Only nyc-answer moves a last day off a weekend or holiday (GCL § 25-a).
+schema_version: 1
+deadlines:
+  - id: rent-demand
+    topic: eviction
+    kind: waiting_period
+    urgent: true
+    title:
+      en: Your 14 days to pay after a written rent demand
+      es: Sus 14 días para pagar después de un aviso por escrito para cobrar la renta
+    summary:
+      en: Your landlord must give you a written rent demand and 14 days to pay before starting a nonpayment case in court.
+      es: El arrendador debe darle un aviso por escrito para cobrar la renta y 14 días para pagar antes de iniciar un caso por falta de pago en el tribunal.
+    trigger:
+      en: The day you got or found the written rent demand
+      es: El día en que recibió o encontró el aviso por escrito para cobrar la renta
+    period: { amount: 14, unit: calendar_days }
+    extend_if_closed: false
+    explanation:
+      en: >-
+        Before your landlord can take you to court for unpaid rent, they must give you a written
+        demand that gives you at least 14 days to pay. If you pay all the rent the demand asks for
+        within those 14 days, your landlord can't start a nonpayment case based on that demand. The
+        date shown is the last of your 14 days, and your landlord can't file until after it. When a
+        demand is taped to your door or left with someone else, the law isn't clear about when the 14
+        days start, so we count from the first day any copy reached you; use an earlier date if you
+        think it was left earlier.
+      es: >-
+        Antes de llevarle al tribunal por renta no pagada, el arrendador debe darle un aviso por
+        escrito que le dé por lo menos 14 días para pagar. Si paga toda la renta que pide el aviso
+        dentro de esos 14 días, el arrendador no puede iniciar un caso por falta de pago basado en ese
+        aviso. La fecha que mostramos es el último de sus 14 días, y el arrendador no puede presentar
+        el caso hasta después de esa fecha. Cuando el aviso se pega en su puerta o se deja con otra
+        persona, la ley no deja claro cuándo empiezan los 14 días, así que contamos desde el primer
+        día en que le llegó cualquier copia; use una fecha anterior si cree que lo dejaron antes.
+    if_missed:
+      en: >-
+        After the 14 days, your landlord can file a nonpayment case, and you will get court papers
+        with a short deadline to answer. If your landlord filed before your 14 days ended, or never
+        gave you a written demand, tell the court: the case may be dismissed. Paying all the rent you
+        owe can still help after a case starts, so get legal help right away.
+      es: >-
+        Después de los 14 días, el arrendador puede presentar un caso por falta de pago, y usted
+        recibirá documentos del tribunal con un plazo corto para responder. Si el arrendador presentó
+        el caso antes de que terminaran sus 14 días, o nunca le dio un aviso por escrito, dígaselo al
+        tribunal: el caso podría ser desestimado. Pagar toda la renta que debe todavía puede ayudar
+        después de que empiece un caso, así que busque ayuda legal de inmediato.
+    steps:
+      - en: >-
+          If you can, pay all the rent the demand asks for before the date shown. Get a receipt, or
+          pay in a way that leaves a record, such as a money order, check or bank transfer.
+        es: >-
+          Si puede, pague toda la renta que pide el aviso antes de la fecha que mostramos. Pida un
+          recibo, o pague de una forma que deje constancia, como un giro postal (money order), un
+          cheque o una transferencia bancaria.
+      - en: >-
+          If you can't pay it all, apply for rental assistance (in New York City, call 311) and offer
+          your landlord a payment plan in writing. A plan only protects you if your landlord agrees
+          to it in writing.
+        es: >-
+          Si no puede pagarlo todo, solicite ayuda para pagar la renta (en la Ciudad de Nueva York,
+          llame al 311) y ofrézcale al arrendador un plan de pagos por escrito. Un plan solo le
+          protege si el arrendador lo acepta por escrito.
+      - en: >-
+          Check your papers and write down what's missing. If your rent wasn't received within 5
+          days after it was due, your landlord had to send you a notice saying so by certified mail.
+          Eviction papers must also come with a "Good Cause Eviction Law Notice," and the rent demand
+          may need one too. A missing notice may be a defense in court, but it doesn't cancel the
+          rent you owe.
+        es: >-
+          Revise sus documentos y anote lo que falte. Si su renta no se recibió dentro de los 5 días
+          después de la fecha de pago, el arrendador tenía que enviarle un aviso por correo
+          certificado diciéndolo. Los documentos de desalojo también deben venir con un "Aviso de la
+          Ley de Desalojo por Causa Justificada" (Good Cause Eviction Law Notice), y es posible que el
+          aviso de cobro también lo necesite. Que falte un aviso puede ser una defensa en el tribunal,
+          pero no cancela la renta que debe.
+      - en: Get free legal help now. In New York City, call 311 and ask for the Tenant Helpline.
+        es: >-
+          Busque ayuda legal gratuita ahora. En la Ciudad de Nueva York, llame al 311 y pida la Línea
+          de Ayuda para Inquilinos (Tenant Helpline).
+    letters: [payment-plan]
+    citations:
+      - label: N.Y. RPAPL § 711(2)
+        url: https://www.nysenate.gov/legislation/laws/RPA/711
+      - label: N.Y. Real Prop. Law § 235-e(d) (certified-mail notice of late rent)
+        url: https://www.nysenate.gov/legislation/laws/RPP/235-E
+      - label: N.Y. Real Prop. Law § 231-c (Good Cause Eviction Law notice)
+        url: https://www.nysenate.gov/legislation/laws/RPP/231-C
+
+  - id: nyc-answer
+    topic: eviction
+    kind: tenant_deadline
+    urgent: true
+    title:
+      en: Answer a New York City Housing Court nonpayment case
+      es: Responder a un caso por falta de pago en el Tribunal de Vivienda de la Ciudad de Nueva York
+    summary:
+      en: In a New York City nonpayment case, you must answer at the court clerk's office within 10 days after you get the court papers.
+      es: En un caso por falta de pago en la Ciudad de Nueva York, debe responder en la oficina del secretario del tribunal dentro de los 10 días después de recibir los documentos del tribunal.
+    trigger:
+      en: The day you got or found the court papers (notice of petition and petition)
+      es: El día en que recibió o encontró los documentos del tribunal (notificación de la petición y petición)
+    period: { amount: 10, unit: calendar_days }
+    extend_if_closed: true
+    explanation:
+      en: >-
+        This date is only for nonpayment cases in New York City Housing Court where your papers tell
+        you to answer at the clerk's office. You have 10 days to answer, in person at the clerk's
+        office or in writing, and if the 10th day is a weekend or a public holiday, it moves to the
+        next business day. We count from the day you got or found the papers, which can be earlier
+        than the date the law uses, so you won't be late. Outside New York City, and in holdover
+        cases anywhere in the state, you answer on the hearing date printed on your papers, or 3 days
+        before it if the papers say so. Check your papers, and call the court if you aren't sure
+        which rule applies.
+      es: >-
+        Esta fecha es solo para casos por falta de pago en el Tribunal de Vivienda de la Ciudad de
+        Nueva York en los que sus documentos le dicen que responda en la oficina del secretario
+        (clerk). Tiene 10 días para responder, en persona en la oficina del secretario o por escrito,
+        y si el décimo día cae en fin de semana o en un feriado oficial, pasa al siguiente día hábil.
+        Contamos desde el día en que recibió o encontró los documentos, que puede ser antes de la
+        fecha que usa la ley, para que no se le pase el plazo. Fuera de la Ciudad de Nueva York, y en
+        los casos de holdover en cualquier parte del estado, usted responde en la fecha de la
+        audiencia que aparece en sus documentos, o 3 días antes si los documentos lo piden. Revise sus
+        documentos y llame al tribunal si no está seguro de qué regla le corresponde.
+    if_missed:
+      en: >-
+        If you don't answer in time, your landlord can ask the court for a default judgment, which
+        can lead to an eviction warrant. Go to the clerk's office right away anyway: you may still be
+        able to answer, or to ask the court to cancel (vacate) a default judgment, and the court has
+        a free do-it-yourself form for that. Call 311 and ask for the Tenant Helpline.
+      es: >-
+        Si no responde a tiempo, el arrendador puede pedirle al tribunal una sentencia en rebeldía
+        (default judgment), que puede llevar a una orden de desalojo. Aun así, vaya de inmediato a la
+        oficina del secretario: es posible que todavía pueda responder, o pedirle al tribunal que
+        anule (vacate) la sentencia en rebeldía, y el tribunal tiene un formulario gratuito para
+        hacerlo usted mismo. Llame al 311 y pida la Línea de Ayuda para Inquilinos (Tenant Helpline).
+    steps:
+      - en: >-
+          Read the notice of petition. If it tells you to answer to the clerk within 10 days, use the
+          date shown here. If it gives a court date and time instead, answer on that date, or 3 days
+          before it if the papers say so.
+        es: >-
+          Lea la notificación de la petición (notice of petition). Si le dice que responda ante el
+          secretario dentro de 10 días, use la fecha que mostramos aquí. Si en cambio indica una fecha
+          y hora de audiencia, responda ese día, o 3 días antes si los documentos lo piden.
+      - en: >-
+          Go to the Housing Court clerk's office in your borough by the date shown, or answer in
+          writing. If the courthouse is closed that day, go the business day before. Bring your
+          papers and rent receipts. The clerk will give you a court date, usually 3 to 8 days later.
+          Go to it.
+        es: >-
+          Vaya a la oficina del secretario del Tribunal de Vivienda de su condado (borough) a más
+          tardar en la fecha que mostramos, o responda por escrito. Si el tribunal está cerrado ese
+          día, vaya el día hábil anterior. Lleve sus documentos y sus recibos de renta. El secretario
+          le dará una fecha para ir al tribunal, por lo general de 3 a 8 días después. No falte.
+      - en: >-
+          Tell the clerk every defense you have, for example: you paid, the amount is wrong, repairs
+          are needed, you never got a written 14-day rent demand, or the papers didn't include the
+          Good Cause Eviction Law Notice. A defense you leave out may be lost.
+        es: >-
+          Dígale al secretario todas sus defensas, por ejemplo: que pagó, que la cantidad está mal,
+          que hacen falta reparaciones, que nunca recibió un aviso por escrito de 14 días para cobrar
+          la renta, o que los documentos no incluían el Aviso de la Ley de Desalojo por Causa
+          Justificada. Una defensa que no mencione podría perderse.
+      - en: >-
+          Call 311 and ask for the Tenant Helpline or Right to Counsel. Many New York City tenants
+          can get a free lawyer for Housing Court.
+        es: >-
+          Llame al 311 y pida la Línea de Ayuda para Inquilinos (Tenant Helpline) o el Derecho a
+          Representación Legal (Right to Counsel). Muchos inquilinos de la Ciudad de Nueva York pueden
+          obtener un abogado gratuito para el Tribunal de Vivienda.
+    letters: [payment-plan]
+    citations:
+      - label: N.Y. RPAPL § 732
+        url: https://www.nysenate.gov/legislation/laws/RPA/732
+      - label: NYC Housing Court, Answering a case
+        url: https://www.nycourts.gov/new-york-city-housing-court/answering-case-nyc-housing-court
+        note:
+          en: The court rule that makes § 732 apply in New York City is 22 NYCRR 208.42.
+          es: La regla del tribunal que hace que el artículo 732 se aplique en la Ciudad de Nueva York es 22 NYCRR 208.42.
+      - label: N.Y. Gen. Constr. Law § 25-a
+        url: https://www.nysenate.gov/legislation/laws/GCN/25-A
+      - label: N.Y. RPAPL § 743 (answering at the hearing)
+        url: https://www.nysenate.gov/legislation/laws/RPA/743
+      - label: NY Courts CourtHelp, Answering an eviction case
+        url: https://www.nycourts.gov/courthelp/homes/LTanswering.shtml
+
+  - id: deposit-return
+    topic: deposit
+    kind: landlord_deadline
+    urgent: false
+    title:
+      en: Your landlord must return your deposit within 14 days
+      es: El arrendador debe devolverle su depósito en un plazo de 14 días
+    summary:
+      en: Within 14 days after you move out, your landlord must return your deposit and give you an itemized list of anything they keep.
+      es: Dentro de los 14 días después de que usted se mude, el arrendador debe devolverle su depósito y darle una lista detallada de lo que se quede.
+    trigger:
+      en: The day you moved out
+      es: El día en que se mudó
+    period: { amount: 14, unit: calendar_days }
+    extend_if_closed: false
+    explanation:
+      en: >-
+        Within 14 days after you move out, your landlord must give you an itemized statement of
+        anything they keep from your deposit and return the rest. They can only keep money for unpaid
+        rent, utilities you owe them under the lease, damage beyond normal wear and tear, and moving
+        or storing things you left behind. A landlord who misses the 14 days loses the right to keep
+        any of the deposit, and a court can order a landlord who breaks this law on purpose to pay up
+        to twice the deposit in extra damages. If your apartment is rent-stabilized, a different
+        section of the law (General Obligations Law § 7-107) may apply and may not have a firm 14-day
+        deadline, so check with legal aid or HCR.
+      es: >-
+        Dentro de los 14 días después de que usted se mude, el arrendador debe darle una lista
+        detallada de lo que se quede de su depósito y devolverle el resto. Solo puede quedarse con
+        dinero por renta no pagada, servicios que usted le deba según el contrato, daños que vayan más
+        allá del desgaste normal, y el costo de mover o guardar cosas que usted dejó. Si el
+        arrendador no cumple con los 14 días, pierde el derecho a quedarse con cualquier parte del
+        depósito, y un tribunal puede ordenar que un arrendador que viola esta ley a propósito pague
+        hasta el doble del depósito como daños adicionales. Si su apartamento es de renta
+        estabilizada, podría aplicarse otro artículo de la ley (Ley de Obligaciones Generales,
+        artículo 7-107) que tal vez no tenga un plazo fijo de 14 días, así que consulte con una
+        oficina de ayuda legal o con HCR.
+    if_missed:
+      en: >-
+        Your landlord loses the right to keep any of your deposit. Send a demand letter asking for
+        all of it. If that doesn't work, you can file a complaint with the New York Attorney General
+        or sue in small claims court.
+      es: >-
+        El arrendador pierde el derecho a quedarse con cualquier parte de su depósito. Envíele una
+        carta exigiendo que le devuelva todo. Si eso no funciona, puede presentar una queja ante la
+        Procuraduría General (Attorney General) de Nueva York o demandar en el tribunal de reclamos
+        menores.
+    steps:
+      - en: >-
+          Before you move out, ask your landlord in writing for an inspection. Your landlord must
+          tell you that you can ask for one. It should happen 1 to 2 weeks before you leave, so you
+          have time to fix anything on the list of deductions your landlord gives you.
+        es: >-
+          Antes de mudarse, pídale al arrendador por escrito una inspección. El arrendador debe
+          decirle que usted puede pedirla. Debe hacerse de 1 a 2 semanas antes de que se vaya, para
+          que tenga tiempo de arreglar lo que aparezca en la lista de descuentos que le dé el
+          arrendador.
+      - en: >-
+          On move-out day, take dated photos or video of every room, return the keys, and give your
+          landlord your new address in writing.
+        es: >-
+          El día de la mudanza, tome fotos o videos con fecha de cada cuarto, devuelva las llaves y
+          dele al arrendador su nueva dirección por escrito.
+      - en: If the date shown passes without your deposit and an itemized statement, send a demand letter.
+        es: Si pasa la fecha que mostramos y no ha recibido su depósito ni una lista detallada, envíe una carta de reclamación.
+      - en: >-
+          If your landlord still doesn't pay, file a complaint with the Attorney General
+          (1-800-771-7755) or sue in small claims court.
+        es: >-
+          Si el arrendador aún no le paga, presente una queja ante la Procuraduría General
+          (1-800-771-7755) o demande en el tribunal de reclamos menores.
+    letters: [deposit-demand]
+    citations:
+      - label: N.Y. Gen. Oblig. Law § 7-108(1-a)
+        url: https://www.nysenate.gov/legislation/laws/GOB/7-108
+      - label: N.Y. Gen. Oblig. Law § 7-107 (rent-stabilized apartments)
+        url: https://www.nysenate.gov/legislation/laws/GOB/7-107
+      - label: New York Attorney General, Residential Tenants' Rights Guide
+        url: https://ag.ny.gov/publications/residential-tenants-rights-guide
+
+  - id: retaliation-protection
+    topic: repairs
+    kind: protection_period
+    urgent: false
+    title:
+      en: Protection from retaliation after you complain
+      es: Protección contra represalias después de presentar una queja
+    summary:
+      en: For one year after a good-faith complaint, the law presumes that an eviction case or a big change to your lease is retaliation.
+      es: Durante un año después de una queja de buena fe, la ley presume que un caso de desalojo o un cambio importante en su contrato es una represalia.
+    trigger:
+      en: The day you made a good-faith complaint about repairs, health or safety
+      es: El día en que presentó de buena fe una queja sobre reparaciones, salud o seguridad
+    period: { amount: 12, unit: months }
+    extend_if_closed: false
+    explanation:
+      en: >-
+        If you complain in good faith about repairs, health or safety, to your landlord or to a
+        government agency, your landlord can't punish you for it. The same goes for joining a
+        tenants' group or using your rights under your lease or the law. For one year afterward, if
+        your landlord starts an eviction case, serves a notice ending your tenancy, or tries to make a
+        big change to your lease, such as an unreasonable rent increase, the law presumes it is
+        retaliation, and your landlord has to prove a different reason. This doesn't apply in a
+        building with fewer than 4 units where the owner lives, and it doesn't cancel rent you owe.
+      es: >-
+        Si usted se queja de buena fe sobre reparaciones, salud o seguridad, ante el arrendador o ante
+        una agencia del gobierno, el arrendador no puede castigarle por eso. Lo mismo vale si se une a
+        un grupo de inquilinos o usa sus derechos según su contrato o la ley. Durante el año
+        siguiente, si el arrendador inicia un caso de desalojo, le entrega un aviso para terminar su
+        contrato o trata de hacer un cambio importante en su contrato, como un aumento de renta no
+        razonable, la ley presume que es una represalia, y el arrendador tiene que probar que tuvo
+        otro motivo. Esto no se aplica en un edificio de menos de 4 unidades donde vive el dueño, y no
+        cancela la renta que usted deba.
+    if_missed:
+      en: >-
+        After the year ends, retaliation is still against the law, but you would have to prove it
+        yourself, without the presumption.
+      es: >-
+        Cuando termina el año, las represalias siguen siendo ilegales, pero usted tendría que
+        probarlas por su cuenta, sin la presunción.
+    steps:
+      - en: Make complaints in writing and keep dated copies. A repair request letter works.
+        es: Presente sus quejas por escrito y guarde copias con fecha. Una carta de solicitud de reparaciones sirve.
+      - en: >-
+          In New York City, also report the problem to HPD by calling 311. This creates an official
+          record and can lead to an inspection.
+        es: >-
+          En la Ciudad de Nueva York, reporte también el problema a HPD llamando al 311. Esto deja un
+          registro oficial y puede llevar a una inspección.
+      - en: Keep paying your rent, unless a lawyer tells you it's safe to do something else.
+        es: Siga pagando la renta, a menos que un abogado le diga que es seguro hacer otra cosa.
+      - en: >-
+          If your landlord acts against you during the year, tell the court it's retaliation, show
+          your complaint, and get legal help.
+        es: >-
+          Si el arrendador toma medidas en su contra durante ese año, dígale al tribunal que es una
+          represalia, muestre su queja y busque ayuda legal.
+    letters: [repair-request]
+    citations:
+      - label: N.Y. Real Prop. Law § 223-b
+        url: https://www.nysenate.gov/legislation/laws/RPP/223-B
+      - label: NYC HPD, Report a maintenance issue
+        url: https://www.nyc.gov/site/hpd/services-and-information/report-a-maintenance-issue.page

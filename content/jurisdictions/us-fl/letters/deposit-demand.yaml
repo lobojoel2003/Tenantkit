@@ -1,0 +1,78 @@
+# yaml-language-server: $schema=../../../../schema/letter.schema.json
+# Florida security deposit demand. Fla. Stat. § 83.49(3).
+schema_version: 1
+id: deposit-demand
+extends: deposit-demand
+params:
+  law:
+    en: >-
+      Under Florida Statutes section 83.49(3), if you do not intend to make a claim on my
+      deposit, you must return it within 15 days after I moved out, that is, by
+      {{no_claim_deadline}}. If you intend to make a claim, you must send me written notice of
+      the claim and the reason for it by certified mail (or by email, only if we both signed an
+      agreement to send notices by email) within 30 days after I moved out, that is, by
+      {{claim_notice_deadline}}. If you do not send that notice on time, you forfeit the right to
+      make a claim on my deposit.
+      {{#if itemization == "disputed"}}This letter is my written objection to your claim under
+      section 83.49(3).{{/if}}
+      Under section 83.49(3)(c), if either of us goes to court over the deposit, the winner is
+      entitled to court costs and a reasonable attorney's fee.
+    es: >-
+      Según la sección 83.49(3) de los Estatutos de Florida, si usted no piensa hacer un reclamo
+      sobre mi depósito, debe devolvérmelo dentro de los 15 días después de que me mudé, es decir,
+      a más tardar el {{no_claim_deadline}}. Si piensa hacer un reclamo, debe enviarme un aviso por
+      escrito del reclamo y del motivo por correo certificado (o por correo electrónico, solo si
+      ambos firmamos un acuerdo para enviar avisos por correo electrónico) dentro de los 30 días
+      después de que me mudé, es decir, a más tardar el {{claim_notice_deadline}}. Si no envía ese
+      aviso a tiempo, pierde el derecho a hacer un reclamo sobre mi depósito.
+      {{#if itemization == "disputed"}}Esta carta es mi objeción por escrito a su reclamo según la
+      sección 83.49(3).{{/if}}
+      Según la sección 83.49(3)(c), si cualquiera de los dos acude al tribunal por el depósito,
+      quien gane tiene derecho a recuperar los gastos del tribunal y honorarios razonables de
+      abogado.
+computed:
+  no_claim_deadline:
+    from: move_out_date
+    deadline: deposit-no-claim
+  claim_notice_deadline:
+    from: move_out_date
+    deadline: deposit-claim-notice
+delivery_tips:
+  - en: >-
+      If you are objecting to your landlord's notice of claim, your landlord should get this
+      letter within 15 days after you received the notice. Send it to the address given in the
+      notice.
+    es: >-
+      Si está objetando el aviso de reclamo del arrendador, el arrendador debe recibir esta carta
+      dentro de los 15 días después de que usted recibió el aviso. Envíela a la dirección que
+      aparece en el aviso.
+  - en: Send it by certified mail with a return receipt, or hand-deliver it and get a signed, dated copy.
+    es: Envíela por correo certificado con acuse de recibo, o entréguela en mano y pida una copia firmada y con fecha.
+  - en: Keep a copy of the letter and any mailing receipt. Write down the date you sent it.
+    es: Guarde una copia de la carta y cualquier recibo de envío. Anote la fecha en que la envió.
+  - en: Keep your lease, your move-in and move-out photos, and any list of deductions together. You will need them if you go to small claims court.
+    es: Guarde juntos su contrato, las fotos de cuando se mudó y de cuando se fue, y cualquier lista de descuentos. Los necesitará si va al tribunal de reclamos menores.
+  - en: >-
+      Florida's rule on fees works both ways: if you sue over the deposit and lose, you may have
+      to pay your landlord's court costs and attorney's fees. Talk to legal aid before you file.
+    es: >-
+      La regla de Florida sobre los honorarios se aplica a ambas partes: si usted demanda por el
+      depósito y pierde, podría tener que pagar los gastos del tribunal y los honorarios del
+      abogado del arrendador. Consulte con una oficina de ayuda legal antes de presentar una
+      demanda.
+checklist:
+  - en: Your lease and proof of the deposit you paid (receipt, bank record or lease clause)
+    es: Su contrato y prueba del depósito que pagó (recibo, registro bancario o cláusula del contrato)
+  - en: Photos or video from move-in and move-out
+    es: Fotos o video de cuando se mudó y de cuando se fue
+  - en: Any list of deductions or notice of claim your landlord sent
+    es: Cualquier lista de descuentos o aviso de reclamo que le haya enviado el arrendador
+  - en: The envelope or certified-mail slip that shows when you got the notice of claim
+    es: El sobre o el aviso de carta certificada que muestra cuándo recibió el aviso de reclamo
+  - en: A copy of the written notice of your new address, if you gave one before moving out
+    es: Una copia del aviso por escrito con su nueva dirección, si dio uno antes de mudarse
+citations:
+  - label: Fla. Stat. § 83.49(3)
+    url: https://www.flsenate.gov/Laws/Statutes/2025/83.49
+  - label: Fla. Stat. § 83.505
+    url: https://www.flsenate.gov/Laws/Statutes/2025/83.505

@@ -1,0 +1,39 @@
+# yaml-language-server: $schema=../../../../schema/letter.schema.json
+# California version of the shared repair request: cites the duty to keep the home fit to live in
+# (Civ. Code §§ 1941, 1941.1), repair and deduct (§ 1942) and protection from retaliation (§ 1942.5).
+schema_version: 1
+id: repair-request
+extends: repair-request
+params:
+  law:
+    en: |
+      Please treat this letter as my written notice of these problems. Under California Civil Code
+      sections 1941 and 1941.1, you must keep this home fit to live in. That includes weatherproofing,
+      such as unbroken windows and doors, working plumbing and gas, hot and cold running water,
+      heating, and electricity and lighting. If the repairs are not made within a reasonable time,
+      I may use the remedies the law gives me, which can include having the problems repaired and
+      deducting the cost from my rent under Civil Code section 1942.
+
+      Civil Code section 1942.5 prohibits retaliation against a tenant for asking for repairs. You
+      may not try to evict me, raise my rent or reduce my services because I made this request.
+    es: |
+      Le pido que considere esta carta como mi aviso por escrito de estos problemas. Según el Código
+      Civil de California, secciones 1941 y 1941.1, usted debe mantener esta vivienda en condiciones
+      habitables. Eso incluye protección contra la intemperie, como ventanas y puertas sin roturas,
+      plomería y gas que funcionen, agua corriente fría y caliente, calefacción, y electricidad e
+      iluminación. Si las reparaciones no se hacen en un plazo razonable, podría usar los recursos
+      que me da la ley, que pueden incluir mandar hacer las reparaciones y descontar el costo de mi
+      renta según la sección 1942 del Código Civil.
+
+      La sección 1942.5 del Código Civil prohíbe las represalias contra un inquilino por pedir
+      reparaciones. Usted no puede intentar desalojarme, subirme la renta ni reducir mis servicios
+      porque hice esta solicitud.
+citations:
+  - label: Cal. Civ. Code § 1941
+    url: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1941
+  - label: Cal. Civ. Code § 1941.1
+    url: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1941.1
+  - label: Cal. Civ. Code § 1942
+    url: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1942
+  - label: Cal. Civ. Code § 1942.5
+    url: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1942.5

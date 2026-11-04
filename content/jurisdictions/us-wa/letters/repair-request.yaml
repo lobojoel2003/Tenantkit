@@ -1,0 +1,66 @@
+# yaml-language-server: $schema=../../../../schema/letter.schema.json
+# Washington repair request. The clock for the landlord to start repairs (RCW 59.18.070)
+# starts when the landlord RECEIVES this letter, so the tips focus on proof of delivery.
+# No computed repair date: we don't know when the letter will arrive or which time limit applies.
+schema_version: 1
+id: repair-request
+extends: repair-request
+params:
+  law:
+    en: |
+      I am giving you this written notice under RCW 59.18.070. Washington law requires you to
+      keep the home fit to live in and in good repair (RCW 59.18.060). After you receive written
+      notice of a problem, you must begin repairs as soon as possible, and no later than: 24 hours
+      if there is no heat, no hot or cold water, no electricity, or a condition that is
+      imminently hazardous to life; 72 hours if a refrigerator, range and oven, or major plumbing
+      fixture that you supplied does not work; and 10 days for other repairs.
+
+      Washington law also prohibits retaliation against a tenant for asserting rights under the
+      Residential Landlord-Tenant Act, such as this request (RCW 59.18.240 and 59.18.250).
+    es: |
+      Le entrego este aviso por escrito conforme a la sección RCW 59.18.070. La ley de Washington
+      le exige mantener la vivienda en condiciones aptas para vivir y en buen estado (RCW
+      59.18.060). Después de recibir un aviso por escrito sobre un problema, usted debe empezar
+      las reparaciones lo antes posible y, a más tardar: en 24 horas si no hay calefacción, agua
+      caliente o fría, o electricidad, o si hay una condición que pone en peligro inminente la
+      vida; en 72 horas si no funciona un refrigerador, una estufa con horno o un accesorio de
+      plomería importante que usted haya proporcionado; y en 10 días para otras reparaciones.
+
+      La ley de Washington también prohíbe tomar represalias contra un inquilino por hacer valer
+      sus derechos según la Ley de Arrendamiento Residencial (Residential Landlord-Tenant Act),
+      como lo hago con esta solicitud (RCW 59.18.240 y 59.18.250).
+delivery_tips:
+  - en: >-
+      Send it to the person and address your rental agreement names for notices. Washington
+      landlords must tell you who that is.
+    es: >-
+      Envíela a la persona y a la dirección que su contrato designa para recibir avisos. En
+      Washington, el arrendador debe informarle quién es.
+  - en: >-
+      Your landlord's time to start repairs begins when they get the letter, so use a way that
+      proves the date: hand it over and ask for a signed, dated copy, or use certified mail with a
+      return receipt. Keep a copy of the letter and any receipt.
+    es: >-
+      El plazo del arrendador para empezar las reparaciones comienza cuando recibe la carta, así
+      que use una forma que compruebe la fecha: entréguela en mano y pida una copia firmada y con
+      fecha, o envíela por correo certificado con acuse de recibo. Guarde una copia de la carta y
+      cualquier recibo.
+  - en: Take dated photos or videos of each problem, before and after any repair.
+    es: Tome fotos o videos con fecha de cada problema, antes y después de cualquier reparación.
+  - en: >-
+      Keep paying rent and utilities on time. In Washington you must be up to date to use repair
+      remedies such as repair and deduct, and holding back rent without following the rules can
+      lead to an eviction case. Talk to legal aid first.
+    es: >-
+      Siga pagando la renta y los servicios públicos a tiempo. En Washington, debe estar al día
+      para usar recursos como reparar y descontar de la renta, y retener la renta sin seguir las
+      reglas puede llevar a un caso de desalojo. Hable primero con una oficina de ayuda legal.
+citations:
+  - label: RCW 59.18.060
+    url: https://app.leg.wa.gov/RCW/default.aspx?cite=59.18.060
+  - label: RCW 59.18.070
+    url: https://app.leg.wa.gov/RCW/default.aspx?cite=59.18.070
+  - label: RCW 59.18.240
+    url: https://app.leg.wa.gov/RCW/default.aspx?cite=59.18.240
+  - label: RCW 59.18.250
+    url: https://app.leg.wa.gov/RCW/default.aspx?cite=59.18.250

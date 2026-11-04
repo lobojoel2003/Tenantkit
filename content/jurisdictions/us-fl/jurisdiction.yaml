@@ -1,0 +1,105 @@
+# yaml-language-server: $schema=../../../schema/jurisdiction.schema.json
+# Florida. Researched 2026-11-04 from Fla. Stat. ch. 83 part II, § 51.011, § 110.117
+# and Fla. R. Gen. Prac. & Jud. Admin. 2.514. Not yet reviewed by a Florida lawyer.
+schema_version: 1
+id: us-fl
+name:
+  en: Florida
+  es: Florida
+short_name: FL
+country: US
+kind: state
+status: draft
+last_reviewed: 2026-11-04
+reviewed_by: []
+maintainers: []
+summary:
+  en: >-
+    Deadlines for Florida's 3-day notice to pay rent, eviction court papers, security deposits
+    and repairs, with letters that cite Florida law. Florida eviction deadlines are very short,
+    so get legal help right away.
+  es: >-
+    Plazos de Florida para el aviso de 3 días para pagar la renta, los documentos de una demanda
+    de desalojo, el depósito de garantía y las reparaciones, con cartas que citan la ley de
+    Florida. Los plazos de desalojo en Florida son muy cortos, así que busque ayuda legal de
+    inmediato.
+letters: [repair-request, deposit-demand, payment-plan]
+holidays:
+  extends: [us-federal]
+  # Florida courts count the paid state holidays in § 110.117, not the federal list.
+  remove: [presidents-day, juneteenth, columbus-day]
+  add:
+    - id: day-after-thanksgiving
+      name:
+        en: Friday after Thanksgiving
+        es: Viernes después del Día de Acción de Gracias
+      date: { month: 11, weekday: thu, nth: 4, offset_days: 1 }
+  note:
+    en: >-
+      Florida counts court deadlines using the paid state holidays in Fla. Stat. § 110.117
+      (Rule 2.514): New Year's Day, Martin Luther King Jr. Day, Memorial Day, Independence Day,
+      Labor Day, Veterans Day, Thanksgiving, the Friday after Thanksgiving, and Christmas.
+      A holiday on a Saturday is observed on Friday, and one on a Sunday on Monday. Many courts
+      also close on other days, such as Good Friday, Juneteenth, Yom Kippur or Christmas Eve,
+      and these differ by county. We count only the statewide days, which gives the earliest
+      (safest) date. Check with your county clerk.
+    es: >-
+      Florida cuenta los plazos del tribunal usando los días feriados pagados del estado que
+      aparecen en la sección 110.117 de los Estatutos de Florida (Regla 2.514): Año Nuevo, Día de
+      Martin Luther King Jr., Día de los Caídos (Memorial Day), Día de la Independencia, Día del
+      Trabajo, Día de los Veteranos, Día de Acción de Gracias, el viernes siguiente y Navidad.
+      Si un feriado cae en sábado, se observa el viernes; si cae en domingo, el lunes. Muchos
+      tribunales también cierran otros días, como el Viernes Santo, Juneteenth, Yom Kipur o la
+      Nochebuena, y esos días cambian según el condado. Aquí solo contamos los días de todo el
+      estado, lo que da la fecha más temprana (la más segura). Consulte con la secretaría del
+      tribunal de su condado.
+  sources:
+    - label: Fla. Stat. § 110.117
+      url: https://www.flsenate.gov/Laws/Statutes/2025/110.117
+    - label: Fla. R. Gen. Prac. & Jud. Admin. 2.514
+      url: https://www.floridabar.org/rules/ctproc/
+help:
+  - name: FloridaLawHelp.org
+    url: https://www.floridalawhelp.org
+    description:
+      en: Find the free legal aid office for your county, plus self-help guides about evictions, repairs and deposits.
+      es: Encuentre la oficina gratuita de ayuda legal de su condado y guías de autoayuda sobre desalojos, reparaciones y depósitos.
+    topics: [eviction, repairs, deposit]
+  - name: Florida Legal Services — Eviction Prevention Helpline
+    url: https://www.floridalegal.org/eviction-prevention
+    phone: "1-888-780-0443"
+    description:
+      en: Free statewide helpline for tenants facing eviction. Call to check the current hours.
+      es: Línea de ayuda gratuita en todo el estado para inquilinos que enfrentan un desalojo. Llame para confirmar el horario actual.
+    topics: [eviction]
+  - name: Florida Free Legal Answers
+    url: https://florida.freelegalanswers.org
+    description:
+      en: >-
+        Ask a volunteer lawyer a written question online, for free, if your income qualifies.
+        Answers can take several days, so don't rely on it for an eviction deadline.
+      es: >-
+        Hágale una pregunta por escrito en línea a un abogado voluntario, gratis, si sus ingresos
+        califican. Las respuestas pueden tardar varios días, así que no dependa de este servicio
+        para un plazo de desalojo.
+    topics: [repairs, deposit]
+  - name: The Florida Bar Lawyer Referral Service
+    url: https://www.floridabar.org/public/lrs/
+    phone: "1-800-342-8011"
+    description:
+      en: >-
+        Not free, but low-cost. Refers you to a private lawyer for a first 30-minute consultation
+        for $25 or less. It can also point you to legal aid.
+      es: >-
+        No es gratis, pero cuesta poco. Le refiere a un abogado privado para una primera consulta
+        de 30 minutos por $25 o menos. También puede indicarle dónde encontrar ayuda legal gratuita.
+  - name: "211"
+    url: https://www.211.org/
+    phone: "211"
+    description:
+      en: Call or text 211 to find emergency rental assistance and other local help.
+      es: Llame o envíe un mensaje al 211 para encontrar ayuda de emergencia para la renta y otros servicios locales.
+    topics: [eviction]
+sources:
+  - label: Florida Department of Agriculture and Consumer Services — Landlord/Tenant Law in Florida
+    url: https://www.fdacs.gov/Consumer-Resources/Landlord-Tenant-Law-in-Florida

@@ -1,0 +1,115 @@
+# yaml-language-server: $schema=../../../schema/jurisdiction.schema.json
+# Washington State. Facts checked against official sources on 2026-11-04 (see the
+# citations in deadlines.yaml). Not yet reviewed by a lawyer licensed in Washington.
+schema_version: 1
+id: us-wa
+name:
+  en: Washington
+  es: Washington
+short_name: WA
+country: US
+kind: state
+status: draft
+last_reviewed: 2026-11-04
+reviewed_by: []
+maintainers: []
+summary:
+  en: >-
+    Deadlines and letters for renters in Washington State: 14-day notices to pay or vacate,
+    repairs, security deposits and protection from retaliation. Volunteers wrote this from
+    state law, and a lawyer has not checked it yet.
+  es: >-
+    Plazos y cartas para inquilinos en el estado de Washington: avisos de 14 días para pagar o
+    desocupar, reparaciones, depósitos de garantía y protección contra represalias. Lo
+    escribieron voluntarios a partir de la ley estatal y todavía no lo ha revisado un abogado.
+letters: [repair-request, deposit-demand, payment-plan]
+# No deadline here uses court_days or extend_if_closed yet. The calendar is ready for
+# future rules (for example the 5 court days to reinstate a tenancy in RCW 59.18.410).
+holidays:
+  extends: [us-federal]
+  remove: [columbus-day]
+  add:
+    - id: day-after-thanksgiving
+      name:
+        en: Native American Heritage Day (day after Thanksgiving)
+        es: Día de la Herencia de los Nativos Americanos (día después de Acción de Gracias)
+      date: { month: 11, weekday: thu, nth: 4, offset_days: 1 }
+  note:
+    en: >-
+      Washington's legal holidays (RCW 1.16.050) are the federal holidays except Columbus Day,
+      plus Native American Heritage Day, the Friday after Thanksgiving. A holiday that falls on
+      a Saturday is observed on Friday, and one on a Sunday is observed on Monday. Lunar New
+      Year and Eid are recognized days, not legal holidays, so courts stay open. The deadlines
+      on this page don't skip weekends or holidays, to be safe.
+    es: >-
+      Los días feriados oficiales de Washington (RCW 1.16.050) son los feriados federales,
+      menos el Día de Colón, más el Día de la Herencia de los Nativos Americanos, el viernes
+      después de Acción de Gracias. Si un feriado cae en sábado, se observa el viernes; si cae
+      en domingo, se observa el lunes. El Año Nuevo Lunar y el Eid son días reconocidos, no
+      feriados oficiales, así que los tribunales abren. Para mayor seguridad, los plazos de
+      esta página no se saltan los fines de semana ni los feriados.
+  sources:
+    - label: RCW 1.16.050 (legal holidays)
+      url: https://app.leg.wa.gov/RCW/default.aspx?cite=1.16.050
+    - label: Washington Courts, Court Closing Days
+      url: https://www.courts.wa.gov/appellate_trial_courts/?fa=atc.closing
+help:
+  - name: Eviction Defense Screening Line
+    url: https://www.washingtonlawhelp.org/en/free-lawyers-renters-washington-state
+    phone: "1-855-657-8387"
+    description:
+      en: >-
+        Got eviction court papers? Call right away, or apply online. If your income is low,
+        the court may appoint a free lawyer for you.
+      es: >-
+        ¿Recibió documentos del tribunal por un desalojo? Llame de inmediato o presente su
+        solicitud en línea. Si tiene bajos ingresos, es posible que el tribunal le asigne un
+        abogado gratis.
+    topics: [eviction]
+  - name: Northwest Justice Project — CLEAR hotline
+    url: https://nwjustice.org/clear-hotline
+    phone: "1-888-201-1014"
+    description:
+      en: >-
+        Free legal advice for people with low incomes. Outside King County, call this number
+        on weekday mornings or apply online. In King County, call 2-1-1 instead.
+      es: >-
+        Asesoría legal gratis para personas de bajos ingresos. Fuera del condado de King, llame
+        a este número entre semana por la mañana o presente su solicitud en línea. En el
+        condado de King, llame al 2-1-1.
+    topics: [eviction, repairs, deposit]
+  - name: Northwest Justice Project — CLEAR*Sr (age 60 and over)
+    url: https://nwjustice.org/clear-hotline
+    phone: "1-888-387-7111"
+    description:
+      en: Free legal advice by phone for Washington residents age 60 and older.
+      es: Asesoría legal gratis por teléfono para residentes de Washington de 60 años o más.
+    topics: [eviction, repairs, deposit]
+  - name: WashingtonLawHelp.org
+    url: https://www.washingtonlawhelp.org
+    description:
+      en: >-
+        Free plain-language guides and forms about eviction, repairs and deposits, from the
+        Northwest Justice Project.
+      es: >-
+        Guías y formularios gratis, en lenguaje sencillo, sobre desalojos, reparaciones y
+        depósitos, del Northwest Justice Project.
+    topics: [eviction, repairs, deposit]
+  - name: Tenants Union of Washington State
+    url: https://tenantsunion.org
+    phone: "(206) 723-0500"
+    description:
+      en: >-
+        Information about tenant rights and referrals from trained counselors. They are not
+        lawyers, and phone hours are limited.
+      es: >-
+        Información sobre los derechos de los inquilinos y referencias, de consejeros
+        capacitados. No son abogados y el horario telefónico es limitado.
+    topics: [eviction, repairs, deposit]
+sources:
+  - label: Residential Landlord-Tenant Act (RCW 59.18)
+    url: https://app.leg.wa.gov/RCW/default.aspx?cite=59.18
+  - label: WashingtonLawHelp.org — Eviction notices
+    url: https://www.washingtonlawhelp.org/en/eviction-notices
+  - label: WashingtonLawHelp.org — Respond to an eviction lawsuit
+    url: https://www.washingtonlawhelp.org/en/respond-eviction-lawsuit
