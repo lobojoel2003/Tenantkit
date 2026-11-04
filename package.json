@@ -40,6 +40,7 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
+		"serve": "tsx scripts/serve.ts build",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --fail-on-warnings",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",

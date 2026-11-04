@@ -21,8 +21,9 @@ export default defineConfig({
 		{ name: 'mobile', use: { ...devices['Pixel 7'] } }
 	],
 	webServer: {
-		// The site must be built first (npm run build); this serves the static files.
-		command: `npx vite preview --port ${port} --strictPort`,
+		// Serves the built site (run `npm run build` first) the way GitHub Pages does.
+		command: `npx tsx scripts/serve.ts build`,
+		env: { PORT: String(port) },
 		port,
 		reuseExistingServer: !process.env.CI
 	}

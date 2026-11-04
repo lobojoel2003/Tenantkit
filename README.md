@@ -152,20 +152,21 @@ npm run dev
 
 Then open http://localhost:5173.
 
-| Command                    | What it does                                                       |
-| -------------------------- | ------------------------------------------------------------------ |
-| `npm run dev`              | Start the dev server with live reload (content changes included)   |
-| `npm run build`            | Build the static site into `build/`                                |
-| `npm run preview`          | Serve the built site locally                                       |
-| `npm run content:validate` | Check every content file (strict: warnings fail too)               |
-| `npm run content:schema`   | Regenerate the JSON Schemas in `schema/`                           |
-| `npm run lint`             | Prettier and ESLint                                                |
-| `npm run format`           | Format all files                                                   |
-| `npm run check`            | Type-check TypeScript and Svelte                                   |
-| `npm run test:unit`        | Unit tests (Vitest)                                                |
-| `npm run test:coverage`    | Unit tests with a coverage report                                  |
-| `npm run test:e2e`         | End-to-end and accessibility tests (Playwright; run `build` first) |
-| `npm run verify`           | Lint, type-check, validate content, unit tests and build           |
+| Command                    | What it does                                                        |
+| -------------------------- | ------------------------------------------------------------------- |
+| `npm run dev`              | Start the dev server with live reload (content changes included)    |
+| `npm run build`            | Build the static site into `build/`                                 |
+| `npm run preview`          | Serve the built site locally                                        |
+| `npm run serve`            | Serve `build/` the way GitHub Pages does (used by end-to-end tests) |
+| `npm run content:validate` | Check every content file (strict: warnings fail too)                |
+| `npm run content:schema`   | Regenerate the JSON Schemas in `schema/`                            |
+| `npm run lint`             | Prettier and ESLint                                                 |
+| `npm run format`           | Format all files                                                    |
+| `npm run check`            | Type-check TypeScript and Svelte                                    |
+| `npm run test:unit`        | Unit tests (Vitest)                                                 |
+| `npm run test:coverage`    | Unit tests with a coverage report                                   |
+| `npm run test:e2e`         | End-to-end and accessibility tests (Playwright; run `build` first)  |
+| `npm run verify`           | Lint, type-check, validate content, unit tests and build            |
 
 The first time you run end-to-end tests, install a browser with
 `npx playwright install chromium`.
