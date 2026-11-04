@@ -1,0 +1,43 @@
+# yaml-language-server: $schema=../../schema/fieldset.schema.json
+# The date of the letter and how it will be delivered.
+schema_version: 1
+id: sending
+fields:
+  - id: letter_date
+    type: date
+    section: sending
+    required: true
+    default: today
+    label:
+      en: Date of the letter
+      es: Fecha de la carta
+    help:
+      en: Usually the day you send it.
+      es: Normalmente, el día en que la envía.
+  - id: delivery_method
+    type: select
+    section: sending
+    default: certified_mail
+    label:
+      en: How will you send it?
+      es: ¿Cómo la enviará?
+    help:
+      en: Certified mail with a return receipt gives you proof that the letter arrived. Whatever you choose, keep a copy and any receipt.
+      es: El correo certificado con acuse de recibo le da una prueba de que la carta llegó. Elija lo que elija, guarde una copia y cualquier recibo.
+    options:
+      - value: certified_mail
+        label:
+          en: By certified mail, return receipt requested
+          es: Por correo certificado con acuse de recibo
+      - value: first_class_mail
+        label:
+          en: By first-class mail
+          es: Por correo regular (first-class)
+      - value: hand_delivery
+        label:
+          en: By hand delivery
+          es: Entregada en mano
+      - value: email
+        label:
+          en: By email
+          es: Por correo electrónico

@@ -1,0 +1,172 @@
+# yaml-language-server: $schema=../../schema/letter.schema.json
+# Shared repair request letter. States extend it and fill in the "law" block.
+#
+# Template rules (see content/README.md):
+#   {{name}} inserts an answer; {{#if name}} … {{/if}} shows text only when it's filled in.
+#   A single line break is a space. A blank line starts a new paragraph.
+schema_version: 1
+id: repair-request
+topic: repairs
+title:
+  en: Ask your landlord to make repairs
+  es: Pedirle al arrendador que haga reparaciones
+summary:
+  en: A written repair request creates a record. In many states it also starts the clock on your landlord's duty to fix the problem and protects you from retaliation.
+  es: Una solicitud de reparación por escrito deja constancia. En muchos estados también inicia el plazo que tiene el arrendador para arreglar el problema y le protege contra represalias.
+fieldsets: [tenant, landlord, sending]
+fields:
+  - id: problems
+    type: textarea
+    required: true
+    max_length: 3000
+    label:
+      en: What needs to be fixed?
+      es: ¿Qué hay que reparar?
+    help:
+      en: List each problem, where it is, and how it affects you. Put each problem on its own line.
+      es: Escriba cada problema, dónde está y cómo le afecta. Ponga cada problema en una línea aparte.
+    placeholder:
+      en: "- No hot water in the kitchen or bathroom\n- Bedroom window does not lock\n- Mold on the bathroom ceiling"
+      es: "- No hay agua caliente en la cocina ni en el baño\n- La ventana del dormitorio no cierra con llave\n- Hay moho en el techo del baño"
+  - id: problem_since
+    type: date
+    label:
+      en: When did the problems start? (optional)
+      es: ¿Cuándo empezaron los problemas? (opcional)
+  - id: urgent
+    type: checkbox
+    label:
+      en: Some problems are dangerous or affect health or safety
+      es: Algunos problemas son peligrosos o afectan la salud o la seguridad
+    help:
+      en: For example no heat, no water, a gas smell, sparking wires, sewage, broken locks or a pest infestation.
+      es: Por ejemplo, falta de calefacción o de agua, olor a gas, cables que sueltan chispas, aguas negras, cerraduras rotas o una plaga.
+  - id: reported_before
+    type: checkbox
+    label:
+      en: I already told my landlord about these problems
+      es: Ya le avisé al arrendador de estos problemas
+  - id: reported_before_details
+    type: textarea
+    required: true
+    max_length: 600
+    show_if: { field: reported_before }
+    label:
+      en: When and how did you tell them?
+      es: ¿Cuándo y cómo le avisó?
+    placeholder:
+      en: I called the office on March 4 and sent a text message on March 10.
+      es: Llamé a la oficina el 4 de marzo y mandé un mensaje de texto el 10 de marzo.
+  - id: access_note
+    type: textarea
+    max_length: 400
+    label:
+      en: When can repair workers come in? (optional)
+      es: ¿Cuándo pueden entrar los trabajadores? (opcional)
+    placeholder:
+      en: Weekdays after 3 pm. Please call or text me first.
+      es: Entre semana después de las 3 de la tarde. Por favor, llámeme o mándeme un mensaje antes.
+  - id: has_photos
+    type: checkbox
+    label:
+      en: I have photos or videos of the problems
+      es: Tengo fotos o videos de los problemas
+params:
+  law: null
+computed:
+  respond_by:
+    from: letter_date
+    add: { amount: 14, unit: calendar_days }
+subject:
+  en: "Re: Request for repairs at {{rental_address}}"
+  es: "Asunto: Solicitud de reparaciones en {{rental_address}}"
+body:
+  en: |
+    I rent the home at {{rental_address}}. I am writing to ask you to make repairs.
+
+    These problems need to be fixed:
+
+    {{problems}}
+
+    {{#if problem_since}}
+    The problems started on or about {{problem_since}}.
+    {{/if}}
+    {{#if reported_before}}
+    I have already told you about them: {{reported_before_details}}
+    {{/if}}
+
+    {{#if urgent}}
+    Some of these problems affect my health and safety. Please treat them as urgent and contact me
+    within 24 hours to arrange the repairs.
+
+    {{/if}}
+    {{#if law}}
+    {{law}}
+
+    {{/if}}
+    Please make these repairs within a reasonable time, and let me know in writing by {{respond_by}}
+    when the work will be done.
+    {{#if access_note}}
+    Workers can come in at these times: {{access_note}}
+    {{else}}
+    Please contact me ahead of time to arrange a time for workers to come in.
+    {{/if}}
+
+    {{#if has_photos}}
+    I have photos of these problems and can share copies with you.
+
+    {{/if}}
+    Thank you for your prompt attention to this matter.
+  es: |
+    Alquilo la vivienda ubicada en {{rental_address}}. Le escribo para pedirle que haga reparaciones.
+
+    Hay que arreglar estos problemas:
+
+    {{problems}}
+
+    {{#if problem_since}}
+    Los problemas empezaron alrededor del {{problem_since}}.
+    {{/if}}
+    {{#if reported_before}}
+    Ya le había avisado de ellos: {{reported_before_details}}
+    {{/if}}
+
+    {{#if urgent}}
+    Algunos de estos problemas afectan mi salud y mi seguridad. Le pido que los trate como urgentes y
+    que se comunique conmigo en un plazo de 24 horas para organizar las reparaciones.
+
+    {{/if}}
+    {{#if law}}
+    {{law}}
+
+    {{/if}}
+    Le pido que haga estas reparaciones en un plazo razonable y que me informe por escrito, a más
+    tardar el {{respond_by}}, cuándo se hará el trabajo.
+    {{#if access_note}}
+    Los trabajadores pueden entrar en estos horarios: {{access_note}}
+    {{else}}
+    Por favor, comuníquese conmigo con anticipación para acordar una hora para que entren los trabajadores.
+    {{/if}}
+
+    {{#if has_photos}}
+    Tengo fotos de estos problemas y puedo enviarle copias.
+
+    {{/if}}
+    Gracias por su pronta atención a este asunto.
+closing:
+  en: Sincerely,
+  es: Atentamente,
+delivery_tips:
+  - en: Keep a copy of the letter and any mailing receipt. Write down the date you sent it.
+    es: Guarde una copia de la carta y cualquier recibo de envío. Anote la fecha en que la envió.
+  - en: Take dated photos or videos of each problem, before and after any repair.
+    es: Tome fotos o videos con fecha de cada problema, antes y después de cualquier reparación.
+  - en: Keep paying rent unless a lawyer or legal aid office tells you it is safe to do something else. Withholding rent without following your state's rules can lead to an eviction case.
+    es: Siga pagando la renta, a menos que un abogado o una oficina de ayuda legal le diga que es seguro hacer otra cosa. Retener la renta sin seguir las reglas de su estado puede llevar a un caso de desalojo.
+checklist:
+  - en: Photos or videos of each problem
+    es: Fotos o videos de cada problema
+  - en: Copies of earlier texts, emails or letters about the repairs
+    es: Copias de mensajes, correos o cartas anteriores sobre las reparaciones
+  - en: Notes of phone calls (date, who you talked to, what they said)
+    es: Notas de las llamadas (fecha, con quién habló, qué le dijeron)

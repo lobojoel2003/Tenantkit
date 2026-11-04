@@ -1,0 +1,193 @@
+# yaml-language-server: $schema=../../schema/letter.schema.json
+# Shared letter asking for a rent payment plan. It does not stop an eviction case.
+schema_version: 1
+id: payment-plan
+topic: eviction
+title:
+  en: Propose a payment plan for rent you owe
+  es: Proponer un plan de pagos para la renta atrasada
+summary:
+  en: Puts your offer to pay back rent in writing, so there is a record that you tried to work it out. It does not stop an eviction case or change any court deadline.
+  es: Deja por escrito su oferta para pagar la renta atrasada, para que haya constancia de que intentó llegar a un acuerdo. No detiene un caso de desalojo ni cambia ningún plazo del tribunal.
+fieldsets: [tenant, landlord, sending]
+fields:
+  - id: amount_owed
+    type: money
+    required: true
+    label:
+      en: How much rent do you owe right now?
+      es: ¿Cuánta renta debe en este momento?
+    help:
+      en: Only include rent. If your landlord is also asking for fees, you can mention them in the next questions.
+      es: Incluya solo la renta. Si el arrendador también le cobra otros cargos, puede mencionarlos en las siguientes preguntas.
+  - id: reason
+    type: select
+    label:
+      en: Why did you fall behind? (optional)
+      es: ¿Por qué se atrasó? (opcional)
+    options:
+      - value: job_loss
+        label:
+          en: I lost my job or part of my income
+          es: Perdí mi trabajo o parte de mis ingresos
+      - value: medical
+        label:
+          en: A medical problem or emergency
+          es: Un problema médico o una emergencia
+      - value: family
+        label:
+          en: A family emergency
+          es: Una emergencia familiar
+      - value: delayed_income
+        label:
+          en: My paycheck or benefits were delayed
+          es: Mi sueldo o mis beneficios se retrasaron
+      - value: other
+        label:
+          en: Something else, or I'd rather not say
+          es: Otra razón, o prefiero no decirlo
+  - id: reason_details
+    type: textarea
+    max_length: 1000
+    label:
+      en: Anything else you want to explain? (optional)
+      es: ¿Quiere explicar algo más? (opcional)
+  - id: proposal
+    type: textarea
+    required: true
+    max_length: 1500
+    label:
+      en: What can you pay, and when?
+      es: ¿Cuánto puede pagar y cuándo?
+    help:
+      en: Only offer what you can really afford, on top of your regular rent.
+      es: Ofrezca solo lo que realmente pueda pagar, además de su renta normal.
+    placeholder:
+      en: $400 on May 1, then $300 on the 15th of each month until it is paid off, along with my regular rent.
+      es: $400 el 1 de mayo, y después $300 el día 15 de cada mes hasta pagarlo todo, además de mi renta normal.
+  - id: assistance
+    type: checkbox
+    label:
+      en: I have applied for rental assistance
+      es: Solicité ayuda para pagar la renta
+  - id: assistance_details
+    type: text
+    required: true
+    max_length: 200
+    show_if: { field: assistance }
+    label:
+      en: Which program, and when did you apply?
+      es: ¿A qué programa y cuándo lo solicitó?
+    placeholder:
+      en: County Emergency Rental Assistance, applied on April 2
+      es: Ayuda de Emergencia para la Renta del condado, solicitada el 2 de abril
+  - id: notice_date
+    type: date
+    label:
+      en: Date on any notice your landlord gave you about the rent (optional)
+      es: Fecha de cualquier aviso sobre la renta que le dio el arrendador (opcional)
+params:
+  law: null
+computed:
+  respond_by:
+    from: letter_date
+    add: { amount: 5, unit: calendar_days }
+subject:
+  en: "Re: Payment plan for rent owed at {{rental_address}}"
+  es: "Asunto: Plan de pagos de la renta atrasada en {{rental_address}}"
+body:
+  en: |
+    I rent the home at {{rental_address}}.
+    {{#if notice_date}}
+    I received your notice dated {{notice_date}}.
+    {{/if}}
+    I am writing about the rent I owe, which is {{amount_owed}}. I want to stay in my home and pay what I owe.
+
+    {{#if reason == "job_loss"}}
+    I fell behind because I lost my job or part of my income.
+    {{/if}}
+    {{#if reason == "medical"}}
+    I fell behind because of a medical problem or emergency.
+    {{/if}}
+    {{#if reason == "family"}}
+    I fell behind because of a family emergency.
+    {{/if}}
+    {{#if reason == "delayed_income"}}
+    I fell behind because my paycheck or benefits were delayed.
+    {{/if}}
+    {{#if reason_details}}
+    {{reason_details}}
+    {{/if}}
+
+    I propose this payment plan:
+
+    {{proposal}}
+
+    {{#if assistance}}
+    I have also applied for rental assistance ({{assistance_details}}) and will tell you as soon as I hear back.
+
+    {{/if}}
+    {{#if law}}
+    {{law}}
+
+    {{/if}}
+    Please let me know in writing by {{respond_by}} whether you accept this plan. If you agree, please
+    send me a signed copy of the agreement.
+
+    This letter is an offer to settle what I owe. It does not waive any of my rights as a tenant.
+  es: |
+    Alquilo la vivienda ubicada en {{rental_address}}.
+    {{#if notice_date}}
+    Recibí su aviso con fecha del {{notice_date}}.
+    {{/if}}
+    Le escribo sobre la renta que debo, que es de {{amount_owed}}. Quiero quedarme en mi vivienda y pagar lo que debo.
+
+    {{#if reason == "job_loss"}}
+    Me atrasé porque perdí mi trabajo o parte de mis ingresos.
+    {{/if}}
+    {{#if reason == "medical"}}
+    Me atrasé por un problema médico o una emergencia.
+    {{/if}}
+    {{#if reason == "family"}}
+    Me atrasé por una emergencia familiar.
+    {{/if}}
+    {{#if reason == "delayed_income"}}
+    Me atrasé porque mi sueldo o mis beneficios se retrasaron.
+    {{/if}}
+    {{#if reason_details}}
+    {{reason_details}}
+    {{/if}}
+
+    Le propongo este plan de pagos:
+
+    {{proposal}}
+
+    {{#if assistance}}
+    También solicité ayuda para pagar la renta ({{assistance_details}}) y le avisaré en cuanto tenga respuesta.
+
+    {{/if}}
+    {{#if law}}
+    {{law}}
+
+    {{/if}}
+    Le pido que me diga por escrito, a más tardar el {{respond_by}}, si acepta este plan. Si está de
+    acuerdo, por favor envíeme una copia firmada del acuerdo.
+
+    Esta carta es una oferta para resolver lo que debo. No renuncio a ninguno de mis derechos como inquilino.
+closing:
+  en: Sincerely,
+  es: Atentamente,
+delivery_tips:
+  - en: This letter does not stop an eviction case. If you received court papers, you must still respond to the court by the deadline.
+    es: Esta carta no detiene un caso de desalojo. Si recibió documentos del tribunal, igual debe responder al tribunal dentro del plazo.
+  - en: If your landlord agrees, get the plan in writing and signed. Keep receipts for every payment.
+    es: Si el arrendador está de acuerdo, pida el plan por escrito y firmado. Guarde los recibos de cada pago.
+  - en: Contact legal aid or a local tenant group before you sign any agreement to move out.
+    es: Comuníquese con una oficina de ayuda legal o un grupo de inquilinos antes de firmar cualquier acuerdo para mudarse.
+checklist:
+  - en: Any notice your landlord gave you
+    es: Cualquier aviso que le haya dado el arrendador
+  - en: Proof of income or of what changed (pay stubs, letter from employer, medical bills)
+    es: Prueba de ingresos o de lo que cambió (talones de pago, carta del empleador, facturas médicas)
+  - en: Receipts for rent you have paid
+    es: Recibos de la renta que ha pagado

@@ -1,0 +1,182 @@
+# yaml-language-server: $schema=../../schema/letter.schema.json
+# Shared security deposit demand letter. States extend it and fill in the "law" block.
+schema_version: 1
+id: deposit-demand
+topic: deposit
+title:
+  en: Ask for your security deposit back
+  es: Pedir la devolución del depósito de garantía
+summary:
+  en: A written demand tells your landlord where to send your deposit and that you know your rights. Many small claims courts expect you to send one before you file.
+  es: Una carta de reclamación le dice al arrendador adónde enviar su depósito y que usted conoce sus derechos. Muchos tribunales de reclamos menores esperan que la envíe antes de presentar una demanda.
+fieldsets: [tenant, landlord, sending]
+fields:
+  - id: tenant_address
+    type: textarea
+    section: you
+    required: true
+    max_length: 300
+    label:
+      en: Your new mailing address
+      es: Su nueva dirección postal
+    help:
+      en: Where your landlord should send the deposit. In many states the deadline doesn't start until you give a forwarding address in writing.
+      es: Adónde debe enviar el depósito el arrendador. En muchos estados, el plazo no empieza hasta que usted da su nueva dirección por escrito.
+  - id: move_out_date
+    type: date
+    required: true
+    label:
+      en: The day you moved out and returned the keys
+      es: El día en que se mudó y devolvió las llaves
+  - id: deposit_amount
+    type: money
+    required: true
+    label:
+      en: How much was your security deposit?
+      es: ¿De cuánto fue su depósito de garantía?
+    placeholder:
+      en: "1500"
+      es: "1500"
+  - id: amount_received
+    type: money
+    label:
+      en: How much have you gotten back so far? (leave empty if nothing)
+      es: ¿Cuánto le han devuelto hasta ahora? (déjelo en blanco si nada)
+  - id: itemization
+    type: select
+    required: true
+    default: none
+    label:
+      en: Did your landlord send you a list of deductions?
+      es: ¿El arrendador le envió una lista de descuentos?
+    options:
+      - value: none
+        label:
+          en: No, I have not received a list
+          es: No, no he recibido ninguna lista
+      - value: disputed
+        label:
+          en: Yes, but I disagree with some charges
+          es: Sí, pero no estoy de acuerdo con algunos cargos
+  - id: disputed_deductions
+    type: textarea
+    required: true
+    max_length: 2000
+    show_if: { field: itemization, equals: disputed }
+    label:
+      en: Which charges do you disagree with, and why?
+      es: ¿Con qué cargos no está de acuerdo y por qué?
+    placeholder:
+      en: "- $300 for carpet cleaning: the carpet was 10 years old and only had normal wear\n- $150 for painting: I did not damage the walls"
+      es: "- $300 por limpieza de alfombra: la alfombra tenía 10 años y solo tenía desgaste normal\n- $150 por pintura: no dañé las paredes"
+  - id: move_out_condition
+    type: textarea
+    max_length: 1000
+    label:
+      en: Anything about the condition of the home when you left? (optional)
+      es: ¿Algo sobre el estado de la vivienda cuando se fue? (opcional)
+    placeholder:
+      en: I cleaned the apartment and returned it in the same condition as when I moved in, except for normal wear and tear.
+      es: Limpié el apartamento y lo dejé en las mismas condiciones en que lo recibí, salvo el desgaste normal.
+  - id: has_photos
+    type: checkbox
+    label:
+      en: I have photos or video from the day I moved out
+      es: Tengo fotos o video del día en que me mudé
+params:
+  law: null
+computed:
+  respond_by:
+    from: letter_date
+    add: { amount: 14, unit: calendar_days }
+subject:
+  en: "Re: Return of security deposit for {{rental_address}}"
+  es: "Asunto: Devolución del depósito de garantía de {{rental_address}}"
+body:
+  en: |
+    I rented the home at {{rental_address}} and moved out on {{move_out_date}}.
+    My security deposit was {{deposit_amount}}.
+    {{#if amount_received}}
+    So far I have received {{amount_received}}.
+    {{else}}
+    I have not received any of it back.
+    {{/if}}
+
+    {{#if itemization == "none"}}
+    I have not received my deposit or an itemized list of deductions.
+    {{/if}}
+    {{#if itemization == "disputed"}}
+    I received a list of deductions, but I disagree with these charges:
+
+    {{disputed_deductions}}
+    {{/if}}
+
+    {{#if move_out_condition}}
+    {{move_out_condition}}
+
+    {{/if}}
+    {{#if law}}
+    {{law}}
+
+    {{/if}}
+    Please send {{#if amount_received}}the rest of {{/if}}my deposit to me by {{respond_by}} at this address:
+
+    {{tenant_address}}
+
+    {{#if has_photos}}
+    I have photos showing the condition of the home when I moved out.
+
+    {{/if}}
+    If I do not receive my deposit by that date, I may take further steps to recover it, including
+    filing a claim in small claims court.
+  es: |
+    Alquilé la vivienda ubicada en {{rental_address}} y me mudé el {{move_out_date}}.
+    Mi depósito de garantía fue de {{deposit_amount}}.
+    {{#if amount_received}}
+    Hasta ahora he recibido {{amount_received}}.
+    {{else}}
+    No me han devuelto nada.
+    {{/if}}
+
+    {{#if itemization == "none"}}
+    No he recibido mi depósito ni una lista detallada de descuentos.
+    {{/if}}
+    {{#if itemization == "disputed"}}
+    Recibí una lista de descuentos, pero no estoy de acuerdo con estos cargos:
+
+    {{disputed_deductions}}
+    {{/if}}
+
+    {{#if move_out_condition}}
+    {{move_out_condition}}
+
+    {{/if}}
+    {{#if law}}
+    {{law}}
+
+    {{/if}}
+    Le pido que me envíe {{#if amount_received}}el resto de {{/if}}mi depósito a más tardar el {{respond_by}} a esta dirección:
+
+    {{tenant_address}}
+
+    {{#if has_photos}}
+    Tengo fotos que muestran el estado de la vivienda cuando me mudé.
+
+    {{/if}}
+    Si no recibo mi depósito para esa fecha, podría tomar otras medidas para recuperarlo, como
+    presentar un reclamo en el tribunal de reclamos menores.
+closing:
+  en: Sincerely,
+  es: Atentamente,
+delivery_tips:
+  - en: Keep a copy of the letter and any mailing receipt. Write down the date you sent it.
+    es: Guarde una copia de la carta y cualquier recibo de envío. Anote la fecha en que la envió.
+  - en: Keep your lease, your move-in and move-out photos, and any list of deductions together. You will need them if you go to small claims court.
+    es: Guarde juntos su contrato, las fotos de cuando se mudó y de cuando se fue, y cualquier lista de descuentos. Los necesitará si va al tribunal de reclamos menores.
+checklist:
+  - en: Your lease and proof of the deposit you paid (receipt, bank record or lease clause)
+    es: Su contrato y prueba del depósito que pagó (recibo, registro bancario o cláusula del contrato)
+  - en: Photos or video from move-in and move-out
+    es: Fotos o video de cuando se mudó y de cuando se fue
+  - en: Any list of deductions your landlord sent
+    es: Cualquier lista de descuentos que le haya enviado el arrendador

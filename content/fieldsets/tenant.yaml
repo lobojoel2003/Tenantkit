@@ -1,0 +1,54 @@
+# yaml-language-server: $schema=../../schema/fieldset.schema.json
+# Questions about the tenant. Used for the sender block and signature of every letter.
+schema_version: 1
+id: tenant
+fields:
+  - id: tenant_name
+    type: text
+    section: you
+    required: true
+    max_length: 120
+    label:
+      en: Your full name
+      es: Su nombre completo
+    help:
+      en: Use the name on your lease. If several people rent the home, you can list everyone, e.g. "Ana López and José López".
+      es: Use el nombre que aparece en su contrato. Si varias personas alquilan la vivienda, puede escribir todos los nombres, por ejemplo "Ana López y José López".
+  - id: rental_address
+    type: text
+    section: you
+    required: true
+    max_length: 200
+    label:
+      en: Address of the rental home
+      es: Dirección de la vivienda que alquila
+    help:
+      en: Include the unit or apartment number, city, state and ZIP code.
+      es: Incluya el número de unidad o apartamento, la ciudad, el estado y el código postal.
+    placeholder:
+      en: 123 Main St, Apt 4, Springfield, ST 12345
+      es: 123 Main St, Apt 4, Springfield, ST 12345
+  - id: tenant_address
+    type: textarea
+    section: you
+    max_length: 300
+    label:
+      en: Your mailing address, if it is different
+      es: Su dirección postal, si es diferente
+    help:
+      en: Leave this empty if you get mail at the rental home.
+      es: Déjelo en blanco si recibe correo en la vivienda que alquila.
+  - id: tenant_phone
+    type: tel
+    section: you
+    max_length: 40
+    label:
+      en: Your phone number (optional)
+      es: Su número de teléfono (opcional)
+  - id: tenant_email
+    type: email
+    section: you
+    max_length: 120
+    label:
+      en: Your email address (optional)
+      es: Su correo electrónico (opcional)

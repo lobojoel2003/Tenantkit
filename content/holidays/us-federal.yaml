@@ -1,0 +1,49 @@
+# yaml-language-server: $schema=../../schema/holidays.schema.json
+# U.S. federal holidays. States extend this list and add or remove their own.
+# When a fixed-date holiday falls on a Saturday it is observed on Friday;
+# on a Sunday, it is observed on Monday.
+schema_version: 1
+id: us-federal
+name:
+  en: U.S. federal holidays
+  es: Días feriados federales de EE. UU.
+holidays:
+  - id: new-years-day
+    name: { en: New Year's Day, es: Año Nuevo }
+    date: { month: 1, day: 1 }
+  - id: mlk-day
+    name: { en: Martin Luther King Jr. Day, es: Día de Martin Luther King Jr. }
+    date: { month: 1, weekday: mon, nth: 3 }
+  - id: presidents-day
+    name: { en: Presidents' Day (Washington's Birthday), es: Día de los Presidentes }
+    date: { month: 2, weekday: mon, nth: 3 }
+  - id: memorial-day
+    name: { en: Memorial Day, es: Día de los Caídos (Memorial Day) }
+    date: { month: 5, weekday: mon, nth: -1 }
+  - id: juneteenth
+    name: { en: Juneteenth, es: Juneteenth (Día de la Emancipación) }
+    date: { month: 6, day: 19 }
+    since: 2021
+  - id: independence-day
+    name: { en: Independence Day, es: Día de la Independencia }
+    date: { month: 7, day: 4 }
+  - id: labor-day
+    name: { en: Labor Day, es: Día del Trabajo }
+    date: { month: 9, weekday: mon, nth: 1 }
+  - id: columbus-day
+    name: { en: Columbus Day / Indigenous Peoples' Day, es: Día de Colón / Día de los Pueblos Indígenas }
+    date: { month: 10, weekday: mon, nth: 2 }
+  - id: veterans-day
+    name: { en: Veterans Day, es: Día de los Veteranos }
+    date: { month: 11, day: 11 }
+  - id: thanksgiving
+    name: { en: Thanksgiving Day, es: Día de Acción de Gracias }
+    date: { month: 11, weekday: thu, nth: 4 }
+  - id: christmas
+    name: { en: Christmas Day, es: Navidad }
+    date: { month: 12, day: 25 }
+sources:
+  - label: 5 U.S.C. § 6103
+    url: https://www.law.cornell.edu/uscode/text/5/6103
+  - label: U.S. Office of Personnel Management, Federal Holidays
+    url: https://www.opm.gov/policy-data-oversight/pay-leave/federal-holidays/

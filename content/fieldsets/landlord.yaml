@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=../../schema/fieldset.schema.json
+# Questions about the landlord. Used for the recipient block of every letter.
+schema_version: 1
+id: landlord
+fields:
+  - id: landlord_name
+    type: text
+    section: landlord
+    required: true
+    max_length: 160
+    label:
+      en: Landlord or property manager
+      es: Arrendador o administrador de la propiedad
+    help:
+      en: Use the name on your lease, or the person or company you pay rent to.
+      es: Use el nombre que aparece en su contrato, o la persona o empresa a la que le paga la renta.
+  - id: landlord_address
+    type: textarea
+    section: landlord
+    required: true
+    max_length: 300
+    label:
+      en: Landlord's mailing address
+      es: Dirección postal del arrendador
+    help:
+      en: If your lease lists an address for notices, use that one.
+      es: Si su contrato indica una dirección para avisos, use esa.
+    placeholder:
+      en: "Sunrise Property Management\n500 Market St, Suite 200\nSpringfield, ST 12345"
+      es: "Sunrise Property Management\n500 Market St, Suite 200\nSpringfield, ST 12345"

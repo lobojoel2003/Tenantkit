@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=../../../schema/jurisdiction.schema.json
+# A fallback for states Tenantkit doesn't cover yet: general letters, no deadlines.
+# To add your state, copy one of the other folders (see content/README.md).
+schema_version: 1
+id: us-general
+name:
+  en: Other U.S. states
+  es: Otros estados de EE. UU.
+short_name: US
+country: US
+kind: general
+status: draft
+last_reviewed: 2026-11-04
+summary:
+  en: General letters that work in any state. They don't cite a specific law, and there are no deadline calculators yet, because deadlines depend on your state. Ask a local legal aid office about your deadlines.
+  es: Cartas generales que sirven en cualquier estado. No citan una ley específica y aún no hay calculadoras de plazos, porque los plazos dependen de su estado. Pregunte por sus plazos en una oficina local de ayuda legal.
+letters: [repair-request, deposit-demand, payment-plan]
+help:
+  - name: LawHelp.org
+    url: https://www.lawhelp.org/
+    description:
+      en: Find free legal aid programs and self-help information in your state.
+      es: Encuentre programas gratuitos de ayuda legal e información de autoayuda en su estado.
+  - name: Legal Services Corporation — Find legal aid
+    url: https://www.lsc.gov/about-lsc/what-legal-aid/get-legal-help
+    description:
+      en: Look up the federally funded legal aid office that serves your area.
+      es: Busque la oficina de ayuda legal con fondos federales que atiende su zona.
+  - name: "211"
+    url: https://www.211.org/
+    phone: "211"
+    description:
+      en: Call or text 211 to find emergency rental assistance, shelter and other local help.
+      es: Llame o envíe un mensaje al 211 para encontrar ayuda de emergencia para la renta, albergue y otros servicios locales.
+sources: []
