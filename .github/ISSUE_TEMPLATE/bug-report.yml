@@ -1,0 +1,26 @@
+name: Bug report
+description: Something on the site doesn't work.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, and what happened instead. Please leave out personal details.
+    validations:
+      required: true
+  - type: input
+    id: page
+    attributes:
+      label: Page
+      description: The address of the page.
+  - type: input
+    id: device
+    attributes:
+      label: Device and browser
+      placeholder: e.g. Android phone, Chrome
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Shown at the bottom of every page, e.g. "Version 1.0.0 · build 12 · abc1234".

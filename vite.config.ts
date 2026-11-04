@@ -9,22 +9,22 @@ const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 
 	version: string;
 };
 
-function gitCommit(): string {
-	if (process.env.GITHUB_SHA) return process.env.GITHUB_SHA.slice(0, 7);
+function git(command: string): string | undefined {
 	try {
-		return execSync('git rev-parse --short HEAD', { stdio: ['ignore', 'pipe', 'ignore'] })
+		return execSync(`git ${command}`, { stdio: ['ignore', 'pipe', 'ignore'] })
 			.toString()
 			.trim();
 	} catch {
-		return 'unknown';
+		return undefined;
 	}
 }
 
 /** Build metadata baked into the bundle and shown in the site footer. */
 const build = {
 	version: pkg.version,
-	buildNumber: process.env.BUILD_NUMBER ?? process.env.GITHUB_RUN_NUMBER ?? 'dev',
-	commit: gitCommit(),
+	// The build number is the number of commits, so the same commit always gets the same number.
+	buildNumber: process.env.BUILD_NUMBER ?? git('rev-list --count HEAD') ?? 'dev',
+	commit: process.env.GITHUB_SHA?.slice(0, 7) ?? git('rev-parse --short HEAD') ?? 'unknown',
 	date: (process.env.SOURCE_DATE_EPOCH
 		? new Date(Number(process.env.SOURCE_DATE_EPOCH) * 1000)
 		: new Date()

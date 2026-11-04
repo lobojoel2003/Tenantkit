@@ -1,0 +1,16 @@
+{
+	"yaml.schemas": {
+		"./schema/jurisdiction.schema.json": "content/jurisdictions/*/jurisdiction.yaml",
+		"./schema/deadlines.schema.json": "content/jurisdictions/*/deadlines.yaml",
+		"./schema/letter.schema.json": [
+			"content/letters/*.yaml",
+			"content/jurisdictions/*/letters/*.yaml"
+		],
+		"./schema/fieldset.schema.json": "content/fieldsets/*.yaml",
+		"./schema/holidays.schema.json": "content/holidays/*.yaml"
+	},
+	"editor.formatOnSave": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"[svelte]": { "editor.defaultFormatter": "svelte.svelte-vscode" },
+	"files.associations": { "*.yaml": "yaml" }
+}

@@ -1,0 +1,51 @@
+name: Content correction
+description: A deadline, citation, letter or translation is wrong or out of date.
+title: "[state] "
+labels: [content]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you! Please don't include personal details about your own case.
+  - type: dropdown
+    id: state
+    attributes:
+      label: State
+      options:
+        - California
+        - Florida
+        - New York
+        - Texas
+        - Washington
+        - Other U.S. states (general letters)
+    validations:
+      required: true
+  - type: input
+    id: page
+    attributes:
+      label: Page
+      description: Link to the page, or the name of the deadline or letter.
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What's wrong?
+      description: What the page says, and what it should say.
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Source
+      description: A link to the statute, court rule, court website or legal aid guide that shows the correct rule.
+    validations:
+      required: true
+  - type: dropdown
+    id: role
+    attributes:
+      label: Are you a lawyer licensed in this state?
+      options:
+        - "No"
+        - "Yes"
+        - I work for a legal aid organization

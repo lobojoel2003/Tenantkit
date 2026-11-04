@@ -1,0 +1,62 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build site
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      pages: ${{ steps.pages.outcome }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run content:validate
+      - name: Build for https://<owner>.github.io/<repo>/
+        run: npm run build
+        env:
+          BASE_PATH: /${{ github.event.repository.name }}
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v6
+        continue-on-error: true
+      - name: Pages is not enabled yet
+        if: steps.pages.outcome != 'success'
+        run: |
+          echo "::warning title=GitHub Pages is not enabled::Turn it on once in Settings → Pages → Build and deployment → Source: GitHub Actions, then re-run this workflow."
+      - uses: actions/upload-pages-artifact@v5
+        if: steps.pages.outcome == 'success'
+        with:
+          path: build/
+
+  deploy:
+    name: Deploy
+    needs: build
+    if: needs.build.outputs.pages == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

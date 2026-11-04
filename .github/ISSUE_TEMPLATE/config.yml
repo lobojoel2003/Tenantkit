@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: I need legal help
+    url: https://www.lawhelp.org/
+    about: Issues here can't give legal advice. LawHelp.org finds free legal aid in your state, and the Tenantkit site lists help for each state it covers.
+  - name: Content guide (add or fix a state)
+    url: https://github.com/lobojoel2003/Tenantkit/blob/main/content/README.md
+    about: How the rules and letter templates are written, with examples.

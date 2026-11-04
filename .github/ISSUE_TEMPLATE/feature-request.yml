@@ -1,0 +1,14 @@
+name: Idea or feature request
+description: A letter, deadline type or feature that would help tenants.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would it solve?
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: Your idea

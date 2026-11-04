@@ -1,0 +1,29 @@
+name: Add a state or city
+description: Propose (or volunteer to write) rules and letters for a new place.
+title: "Add "
+labels: [content, new jurisdiction]
+body:
+  - type: input
+    id: place
+    attributes:
+      label: State, county or city
+    validations:
+      required: true
+  - type: textarea
+    id: deadlines
+    attributes:
+      label: Deadlines and letters that matter most there
+      description: For example the notice period for unpaid rent, the time to answer an eviction case, the deposit return deadline.
+  - type: textarea
+    id: sources
+    attributes:
+      label: Official sources
+      description: Links to the state's statutes, court self-help pages or legal aid guides.
+  - type: checkboxes
+    id: help
+    attributes:
+      label: Can you help?
+      options:
+        - label: I can write the YAML files (see the content guide)
+        - label: I can translate
+        - label: I'm a lawyer licensed there, or work with legal aid, and can review
