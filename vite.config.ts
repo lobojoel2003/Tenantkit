@@ -69,7 +69,8 @@ export default defineConfig({
 		coverage: {
 			provider: 'v8',
 			include: ['src/lib/engine/**', 'src/lib/pdf/**', 'src/lib/i18n/**'],
-			reporter: ['text', 'html', 'lcov']
+			reporter: ['text', 'html', 'lcov'],
+			thresholds: { lines: 85, functions: 85, statements: 85, branches: 75 }
 		}
 	}
 });
