@@ -71,11 +71,30 @@ jobs:
           path: build/
           retention-days: 7
 
+  playwright:
+    name: Playwright version
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          sparse-checkout: package-lock.json
+          sparse-checkout-cone-mode: false
+      - id: version
+        name: Read the locked @playwright/test version
+        run: echo "version=$(node -p "require('./package-lock.json').packages['node_modules/@playwright/test'].version")" >> "$GITHUB_OUTPUT"
+
   e2e:
     name: End-to-end tests
-    needs: build
+    needs: [build, playwright]
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    # The official image already has the matching browsers and system libraries.
+    container:
+      image: mcr.microsoft.com/playwright:v${{ needs.playwright.outputs.version }}-noble
+      options: --user 1001
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -87,8 +106,6 @@ jobs:
         with:
           name: site
           path: build/
-      - name: Install Chromium
-        run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
       - uses: actions/upload-artifact@v7
         if: failure()
