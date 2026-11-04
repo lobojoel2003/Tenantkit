@@ -43,8 +43,10 @@ The [Release workflow](../.github/workflows/release.yml) then:
 
 Tags with a suffix, such as `v1.1.0-rc.1`, are published as pre-releases.
 
-To re-publish an existing tag (for example after fixing the workflow), run the Release workflow
-manually from the Actions tab and enter the tag.
+You can also release without pushing a tag: run the **Release** workflow from the Actions tab on
+`main` and enter the tag (e.g. `v1.2.0`). If the tag doesn't exist yet, the workflow creates it on
+the latest commit of `main` when it publishes the release. Running it with an existing tag
+re-publishes that release (for example after fixing the workflow).
 
 ## Verifying a download
 

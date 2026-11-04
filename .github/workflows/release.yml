@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: "Existing tag to (re)publish, e.g. v1.0.0"
+        description: "Tag to publish, e.g. v1.0.0. If it doesn't exist yet, it's created on the latest commit of the branch you run this on."
         required: true
 
 permissions:
@@ -35,8 +35,17 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          ref: ${{ env.TAG }}
           fetch-depth: 0
+      - name: Find the commit to release
+        run: |
+          if git rev-parse -q --verify "refs/tags/$TAG" > /dev/null; then
+            git checkout -q "refs/tags/$TAG"
+            echo "TAG_EXISTS=true" >> "$GITHUB_ENV"
+          else
+            echo "Tag $TAG doesn't exist yet; it will be created on $(git rev-parse --short HEAD)."
+            echo "TAG_EXISTS=false" >> "$GITHUB_ENV"
+          fi
+          echo "TARGET_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
@@ -81,6 +90,9 @@ jobs:
             gh release edit "$TAG" --title "$TITLE" --notes-file dist/RELEASE_NOTES.md
             gh release upload "$TAG" "${FILES[@]}" --clobber
           else
-            gh release create "$TAG" "${FILES[@]}" --title "$TITLE" --notes-file dist/RELEASE_NOTES.md --verify-tag $PRERELEASE
+            VERIFY=""
+            if [ "$TAG_EXISTS" = "true" ]; then VERIFY="--verify-tag"; fi
+            gh release create "$TAG" "${FILES[@]}" --title "$TITLE" --notes-file dist/RELEASE_NOTES.md \
+              --target "$TARGET_SHA" $VERIFY $PRERELEASE
           fi
           echo "Published $TITLE" >> "$GITHUB_STEP_SUMMARY"
